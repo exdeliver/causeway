@@ -10,8 +10,8 @@
                     <div class="card-body">
                         <register-component
                                 csrf_token="{{ csrf_token() }}"
-                                register_route="{{ route('register') }}"
-                                login_route="{{ route('login') }}"></register-component>
+                                register_route="{{ route('causeway.register') }}"
+                                login_route="{{ route('causeway.login') }}"></register-component>
                     </div>
                 </div>
             </div>

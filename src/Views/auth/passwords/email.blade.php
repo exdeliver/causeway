@@ -10,8 +10,8 @@
                     <div class="card-body">
                         <request-password-component
                                 csrf_token="{{ csrf_token() }}"
-                                request_password_route="{{ route('password.email') }}"
-                                login_route="{{ route('login') }}"
+                                request_password_route="{{ route('causeway.password.email') }}"
+                                login_route="{{ route('causeway.login') }}"
                         ></request-password-component>
                     </div>
                 </div>

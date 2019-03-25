@@ -21,7 +21,7 @@ class CausewayServiceProvider extends ServiceProvider
     /**
      * @var string
      */
-    protected $namespace = 'Exdeliver\Causeway\ServiceProviders';
+    protected $namespace = 'Exdeliver\Causeway\Controllers';
 
     /**
      *
@@ -52,6 +52,10 @@ class CausewayServiceProvider extends ServiceProvider
         $this->publishes([
             $packageRootDir . '/assets' => public_path('vendor/causeway'),
         ], 'public');
+
+        $this->publishes([
+
+        ], 'controller');
 
         $this->loadViewsFrom($packageWorkingDir . '/Views', 'causeway');
         $this->loadTranslationsFrom($packageWorkingDir . '/Lang', 'causeway');

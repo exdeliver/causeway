@@ -11,8 +11,8 @@
                         @include('causeway::layouts.partials._status_messages')
                         <login-component
                                 csrf_token="{{ csrf_token() }}"
-                                request_password_route="{{ route('password.request') }}"
-                                login_route="{{ route('login') }}"
+                                request_password_route="{{ route('causeway.password.request') }}"
+                                login_route="{{ route('causeway.login') }}"
                         ></login-component>
                     </div>
                 </div>

@@ -2,8 +2,18 @@
 /**
  * Protected routes for verified users...
  */
+Route::group(['prefix' => 'causeway'], function () {
+    Route::get('/login', 'Auth\LoginController@showLoginForm')->name('causeway.login');
+    Route::post('/login', 'Auth\LoginController@login')->name('causeway.login');
+    Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('causeway.register');
+    Route::post('/register', 'Auth\LoginController@register')->name('causeway.register');
+    Route::post('/logout', 'Auth\LoginController@logout')->name('causeway.logout');
 
-Route::group(['middleware' => ['verified', 'auth']], function () {
+    Route::get('/password/reset', 'Auth\ResetPasswordController@showResetForm')->name('causeway.password.request');
+    Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('causeway.password.update');
+});
+
+Route::group(['middleware' => ['verified', 'auth'], 'namespace'], function () {
     Route::post('/upload/file', 'UploadController@upload')->name('site.upload');
     Route::group(['prefix' => 'forum'], function () {
         Route::get('/get-quote', 'ForumController@getQuoteByComment')->name('site.forum.quote');
@@ -54,6 +64,7 @@ Route::group(['middleware' => ['verified', 'auth']], function () {
      * Admin protected routes
      */
     Route::group(['namespace' => 'Admin', 'middleware' => 'admin', 'prefix' => 'causeway'], function () {
+
 
         Route::get('/', function () {
             return redirect()

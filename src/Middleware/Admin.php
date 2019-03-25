@@ -22,6 +22,6 @@ class Admin
         $request->session()->flash('info', '403 Forbidden...');
 
         return redirect()
-            ->to('/');
+            ->route('causeway.login');
     }
 }
