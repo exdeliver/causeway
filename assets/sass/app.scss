@@ -1,0 +1,141 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+// Variables
+@import 'variables';
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import '~jquery-ui/themes/base/all.css';
+@import "~font-awesome/css/font-awesome.css";
+@import '~lightbox2/src/css/lightbox.css';
+@import '~fullcalendar/dist/fullcalendar.css';
+@import '~frontwise-grid-editor/dist/grideditor-font-awesome.css';
+@import '~frontwise-grid-editor/dist/grideditor.css';
+@import '~summernote/dist/summernote.css';
+@import 'soundmanager2.css';
+
+.navbar-laravel {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.calender-div {
+    z-index: 10;
+}
+
+.vue-dialog {
+
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal {
+        opacity: 1 !important;
+        display: flex;
+    }
+
+    .modal-header,
+    .modal-footer {
+        padding: 5px;
+        text-align: center
+    }
+
+    .modal-header {
+        border-bottom: 1px solid #eeeeee;
+        color: #000;
+        justify-content: space-between;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #eeeeee;
+        justify-content: flex-end;
+    }
+
+    .modal-body {
+        position: relative;
+        padding: 20px 10px 0px 10px;
+    }
+
+    .btn-close {
+        border: none;
+        font-size: 20px;
+        padding: 20px;
+        cursor: pointer;
+        font-weight: bold;
+        color: #000;
+        background: transparent;
+        text-align: right;
+    }
+}
+
+.responsive-images {
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+.up-down-chevron-btns {
+    list-style-type: none;
+    padding: 0 0 0 10px;
+    margin: 0;
+    font-size: 10px;
+}
+
+blockquote {
+    position: relative;
+    text-align: left;
+    padding: 1.2em 0 2em 38px;
+    border: none;
+    margin: 20px auto 20px;
+    max-width: 800px;
+    width: 100%;
+    display: block;
+}
+
+blockquote:after {
+    content: "";
+    display: block;
+    width: 2px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    color: #666666;
+    top: 0;
+    background: -moz-linear-gradient(top, #666666 0%, #666666 60%, rgba(102, 102, 102, 0) 100%);
+    background: -webkit-linear-gradient(top, #666666 0%, #666666 60%, rgba(102, 102, 102, 0) 100%);
+    /* background: linear-gradient(to bottom,#66cc66 0%,#66cc66 60%,rgba(255,255,255,0) 100%); */
+}
+
+blockquote:before {
+    content: "\f10d";
+    font-family: "fontawesome";
+    font-size: 20px;
+    display: block;
+    margin-bottom: 0.8em;
+    font-weight: 400;
+    color: #666666;
+}
+
+blockquote > cite,
+blockquote > p > cite {
+    display: block;
+    font-size: 16px;
+    line-height: 1.3em;
+    font-weight: 700;
+    font-style: normal;
+    margin-top: 1.1em;
+    letter-spacing: 0;
+    font-style: italic;
+}
+
+.delete-inline {
+    display: inline !important;
+}
