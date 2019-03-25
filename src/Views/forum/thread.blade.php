@@ -1,4 +1,4 @@
-@extends('layouts.site')
+@extends('causeway::layouts.site')
 
 @section('breadcrumbs')
     <li class="breadcrumb-item"><a href="{{ route('site.forum.index') }}">Forum</a></li>
@@ -41,7 +41,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                @include('comments.comments', ['commentsObject' => $thread, 'type' => \Domain\Entities\Forum\Thread::class])
+                @include('causeway::comments.comments', ['commentsObject' => $thread, 'type' => \Domain\Entities\Forum\Thread::class])
             </div>
         </div>
         @endsection

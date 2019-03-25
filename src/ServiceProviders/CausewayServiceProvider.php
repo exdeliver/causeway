@@ -6,7 +6,10 @@ use Exdeliver\Causeway\Domain\Entities\Forum\Category;
 use Exdeliver\Causeway\Domain\Entities\Forum\Thread;
 use Exdeliver\Causeway\Domain\Entities\Page\Page;
 use Exdeliver\Causeway\Domain\Entities\PhotoAlbum\PhotoAlbum;
+use Exdeliver\Causeway\Middleware\Admin;
+use Exdeliver\Causeway\ViewComposers\NavigationComposer;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -25,6 +28,10 @@ class CausewayServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        View::composer(
+            'layouts.partials._navigation', NavigationComposer::class
+        );
+
         $this->getConfiguration();
         $this->getCommands();
         $this->getRoutes();
@@ -48,9 +55,10 @@ class CausewayServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom($packageWorkingDir . '/Views', 'causeway');
         $this->loadTranslationsFrom($packageWorkingDir . '/Lang', 'causeway');
+        $this->app->make('Illuminate\Database\Eloquent\Factory')->load(realpath(dirname(__DIR__) . '/database/factories'));
     }
 
-    public function getCommands()
+    protected function getCommands()
     {
 //        if ($this->app->runningInConsole()) {
 //            $this->commands([
@@ -63,18 +71,28 @@ class CausewayServiceProvider extends ServiceProvider
     /**
      * Route model bindings etc.
      */
-    public function getRoutes()
+    protected function getRoutes()
     {
         $packageWorkingDir = __DIR__ . '/..';
 
+        $this->routeModelBindings();
+
         Route::middleware('web')
             ->namespace($this->namespace)
-            ->group($packageWorkingDir . '/web.php');
+            ->group($packageWorkingDir . '/Routes/web.php');
 
         Route::middleware('api')
             ->namespace($this->namespace)
-            ->group($packageWorkingDir . '/api.php');
+            ->group($packageWorkingDir . '/Routes/api.php');
 
+        $this->loadRoutesFrom($packageWorkingDir . '/Routes/channels.php');
+    }
+
+    /**
+     * Route model bindings.
+     */
+    protected function routeModelBindings()
+    {
         Route::bind('photoAlbum', function ($value) {
             return PhotoAlbum::where('label', $value)->first();
         });
@@ -97,6 +115,11 @@ class CausewayServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerMiddleware();
+    }
 
+    protected function registerMiddleware()
+    {
+        $this->app['router']->aliasMiddleware('admin' , Admin::class);
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.backend')
+@extends('causeway::layouts.backend')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="/admin/photo/album">Photos</a></li>
@@ -16,7 +16,7 @@
         <div class="card-header">Photo Albums</div>
 
         <div class="card-body">
-            @include('layouts.partials._status_messages')
+            @include('causeway::layouts.partials._status_messages')
 
             <a href="{{ route('admin.photo.album.new') }}" class="btn btn-primary float-right">Create Album</a>
             <div class="clearfix"></div>

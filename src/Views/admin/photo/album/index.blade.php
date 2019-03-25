@@ -1,4 +1,4 @@
-@extends('layouts.backend')
+@extends('causeway::layouts.backend')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="/admin/photo/album">Photos</a></li>
@@ -16,7 +16,7 @@
         <div class="card-header">Photo Albums</div>
 
         <div class="card-body">
-            @include('layouts.partials._status_messages')
+            @include('causeway::layouts.partials._status_messages')
 
             <h4 class="float-left">Album</h4>
 

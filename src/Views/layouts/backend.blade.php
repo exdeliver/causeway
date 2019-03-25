@@ -97,7 +97,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3">
-                        @include('layouts.admin.partials._sidebar')
+                        @include('causeway::layouts.admin.partials._sidebar')
                     </div>
                     <div class="col-lg-9">
                         @yield('content')

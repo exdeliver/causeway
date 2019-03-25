@@ -13,8 +13,13 @@
         "yajra/laravel-datatables-oracle": "~8.0"
     },
     "autoload": {
+        "classmap": [
+            "database/seeds",
+            "database/factories"
+        ],
         "psr-4": {
-            "Exdeliver\\Causeway\\": "src/"
+            "Exdeliver\\Causeway\\": "src/",
+            "Exdeliver\\Causeway\\Tests\\": "tests/"
         }
     },
     "extra": {

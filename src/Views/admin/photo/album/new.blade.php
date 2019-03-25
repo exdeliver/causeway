@@ -1,17 +1,17 @@
-@extends('layouts.backend')
+@extends('causeway::layouts.backend')
 
 @section('content')
     <div class="card">
         <div class="card-header">Photo Albums</div>
 
         <div class="card-body">
-            @include('layouts.partials._status_messages')
+            @include('causeway::layouts.partials._status_messages')
             <h4>Create new album</h4>
             <div class="clearfix"></div>
 
             <hr/>
             {{ Form::open(['url' => route('admin.photo.album.new.store'), 'files' => true]) }}
-            @include('admin.photo.album.partials._form')
+            @include('causeway::admin.photo.album.partials._form')
             {{ Form::close() }}
 
         </div>

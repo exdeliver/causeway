@@ -53,7 +53,7 @@ Route::group(['middleware' => ['verified', 'auth']], function () {
     /**
      * Admin protected routes
      */
-    Route::group(['namespace' => 'Admin', 'middleware' => 'admin', 'prefix' => 'admin'], function () {
+    Route::group(['namespace' => 'Admin', 'middleware' => 'admin', 'prefix' => 'causeway'], function () {
 
         Route::get('/', function () {
             return redirect()

@@ -26,7 +26,7 @@
                             <div class="clearfix">
                                 <span class="date sub-text btn btn-sm btn-like btn-outline-dark">on <span class="commentDate">{{ $comment->created_at->diffForHumans() }}</span></span>
 
-                                @include('like.like', [
+                                @include('causeway::like.like', [
                                 'likeObject' => $comment,
                                 'likeId' => $comment->id,
                                 'likeType' => 'comment'

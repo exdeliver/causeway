@@ -1,4 +1,4 @@
-@extends('layouts.site')
+@extends('causeway::layouts.site')
 
 @section('breadcrumbs')
     <li class="breadcrumb-item"><a href="{{ route('site.forum.index') }}">Forum</a></li>

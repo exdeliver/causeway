@@ -25,10 +25,10 @@
 </head>
 <body>
 <div id="app">
-    @include('layouts.partials._navigation')
+    @include('causeway::layouts.partials._navigation')
 
     <main class="py-4">
-        @include('layouts.partials._breadcrumbs')
+        @include('causeway::layouts.partials._breadcrumbs')
         @yield('content')
     </main>
 </div>

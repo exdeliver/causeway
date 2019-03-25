@@ -13,7 +13,7 @@
             <ul class="navbar-nav mr-auto">
                 @if(isset($site_menu))
                     @foreach($site_menu->items as $site_menu_item)
-                        @include('layouts.partials._navigation_item', ['item' => $site_menu_item])
+                        @include('causeway::layouts.partials._navigation_item', ['item' => $site_menu_item])
                     @endforeach
                 @endif
             </ul>

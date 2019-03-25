@@ -1,4 +1,4 @@
-@extends('layouts.site')
+@extends('causeway::layouts.site')
 
 @section('content')
     <div class="container">

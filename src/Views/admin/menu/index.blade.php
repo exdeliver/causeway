@@ -1,4 +1,4 @@
-@extends('layouts.backend')
+@extends('causeway::layouts.backend')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="/admin/Menu/index">Menu</a></li>
@@ -10,7 +10,7 @@
         <div class="card-header">Menu</div>
 
         <div class="card-body">
-            @include('layouts.partials._status_messages')
+            @include('causeway::layouts.partials._status_messages')
 
             <a href="{{ route('admin.menu.create') }}" class="btn btn-primary float-right">Create Menu</a>
             <div class="clearfix"></div>

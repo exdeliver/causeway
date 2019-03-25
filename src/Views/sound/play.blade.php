@@ -1,4 +1,4 @@
-@extends('layouts.site')
+@extends('causeway::layouts.site')
 
 @section('content')
     <div class="container">
@@ -9,7 +9,7 @@
 
                     <div class="card-body">
 
-                        @include('sound.partials._player')
+                        @include('causeway::sound.partials._player')
 
                     </div>
                 </div>

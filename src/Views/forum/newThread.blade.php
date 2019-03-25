@@ -1,4 +1,4 @@
-@extends('layouts.site')
+@extends('causeway::layouts.site')
 
 @section('breadcrumbs')
     <li class="breadcrumb-item"><a href="{{ route('site.forum.index') }}">Forum</a></li>
@@ -22,7 +22,7 @@
                                         <small>Category: {{ $category->title }}</small>
                                     </p>
                                     {{ Form::open(['url' => route('site.forum.thread.store', ['forumCategory' => $category->slug]), 'files' => true, 'method' => 'post']) }}
-                                    @include('forum.partials._threadForm')
+                                    @include('causeway::forum.partials._threadForm')
                                     {{ Form::close() }}
                                 </div>
                             </main>
