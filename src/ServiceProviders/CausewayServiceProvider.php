@@ -43,6 +43,7 @@ class CausewayServiceProvider extends ServiceProvider
      */
     public function getConfiguration()
     {
+        $this->registerHelpers();
         $packageRootDir = __DIR__ . '/../..';
         $packageWorkingDir = __DIR__ . '/..';
 
@@ -67,7 +68,7 @@ class CausewayServiceProvider extends ServiceProvider
     /**
      * Register factories.
      *
-     * @param  string  $path
+     * @param  string $path
      * @return void
      */
     protected function registerEloquentFactoriesFrom($path)
@@ -134,6 +135,18 @@ class CausewayServiceProvider extends ServiceProvider
 
     protected function registerMiddleware()
     {
-        $this->app['router']->aliasMiddleware('admin' , Admin::class);
+        $this->app['router']->aliasMiddleware('admin', Admin::class);
+    }
+
+    /**
+     * Helpers file.
+     */
+    public function registerHelpers()
+    {
+        $packageWorkingDir = __DIR__ . '/..';
+        // Load the helpers in app/Http/helpers.php
+        if (file_exists($packageWorkingDir . '/Helpers/helpers.php')) {
+            include_once($packageWorkingDir . '/Helpers/helpers.php');
+        }
     }
 }
