@@ -1,7 +1,6 @@
 {
     "name": "exdeliver/causeway",
     "description": "Content Management System for Laravel applications",
-    "type": "composer-plugin",
     "license": "MIT",
     "require": {
         "laravelcollective/html": "^5.4.0",
