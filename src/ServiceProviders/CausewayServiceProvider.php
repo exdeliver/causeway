@@ -55,14 +55,22 @@ class CausewayServiceProvider extends ServiceProvider
             $packageRootDir . '/assets' => public_path('vendor/causeway'),
         ], 'public');
 
-        $this->publishes([
-
-        ], 'controller');
-
         $this->loadViewsFrom($packageWorkingDir . '/Views', 'causeway');
         $this->loadTranslationsFrom($packageWorkingDir . '/Lang', 'causeway');
 
         $this->registerEloquentFactoriesFrom($packageRootDir . '/database/factories');
+    }
+
+    /**
+     * Helpers file.
+     */
+    public function registerHelpers()
+    {
+        $packageWorkingDir = __DIR__ . '/..';
+        // Load the helpers in app/Http/helpers.php
+        if (file_exists($packageWorkingDir . '/Helpers/helpers.php')) {
+            include_once($packageWorkingDir . '/Helpers/helpers.php');
+        }
     }
 
     /**
@@ -136,17 +144,5 @@ class CausewayServiceProvider extends ServiceProvider
     protected function registerMiddleware()
     {
         $this->app['router']->aliasMiddleware('admin', Admin::class);
-    }
-
-    /**
-     * Helpers file.
-     */
-    public function registerHelpers()
-    {
-        $packageWorkingDir = __DIR__ . '/..';
-        // Load the helpers in app/Http/helpers.php
-        if (file_exists($packageWorkingDir . '/Helpers/helpers.php')) {
-            include_once($packageWorkingDir . '/Helpers/helpers.php');
-        }
     }
 }

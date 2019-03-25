@@ -3,7 +3,6 @@
 namespace Exdeliver\Causeway\Tests;
 
 use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
 use Illuminate\Foundation\Testing\TestCase as IlluminateFoundationTestCase;

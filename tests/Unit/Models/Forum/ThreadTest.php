@@ -2,9 +2,9 @@
 
 namespace Exdeliver\Causeway\Tests\Unit;
 
+use Exdeliver\Causeway\Tests\TestCase;
 use Faker\Factory;
 use Tests\Helpers\ThreadFactory;
-use Exdeliver\Causeway\Tests\TestCase;
 
 class ThreadTest extends TestCase
 {

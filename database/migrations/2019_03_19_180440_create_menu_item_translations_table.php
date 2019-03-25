@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateMenuItemTranslationsTable extends Migration
 {
@@ -21,7 +21,7 @@ class CreateMenuItemTranslationsTable extends Migration
             $table->string('url');
 
             $table->string('locale')->index();
-            $table->unique(['menu_item_id','locale']);
+            $table->unique(['menu_item_id', 'locale']);
             $table->foreign('menu_item_id')->references('id')->on('menu_items')->onDelete('cascade');
         });
     }

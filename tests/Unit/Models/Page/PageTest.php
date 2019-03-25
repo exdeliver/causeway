@@ -3,8 +3,8 @@
 namespace Exdeliver\Causeway\Tests\Unit;
 
 use Exdeliver\Causeway\Domain\Entities\Page\Page;
-use Faker\Factory;
 use Exdeliver\Causeway\Tests\TestCase;
+use Faker\Factory;
 
 class PageTest extends TestCase
 {

@@ -3,8 +3,8 @@
 namespace Exdeliver\Causeway\Tests\Unit;
 
 use Exdeliver\Causeway\Domain\Entities\Forum\Category;
-use Faker\Factory;
 use Exdeliver\Causeway\Tests\TestCase;
+use Faker\Factory;
 
 class CategoryTest extends TestCase
 {
