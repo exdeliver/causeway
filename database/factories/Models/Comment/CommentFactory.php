@@ -18,6 +18,6 @@ use Faker\Generator as Faker;
 
 $factory->define(Exdeliver\Causeway\Domain\Entities\Comment\Comment::class, function (Faker $faker) {
     return [
-        'user_id' => factory(\Domain\Entities\User\User::class)->create()->id,
+        'user_id' => factory(Exdeliver\Causeway\Domain\Entities\User\User::class)->create()->id,
     ];
 });

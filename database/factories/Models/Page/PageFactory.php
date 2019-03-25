@@ -18,7 +18,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Exdeliver\Causeway\Domain\Entities\Page\Page::class, function (Faker $faker) {
     return [
-        'user_id' => factory(\Domain\Entities\User\User::class)->create()->id,
+        'user_id' => factory(Exdeliver\Causeway\Domain\Entities\User\User::class)->create()->id,
         'name' => $faker->name,
         'slug' => $faker->name,
         'content' => $faker->paragraph(10),

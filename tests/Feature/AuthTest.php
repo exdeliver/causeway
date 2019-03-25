@@ -19,7 +19,7 @@ class AuthTest extends TestCase
 
         $faker = Factory::create();
 
-        $response = $this->get(route('register'));
+        $response = $this->get(route('causeway.register'));
 
         $response->assertStatus(200);
 
@@ -27,7 +27,7 @@ class AuthTest extends TestCase
         $email = $faker->email;
 
         // Test missing password
-        $response = $this->post(route('register'), [
+        $response = $this->post(route('causeway.register'), [
             'name' => $faker->name,
             'email' => $email,
             'password' => $password,
@@ -36,7 +36,7 @@ class AuthTest extends TestCase
         $response->assertSessionHasErrors();
 
         // Test success
-        $response = $this->post(route('register'), [
+        $response = $this->post(route('causeway.register'), [
             'name' => $faker->name,
             'email' => $email,
             'password' => $password,
@@ -62,18 +62,18 @@ class AuthTest extends TestCase
             'password' => bcrypt($password),
         ]);
 
-        $response = $this->get(route('login'));
+        $response = $this->get(route('causeway.login'));
         $response->assertStatus(200);
 
         // False password
-        $response = $this->post(route('login'), [
+        $response = $this->post(route('causeway.login'), [
             'email' => $user->email,
             'password' => $password . '123',
         ]);
 
         $response->assertJson(['status' => false]);
 
-        $response = $this->post(route('login'), [
+        $response = $this->post(route('causeway.login'), [
             'email' => $user->email,
             'password' => $password,
         ]);

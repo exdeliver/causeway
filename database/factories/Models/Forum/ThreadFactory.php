@@ -18,8 +18,8 @@ use Faker\Generator as Faker;
 
 $factory->define(Exdeliver\Causeway\Domain\Entities\Forum\Thread::class, function (Faker $faker) {
     return [
-        'category_id' => factory(\Domain\Entities\Forum\Category::class)->create()->id,
-        'user_id' => factory(\Domain\Entities\User\User::class)->create()->id,
+        'category_id' => factory(Exdeliver\Causeway\Domain\Entities\Forum\Category::class)->create()->id,
+        'user_id' => factory(Exdeliver\Causeway\Domain\Entities\User\User::class)->create()->id,
         'title' => $faker->name,
         'slug' => $faker->name,
         'content' => $faker->paragraph(3),

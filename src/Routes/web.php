@@ -6,7 +6,7 @@ Route::group(['prefix' => 'causeway'], function () {
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('causeway.login');
     Route::post('/login', 'Auth\LoginController@login')->name('causeway.login');
     Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('causeway.register');
-    Route::post('/register', 'Auth\LoginController@register')->name('causeway.register');
+    Route::post('/register', 'Auth\RegisterController@register')->name('causeway.register');
     Route::post('/logout', 'Auth\LoginController@logout')->name('causeway.logout');
 
     Route::get('/password/reset', 'Auth\ResetPasswordController@showResetForm')->name('causeway.password.request');

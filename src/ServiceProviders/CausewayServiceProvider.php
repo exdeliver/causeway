@@ -8,6 +8,7 @@ use Exdeliver\Causeway\Domain\Entities\Page\Page;
 use Exdeliver\Causeway\Domain\Entities\PhotoAlbum\PhotoAlbum;
 use Exdeliver\Causeway\Middleware\Admin;
 use Exdeliver\Causeway\ViewComposers\NavigationComposer;
+use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -59,7 +60,19 @@ class CausewayServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom($packageWorkingDir . '/Views', 'causeway');
         $this->loadTranslationsFrom($packageWorkingDir . '/Lang', 'causeway');
-        $this->app->make('Illuminate\Database\Eloquent\Factory')->load(realpath(dirname(__DIR__) . '/database/factories'));
+
+        $this->registerEloquentFactoriesFrom($packageRootDir . '/database/factories');
+    }
+
+    /**
+     * Register factories.
+     *
+     * @param  string  $path
+     * @return void
+     */
+    protected function registerEloquentFactoriesFrom($path)
+    {
+        $this->app->make(EloquentFactory::class)->load($path);
     }
 
     protected function getCommands()
@@ -114,9 +127,6 @@ class CausewayServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     *
-     */
     public function register()
     {
         $this->registerMiddleware();
