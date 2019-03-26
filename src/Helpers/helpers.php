@@ -43,3 +43,10 @@ if (!function_exists('recursiveRequireFilesScanDir')) {
         }
     }
 }
+
+if (!function_exists('causewayAsset')) {
+    function causewayAsset($path)
+    {
+        return asset('vendor/exdeliver/causeway' . '/' . $path);
+    }
+}

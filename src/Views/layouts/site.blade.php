@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ causewayAsset('css/app.css') }}" rel="stylesheet">
 
     <script>
         window.Laravel = <?php echo json_encode([
@@ -34,9 +34,9 @@
 </div>
 
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/website.js') }}"></script>
-<script src="{{ asset('js/datatables.min.js') }}"></script>
+<script src="{{ causewayAsset('js/app.js') }}"></script>
+<script src="{{ causewayAsset('js/website.js') }}"></script>
+<script src="{{ causewayAsset('js/datatables.min.js') }}"></script>
 @stack('headerScripts')
 @stack('scripts')
 </body>

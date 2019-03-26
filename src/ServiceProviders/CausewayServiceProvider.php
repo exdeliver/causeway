@@ -52,7 +52,7 @@ class CausewayServiceProvider extends ServiceProvider
         ]);
 
         $this->publishes([
-            $packageRootDir . '/assets' => public_path('vendor/causeway'),
+            $packageRootDir . '/assets/compiled' => public_path('vendor/exdeliver/causeway'),
         ], 'public');
 
         $this->loadViewsFrom($packageWorkingDir . '/Views', 'causeway');

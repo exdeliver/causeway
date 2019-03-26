@@ -12,3 +12,7 @@ Update your config/auth.php
             'model' => Exdeliver\Causeway\Domain\Entities\User\User::class,
         ],
 
+And run the publish command:
+
+    php artisan vendor:publish --tag=public --force
+    

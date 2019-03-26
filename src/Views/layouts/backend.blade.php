@@ -9,16 +9,16 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="stylesheet" href="{{ asset('css/datatables.css') }}">
+    <link rel="stylesheet" href="{{ causewayAsset('css/datatables.css') }}">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/website.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/datatables.css') }}" rel="stylesheet">
+    <link href="{{ causewayAsset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ causewayAsset('css/website.css') }}" rel="stylesheet">
+    <link href="{{ causewayAsset('css/datatables.css') }}" rel="stylesheet">
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
@@ -111,9 +111,9 @@
 </div>
 
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/website.js') }}"></script>
-<script src="{{ asset('js/datatables.min.js') }}"></script>
+<script src="{{ causewayAsset('js/app.js') }}"></script>
+<script src="{{ causewayAsset('js/website.js') }}"></script>
+<script src="{{ causewayAsset('js/datatables.min.js') }}"></script>
 @stack('headerScripts')
 @stack('scripts')
 </body>
