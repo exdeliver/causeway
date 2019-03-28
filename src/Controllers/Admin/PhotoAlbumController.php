@@ -65,7 +65,7 @@ class PhotoAlbumController extends Controller
             $subAlbums = $this->albumService->getAlbums();
         }
 
-        return view('admin.photo.album.index', ['album' => $photoAlbum, 'subAlbums' => $subAlbums, 'photos' => $photos ?? null]);
+        return view('causeway::admin.photo.album.index', ['album' => $photoAlbum, 'subAlbums' => $subAlbums, 'photos' => $photos ?? null]);
     }
 
     /**
@@ -75,7 +75,7 @@ class PhotoAlbumController extends Controller
      */
     public function createAlbum(Request $request, PhotoAlbum $album = null)
     {
-        return view('admin.photo.album.new', ['album' => $album ?? null, 'albumOptions' => $this->albumService->repository->get()]);
+        return view('causeway::admin.photo.album.new', ['album' => $album ?? null, 'albumOptions' => $this->albumService->repository->get()]);
     }
 
     /**
@@ -85,7 +85,7 @@ class PhotoAlbumController extends Controller
      */
     public function editAlbum(Request $request, PhotoAlbum $album)
     {
-        return view('admin.photo.album.new', [
+        return view('causeway::admin.photo.album.new', [
             'album' => $album,
             'albumOptions' => $this->albumService->repository
                 ->where('id', '!=', $album->id ?? null)
@@ -100,7 +100,7 @@ class PhotoAlbumController extends Controller
      */
     public function createPhoto(Request $request, PhotoAlbum $album)
     {
-        return view('admin.photo.photo.new', ['album' => $album]);
+        return view('causeway::admin.photo.photo.new', ['album' => $album]);
     }
 
     /**
@@ -110,7 +110,7 @@ class PhotoAlbumController extends Controller
      */
     public function editPhoto(Request $request, Photo $photo)
     {
-        return view('admin.photo.photo.edit', ['photo' => $photo]);
+        return view('causeway::admin.photo.photo.edit', ['photo' => $photo]);
     }
 
     /**

@@ -28,6 +28,7 @@
         "blueimp-file-upload": "^9.28.0",
         "codemirror": "^5.43.0",
         "datatables.net-bs4": "^1.10.19",
+        "dotenv-webpack": "^1.7.0",
         "font-awesome": "^4.7.0",
         "frontwise-grid-editor": "github:frontwise/grid-editor",
         "fullcalendar": "^3.10.0",
@@ -40,6 +41,7 @@
         "soundmanager2": "^2.97.20170602",
         "summernote": "^0.8.11",
         "vue-spinner": "^1.0.3",
-        "vuejs-datetimepicker": "^1.1.9"
+        "vuejs-datetimepicker": "^1.1.9",
+        "webpack-plugin-replace-css-url": "^1.0.3"
     }
 }

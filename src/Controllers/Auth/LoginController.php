@@ -32,7 +32,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/causeway/dashboard';
 
     /**
      * @var UserService
@@ -73,7 +73,7 @@ class LoginController extends Controller
 
         $request->session()->flash('notice', 'You have been logged out...');
 
-        return $this->loggedOut($request) ?: redirect('/');
+        return $this->loggedOut($request) ?: redirect('/causeway/dashboard');
     }
 
     /**

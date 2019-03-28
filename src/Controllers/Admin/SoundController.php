@@ -51,7 +51,7 @@ class SoundController extends Controller
      */
     public function index()
     {
-        return view('admin.sound.index');
+        return view('causeway::admin.sound.index');
     }
 
     /**
@@ -59,7 +59,7 @@ class SoundController extends Controller
      */
     public function create()
     {
-        return view('admin.sound.new');
+        return view('causeway::admin.sound.new');
     }
 
     /**
@@ -69,7 +69,7 @@ class SoundController extends Controller
      */
     public function edit(Request $request, Sound $sound)
     {
-        return view('admin.sound.edit', [
+        return view('causeway::admin.sound.edit', [
             'page' => $sound,
         ]);
     }

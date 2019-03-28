@@ -48,11 +48,11 @@
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" href="{{ route('causeway.login') }}">{{ __('Login') }}</a>
                         </li>
                         <li class="nav-item">
                             @if (Route::has('register'))
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" href="{{ route('causeway.register') }}">{{ __('Register') }}</a>
                             @endif
                         </li>
                     @else
@@ -93,7 +93,7 @@
             </div>
         </div>
 
-        @if(request()->is('admin/*'))
+        @if(request()->is('causeway/*'))
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3">

@@ -12,7 +12,6 @@ code {
 /*
  * Basic button style
  */
-
 .btn-like {
   box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5) inset;
   border-radius: 3px;
@@ -30,7 +29,6 @@ code {
 /*
  * Counter button style
  */
-
 .btn-counter {
   margin-right: 39px;
 }
@@ -75,7 +73,6 @@ code {
 /*
  * Custom styles
  */
-
 .btn-like {
   background-color: #dbdbdb;
   border-color: #bbb;
@@ -97,10 +94,8 @@ code {
   color: #f64136;
 }
 
-.btn-like:hover,
-.btn:hover span,
-.btn-like.active,
-.btn.active span {
+.btn-like:hover, .btn:hover span,
+.btn-like.active, .btn.active span {
   color: #eeeeee;
 }
 
@@ -202,13 +197,11 @@ div.dataTables_wrapper {
     -webkit-transform: translatey(0px);
             transform: translatey(0px);
   }
-
   50% {
     box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
     -webkit-transform: translatey(-10px);
             transform: translatey(-10px);
   }
-
   100% {
     box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
     -webkit-transform: translatey(0px);
@@ -222,20 +215,17 @@ div.dataTables_wrapper {
     -webkit-transform: translatey(0px);
             transform: translatey(0px);
   }
-
   50% {
     box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
     -webkit-transform: translatey(-10px);
             transform: translatey(-10px);
   }
-
   100% {
     box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
     -webkit-transform: translatey(0px);
             transform: translatey(0px);
   }
 }
-
 #notificationUpdate a {
   -webkit-animation: float 6s ease-in-out infinite;
           animation: float 6s ease-in-out infinite;
@@ -283,4 +273,3 @@ div.dataTables_wrapper {
 .sortableNav {
   padding: 10px;
 }
-

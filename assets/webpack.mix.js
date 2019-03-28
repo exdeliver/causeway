@@ -1,7 +1,6 @@
 const mix = require('laravel-mix');
 var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -14,14 +13,17 @@ var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
  */
 
 mix.webpackConfig({
-    plugins: [
-    ]
-}).js('js/app.js', 'compiled/js')
+    plugins: []
+})
+    .js('js/app.js', 'compiled/js')
     .js('js/website.js', 'compiled/js')
     .js('js/datatables.min.js', 'compiled/js')
     .sass('sass/app.scss', 'compiled/css')
     .sass('sass/website.scss', 'compiled/css')
     .sass('sass/datatables.scss', 'compiled/css')
+    .options({
+        processCssUrls: false
+    })
     .copyDirectory('fonts', 'compiled/fonts')
     .copyDirectory('images', 'compiled/images')
     .copyDirectory('image', 'compiled/image');

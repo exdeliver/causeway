@@ -4,6 +4,7 @@ namespace Exdeliver\Causeway\Domain\Services;
 
 use App\Exceptions\RegistrationException;
 use Exdeliver\Causeway\Domain\Entities\User\User;
+use Exdeliver\Causeway\Events\CausewayRegistered;
 use Exdeliver\Causeway\Infrastructure\Repositories\UserRepository;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -25,7 +26,7 @@ class UserService extends AbstractService
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/causeway/dashboard';
 
     /**
      * PandaUserService constructor.
@@ -57,15 +58,25 @@ class UserService extends AbstractService
      */
     public function login(array $params)
     {
+        $json = request()->wantsJson();
+
         if (Auth::attempt($params)) {
-            return response()->json(['status' => true]);
+            return $json === true ? response()->json(['status' => true]) : redirect()->to('/causeway/dashboard');
         }
-        return response()->json([
-            'status' => false, 'errors' => [
-                'email' => ['Invalid email and or password combination.'],
-                'password' => ['Forgot your password? Please request one.'],
-            ],
-        ], 400);
+
+        if ($json === true) {
+            return response()->json([
+                'status' => false, 'errors' => [
+                    'email' => ['Invalid email and or password combination.'],
+                    'password' => ['Forgot your password? Please request one.'],
+                ],
+            ], 400);
+        }
+
+        return redirect()
+            ->back()
+            ->withErrors();
+
     }
 
     /**
@@ -86,7 +97,7 @@ class UserService extends AbstractService
                 // Default role for all users
                 $user->assignRole('admin');
 
-                event(new Registered($user));
+                event(new CausewayRegistered($user));
 
                 return $user;
             });

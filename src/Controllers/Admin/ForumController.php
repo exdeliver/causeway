@@ -32,7 +32,7 @@ class ForumController extends Controller
      */
     public function index()
     {
-        return view('admin.forum.index');
+        return view('causeway::admin.forum.index');
     }
 
     /**
@@ -40,7 +40,7 @@ class ForumController extends Controller
      */
     public function create()
     {
-        return view('admin.forum.new', [
+        return view('causeway::admin.forum.new', [
             'forumCategories' => Category::getParents()->pluck('title', 'id')->toArray(),
         ]);
     }
@@ -52,7 +52,7 @@ class ForumController extends Controller
      */
     public function edit(Request $request, Category $forum)
     {
-        return view('admin.forum.update', [
+        return view('causeway::admin.forum.update', [
             'forumCategories' => Category::getParents()->pluck('title', 'id')->toArray(),
             'category' => $forum,
         ]);

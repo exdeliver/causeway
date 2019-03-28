@@ -1,18 +1,33 @@
 <?php
-/**
- * Protected routes for verified users...
- */
-Route::group(['prefix' => 'causeway'], function () {
+
+Route::get('/login', function () {
+    return redirect()->route('causeway.login');
+});
+
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect()
+        ->route('causeway.login');
+})->name('logout');
+
+Route::group(['prefix' => 'causeway', 'middleware' => ['guest']], function () {
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('causeway.login');
     Route::post('/login', 'Auth\LoginController@login')->name('causeway.login');
     Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('causeway.register');
     Route::post('/register', 'Auth\RegisterController@register')->name('causeway.register');
     Route::post('/logout', 'Auth\LoginController@logout')->name('causeway.logout');
 
-    Route::get('/password/reset', 'Auth\ResetPasswordController@showResetForm')->name('causeway.password.request');
+    Route::get('/password/request', 'Auth\ResetPasswordController@showResetForm')->name('causeway.password.request');
     Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('causeway.password.update');
 });
 
+Route::group(['prefix' => 'causeway', 'middleware' => ['auth']], function () {
+    Route::get('/password/reset', 'Auth\VerificationController@verify')->name('causeway.verification.verify');
+});
+
+/**
+ * Protected routes for verified users...
+ */
 Route::group(['middleware' => ['verified', 'auth'], 'namespace'], function () {
     Route::post('/upload/file', 'UploadController@upload')->name('site.upload');
     Route::group(['prefix' => 'forum'], function () {
@@ -63,8 +78,7 @@ Route::group(['middleware' => ['verified', 'auth'], 'namespace'], function () {
     /**
      * Admin protected routes
      */
-    Route::group(['namespace' => 'Admin', 'middleware' => 'admin', 'prefix' => 'causeway'], function () {
-
+    Route::group(['namespace' => 'Admin', 'middleware' => ['admin'], 'prefix' => 'causeway'], function () {
 
         Route::get('/', function () {
             return redirect()
@@ -144,7 +158,6 @@ Route::group(['middleware' => ['verified', 'auth'], 'namespace'], function () {
             'update' => 'admin.menu.update.store',
         ]);
         Route::post('menu/show/{menu}/sort', 'MenuController@sort')->name('admin.menu.show.sort');
-
     });
 
     Route::group(['prefix' => 'profile'], function () {

@@ -36,7 +36,7 @@ class EventController extends Controller
     {
         $calendar = \Calendar::addEvents(CalendarItem::get()); //add an array with addEvents
 
-        return view('admin.events.index', [
+        return view('causeway::admin.events.index', [
             'calendar' => $calendar,
         ]);
     }
@@ -46,7 +46,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        return view('admin.events.new');
+        return view('causeway::admin.events.new');
     }
 
     /**
@@ -56,7 +56,7 @@ class EventController extends Controller
      */
     public function edit(Request $request, CalendarItem $event)
     {
-        return view('admin.events.update', [
+        return view('causeway::admin.events.update', [
             'event' => $event,
         ]);
     }

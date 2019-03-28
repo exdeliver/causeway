@@ -36,7 +36,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        return view('admin.menu.index');
+        return view('causeway::admin.menu.index');
     }
 
     /**
@@ -44,7 +44,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('admin.menu.new');
+        return view('causeway::admin.menu.new');
     }
 
     /**
@@ -54,7 +54,7 @@ class MenuController extends Controller
      */
     public function edit(Request $request, Menu $menu)
     {
-        return view('admin.menu.update', [
+        return view('causeway::admin.menu.update', [
             'menu' => $menu,
         ]);
     }
@@ -78,7 +78,7 @@ class MenuController extends Controller
      */
     public function show(Request $request, Menu $menu)
     {
-        return view('admin.menu.show', [
+        return view('causeway::admin.menu.show', [
             'menu' => $menu,
         ]);
     }
@@ -100,7 +100,7 @@ class MenuController extends Controller
      */
     public function createItem(Request $request, Menu $menu)
     {
-        return view('admin.menu.item.new', [
+        return view('causeway::admin.menu.item.new', [
             'menu' => $menu,
         ]);
     }
@@ -113,7 +113,7 @@ class MenuController extends Controller
      */
     public function editItem(Request $request, Menu $menu, MenuItem $item)
     {
-        return view('admin.menu.item.update', [
+        return view('causeway::admin.menu.item.update', [
             'menu' => $menu,
             'item' => $item,
         ]);

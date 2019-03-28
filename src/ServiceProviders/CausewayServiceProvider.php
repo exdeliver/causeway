@@ -6,9 +6,12 @@ use Exdeliver\Causeway\Domain\Entities\Forum\Category;
 use Exdeliver\Causeway\Domain\Entities\Forum\Thread;
 use Exdeliver\Causeway\Domain\Entities\Page\Page;
 use Exdeliver\Causeway\Domain\Entities\PhotoAlbum\PhotoAlbum;
+use Exdeliver\Causeway\Events\CausewayRegistered;
+use Exdeliver\Causeway\Listeners\AccountVerificationNotification;
 use Exdeliver\Causeway\Middleware\Admin;
 use Exdeliver\Causeway\ViewComposers\NavigationComposer;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +28,17 @@ class CausewayServiceProvider extends ServiceProvider
     protected $namespace = 'Exdeliver\Causeway\Controllers';
 
     /**
+     * The event listener mappings for the application.
+     *
+     * @var array
+     */
+    protected $listen = [
+        CausewayRegistered::class => [
+            AccountVerificationNotification::class . '@handle',
+        ],
+    ];
+
+    /**
      *
      */
     public function boot()
@@ -36,6 +50,7 @@ class CausewayServiceProvider extends ServiceProvider
         $this->getConfiguration();
         $this->getCommands();
         $this->getRoutes();
+        $this->getEventListeners();
     }
 
     /**
@@ -144,5 +159,14 @@ class CausewayServiceProvider extends ServiceProvider
     protected function registerMiddleware()
     {
         $this->app['router']->aliasMiddleware('admin', Admin::class);
+    }
+
+    public function getEventListeners()
+    {
+        foreach ($this->listen as $event => $listeners) {
+            foreach ($listeners as $listener) {
+                Event::listen($event, $listener);
+            }
+        }
     }
 }

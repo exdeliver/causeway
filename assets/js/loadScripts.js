@@ -22,6 +22,7 @@ try {
     require('soundmanager2');
 
 } catch (e) {
+    console.log(e);
 }
 
 /**
@@ -53,37 +54,38 @@ if (token) {
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
  */
-
 import Echo from 'laravel-echo'
 
 window.Pusher = require('pusher-js');
 
-window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: process.env.MIX_PUSHER_APP_KEY,
-    wsHost: window.location.hostname,
-    wsPort: 6001,
-    wssPort: 6001,
-    encrypted: false,
-    disableStats: true,
-    enabledTransports: ['ws', 'wss'], // <-- only use ws and wss as valid transports
-});
-
-window.Echo.private('users.notification.thread.' + Laravel.threadId)
-    .listen('CommentNotificationCreated', (data) => {
-        var result = $.parseJSON(data.comment.data);
-        $('#forumReply').after('<li class="list-group-item list-group-item-action flex-column align-items-start">\n' +
-            '<div class="commenterImage">\n' +
-            '</div>\n' +
-            '<div class="commentText">\n' +
-            '<p><strong>' + result.name + '</strong></p>\n' +
-            '<p>' + result.comment + '</p>\n' +
-            '<div class="clearfix"><span class="date sub-text btn btn-sm btn-like btn-outline-dark">on ' + result.formatted_date + '</span>\n' +
-            '<a href="/ajax/like/type/#LIKETYPE#/id/#LIKEID#" class="btn-like btn btn-sm btn-primary btn-counter"\n' +
-            '><i class="fa fa-heart"></i></a>' +
-            '<a href="#" class="btn btn-sm btn-primary btn-like pull-right">\n' +
-            'Quote\n' +
-            '</a>' +
-            '</div></div>\n' +
-            '</li>');
+try {
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: process.env.MIX_PUSHER_APP_KEY,
+        wsHost: window.location.hostname,
+        wsPort: 6001,
+        wssPort: 6001,
+        encrypted: false,
+        disableStats: true,
+        enabledTransports: ['ws', 'wss'], // <-- only use ws and wss as valid transports
     });
+
+    window.Echo.private('users.notification.thread.' + Laravel.threadId)
+        .listen('CommentNotificationCreated', (data) => {
+            var result = $.parseJSON(data.comment.data);
+            $('#forumReply').after('<li class="list-group-item list-group-item-action flex-column align-items-start">\n' +
+                '<div class="commenterImage">\n' +
+                '</div>\n' +
+                '<div class="commentText">\n' +
+                '<p><strong>' + result.name + '</strong></p>\n' +
+                '<p>' + result.comment + '</p>\n' +
+                '<div class="clearfix"><span class="date sub-text btn btn-sm btn-like btn-outline-dark">on ' + result.formatted_date + '</span>\n' +
+                '<a href="/ajax/like/type/#LIKETYPE#/id/#LIKEID#" class="btn-like btn btn-sm btn-primary btn-counter"\n' +
+                '><i class="fa fa-heart"></i></a>' +
+                '<a href="#" class="btn btn-sm btn-primary btn-like pull-right">\n' +
+                'Quote\n' +
+                '</a>' +
+                '</div></div>\n' +
+                '</li>');
+        });
+}catch(e){}

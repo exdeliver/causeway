@@ -57,6 +57,6 @@ trait UserTrait
      */
     public function isAdmin()
     {
-        return $this->hasRole('administrator');
+        return $this->hasRole('admin');
     }
 }

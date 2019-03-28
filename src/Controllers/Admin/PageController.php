@@ -33,7 +33,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.index');
+        return view('causeway::admin.pages.index');
     }
 
     /**
@@ -41,7 +41,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.new');
+        return view('causeway::admin.pages.new');
     }
 
     /**
@@ -51,7 +51,7 @@ class PageController extends Controller
      */
     public function edit(Request $request, Page $page)
     {
-        return view('admin.pages.update', [
+        return view('causeway::admin.pages.update', [
             'page' => $page,
         ]);
     }
