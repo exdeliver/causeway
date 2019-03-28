@@ -11,7 +11,7 @@ class SeedPermissionsToPermissionsTable extends Migration
      */
     public function up()
     {
-        if(\Spatie\Permission\Models\Role::where('name', 'user')->first() === null) {
+        if(\Spatie\Permission\Models\Role::where('name', 'admin')->first() === null) {
             \Spatie\Permission\Models\Role::create([
                 'name' => 'admin',
                 'guard_name' => 'web',
