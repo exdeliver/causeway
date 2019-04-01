@@ -43,4 +43,14 @@ class MenuService extends AbstractService
 
         return parent::updateOrCreate($match, $request->only(['menu_id', 'access_level', 'en']));
     }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function render(string $name)
+    {
+        $menu = $this->repository->where('name', '=', $name)->firstOrFail();
+        return $menu->items;
+    }
 }

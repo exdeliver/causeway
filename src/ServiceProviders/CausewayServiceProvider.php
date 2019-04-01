@@ -6,6 +6,8 @@ use Exdeliver\Causeway\Domain\Entities\Forum\Category;
 use Exdeliver\Causeway\Domain\Entities\Forum\Thread;
 use Exdeliver\Causeway\Domain\Entities\Page\Page;
 use Exdeliver\Causeway\Domain\Entities\PhotoAlbum\PhotoAlbum;
+use Exdeliver\Causeway\Domain\Services\CausewayService;
+use Exdeliver\Causeway\Domain\Services\MenuService;
 use Exdeliver\Causeway\Events\CausewayRegistered;
 use Exdeliver\Causeway\Listeners\AccountVerificationNotification;
 use Exdeliver\Causeway\Middleware\Admin;
@@ -49,6 +51,7 @@ class CausewayServiceProvider extends ServiceProvider
         );
 
         $this->getConfiguration();
+        $this->getClassBindings();
         $this->getCommands();
         $this->getRoutes();
         $this->getEventListeners();
@@ -92,7 +95,7 @@ class CausewayServiceProvider extends ServiceProvider
     /**
      * Register factories.
      *
-     * @param  string $path
+     * @param string $path
      * @return void
      */
     protected function registerEloquentFactoriesFrom($path)
@@ -170,5 +173,12 @@ class CausewayServiceProvider extends ServiceProvider
                 Event::listen($event, $listener);
             }
         }
+    }
+
+    public function getClassBindings()
+    {
+        $this->app->bind('causewayservice', function () {
+            return app(CausewayService::class);
+        });
     }
 }

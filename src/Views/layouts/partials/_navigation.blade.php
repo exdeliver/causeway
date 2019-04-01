@@ -11,11 +11,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                @if(isset($site_menu))
-                    @foreach($site_menu->items as $site_menu_item)
-                        @include('causeway::layouts.partials._navigation_item', ['item' => $site_menu_item])
-                    @endforeach
-                @endif
+                @foreach(CW::getMenu('site-menu') as $site_menu_item)
+                    @include('causeway::layouts.partials._navigation_item', ['item' => $site_menu_item])
+                @endforeach
             </ul>
 
             <!-- Right Side Of Navbar -->
