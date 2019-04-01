@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="name">Language</label>
-    {!! Form::select('locale', Language::list(), null, ['class' => 'form-control']) !!}
+    {!! Form::select('locale', \Exdeliver\Causeway\Domain\Common\Language::list(), null, ['class' => 'form-control']) !!}
     @if ($errors->has('locale'))
         <span class="invalid-feedback  d-block" role="alert">
                     <strong>{{ $errors->first('locale') }}</strong>

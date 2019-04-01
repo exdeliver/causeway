@@ -11,7 +11,7 @@ class Language
     /**
      * @return array
      */
-    public static function list()
+    public static function list(): array
     {
         return ['en' => 'English', 'nl' => 'Dutch'];
     }
