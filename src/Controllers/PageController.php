@@ -13,7 +13,7 @@ class PageController extends Controller
     public function getSlug(Page $pageSlug)
     {
         // Default page view
-        $pageView = 'page.default';
+        $pageView = 'causeway::page.default';
 
         // Find if custom page exists by slug and use that page
         if (view()->exists('page.custom.' . $pageSlug->slug)) {
