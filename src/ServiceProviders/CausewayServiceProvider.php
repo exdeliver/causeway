@@ -9,6 +9,7 @@ use Exdeliver\Causeway\Domain\Entities\PhotoAlbum\PhotoAlbum;
 use Exdeliver\Causeway\Events\CausewayRegistered;
 use Exdeliver\Causeway\Listeners\AccountVerificationNotification;
 use Exdeliver\Causeway\Middleware\Admin;
+use Exdeliver\Causeway\Middleware\CausewayAuth;
 use Exdeliver\Causeway\ViewComposers\NavigationComposer;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 use Illuminate\Support\Facades\Event;
@@ -159,6 +160,7 @@ class CausewayServiceProvider extends ServiceProvider
     protected function registerMiddleware()
     {
         $this->app['router']->aliasMiddleware('admin', Admin::class);
+        $this->app['router']->aliasMiddleware('causewayAuth', CausewayAuth::class);
     }
 
     public function getEventListeners()

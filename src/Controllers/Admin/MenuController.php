@@ -83,14 +83,33 @@ class MenuController extends Controller
         ]);
     }
 
+    /**
+     * @param PostMenuRequest $request
+     * @param Menu $menu
+     */
     public function update(PostMenuRequest $request, Menu $menu)
     {
         $page = $this->store($request, $menu);
     }
 
+    /**
+     * @param PostMenuRequest $request
+     * @param Menu|null $menu
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(PostMenuRequest $request, Menu $menu = null)
     {
+        $this->menuService->updateOrCreate([
+            'id' => $menu->id ?? null,
+        ], $request->only([
+            'name',
+            'label',
+        ]));
 
+        $request->session()->flash('status', isset($menu->id) && $menu->id !== null ? 'Menu has successfully been updated!' : 'Menu has successfully been created!');
+
+        return redirect()
+            ->route('admin.menu.index');
     }
 
     /**

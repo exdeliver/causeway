@@ -21,14 +21,14 @@ Route::group(['prefix' => 'causeway', 'middleware' => ['guest']], function () {
     Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('causeway.password.update');
 });
 
-Route::group(['prefix' => 'causeway', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'causeway', 'middleware' => ['causewayAuth']], function () {
     Route::get('/password/reset', 'Auth\VerificationController@verify')->name('causeway.verification.verify');
 });
 
 /**
  * Protected routes for verified users...
  */
-Route::group(['middleware' => ['verified', 'auth'], 'namespace'], function () {
+Route::group(['middleware' => ['verified', 'causewayAuth'], 'namespace'], function () {
     Route::post('/upload/file', 'UploadController@upload')->name('site.upload');
     Route::group(['prefix' => 'forum'], function () {
         Route::get('/get-quote', 'ForumController@getQuoteByComment')->name('site.forum.quote');
