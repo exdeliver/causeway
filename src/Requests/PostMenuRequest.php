@@ -25,7 +25,18 @@ class PostMenuRequest extends FormRequest
     {
         return [
             'label' => 'required',
-            'name' => 'required',
         ];
+    }
+
+    /**
+     * Prepare for validation.
+     */
+    public function prepareForValidation()
+    {
+        $input = array_map('trim', $this->all());
+
+        $input['name'] = str_slug($this->label);
+
+        $this->replace($input);
     }
 }

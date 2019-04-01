@@ -11,7 +11,7 @@
 
             <hr/>
 
-            {{ Form::open(['url' => route('admin.menu.new.store'), 'id' => 'menu-form']) }}
+            {{ Form::open(['url' => route('admin.menu.new.store'), 'id' => 'menu-form', 'method' => 'post']) }}
             @include('causeway::admin.menu.partials._form')
             {{ Form::close() }}
 
