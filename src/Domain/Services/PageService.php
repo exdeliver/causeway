@@ -38,4 +38,13 @@ class PageService extends AbstractService
 
         return $page;
     }
+
+    /**
+     * @param string $slug
+     * @return mixed
+     */
+    public function getPage(string $slug)
+    {
+        return $this->repository->where('slug', '=', $slug)->firstOrFail();
+    }
 }

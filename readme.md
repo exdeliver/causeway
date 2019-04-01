@@ -1,11 +1,13 @@
-Causeway CMS
-Content Management System for Laravel
+##Causeway CMS
+Content Management System for Laravel 5.7
 
 ##### Howto install
 composer require exdeliver/causeway
 
-Add to your app.php Aliases
+Add to your app.php providers & Aliases
 
+    \Exdeliver\Causeway\ServiceProviders\CausewayServiceProvider::class,
+    
     'CW' => \Exdeliver\Causeway\Facades\CausewayServiceFacade::class,
 
 Update your config/auth.php
@@ -20,7 +22,14 @@ And run the publish command:
 
     php artisan vendor:publish --tag=public --force
     
-CW helpers
+Run migrations:
+
+    php artisan migrate --path=vendor/exdeliver/causeway/database/migrations
+    
+##### CW helpers
 
     // Return specific menu items.
-    CW::getMenu('<menu name>')
+    CW::getMenu('<(string)menu name>')
+    
+    // Return specific page.
+    CW::getPage('<(string)page slug'>);

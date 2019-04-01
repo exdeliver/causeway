@@ -50,7 +50,12 @@ class MenuService extends AbstractService
      */
     public function render(string $name)
     {
-        $menu = $this->repository->where('name', '=', $name)->firstOrFail();
-        return $menu->items;
+        try {
+            $menu = $this->repository->where('name', '=', $name)->firstOrFail();
+            return $menu->items;
+        } catch (\Exception $e) {
+            \Log::warning('Missing menu called: ' . $name);
+            return [];
+        }
     }
 }
