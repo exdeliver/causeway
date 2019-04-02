@@ -95,7 +95,7 @@ class UserService extends AbstractService
                 ]);
 
                 // Default role for all users
-                $user->assignRole('admin');
+                $user->assignRole('user');
 
                 event(new CausewayRegistered($user));
 

@@ -3,6 +3,7 @@
 namespace Exdeliver\Causeway\Middleware;
 
 use App\Http\Middleware\Authenticate;
+use Illuminate\Http\Request;
 
 /**
  * Class CausewayAuth
@@ -13,7 +14,7 @@ class CausewayAuth extends Authenticate
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  Request $request
      * @return string
      */
     protected function redirectTo($request)

@@ -1,7 +1,8 @@
 <?php
 
 Route::get('/login', function () {
-    return redirect()->route('causeway.login');
+    return redirect()
+        ->route('causeway.login');
 });
 
 Route::get('/logout', function () {
@@ -9,10 +10,6 @@ Route::get('/logout', function () {
     return redirect()
         ->route('causeway.login');
 })->name('logout');
-
-Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
-Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
-Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
 Route::group(['prefix' => 'causeway', 'middleware' => ['guest']], function () {
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('causeway.login');

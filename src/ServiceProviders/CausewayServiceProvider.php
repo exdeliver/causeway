@@ -103,6 +103,9 @@ class CausewayServiceProvider extends ServiceProvider
         $this->app->make(EloquentFactory::class)->load($path);
     }
 
+    /**
+     * Registered commands.
+     */
     protected function getCommands()
     {
 //        if ($this->app->runningInConsole()) {
@@ -155,17 +158,26 @@ class CausewayServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * Register method
+     */
     public function register()
     {
         $this->registerMiddleware();
     }
 
+    /**
+     * Registered middleware
+     */
     protected function registerMiddleware()
     {
         $this->app['router']->aliasMiddleware('admin', Admin::class);
         $this->app['router']->aliasMiddleware('causewayAuth', CausewayAuth::class);
     }
 
+    /**
+     * Event listeners.
+     */
     public function getEventListeners()
     {
         foreach ($this->listen as $event => $listeners) {
@@ -175,6 +187,9 @@ class CausewayServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * Class bindings for facades services.
+     */
     public function getClassBindings()
     {
         $this->app->bind('causewayservice', function () {
