@@ -10,6 +10,10 @@ Route::get('/logout', function () {
         ->route('causeway.login');
 })->name('logout');
 
+Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
+Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
+Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+
 Route::group(['prefix' => 'causeway', 'middleware' => ['guest']], function () {
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('causeway.login');
     Route::post('/login', 'Auth\LoginController@login')->name('causeway.login');
