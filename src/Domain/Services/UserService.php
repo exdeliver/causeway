@@ -88,7 +88,7 @@ class UserService extends AbstractService
     {
         try {
             $user = DB::transaction(function () use ($params) {
-                $user = User::create([
+                $user = config('auth.providers.users.model')::create([
                     'name' => $params['name'],
                     'email' => $params['email'],
                     'password' => Hash::make($params['password']),

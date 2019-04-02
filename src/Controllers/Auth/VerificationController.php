@@ -4,9 +4,13 @@ namespace Exdeliver\Causeway\Controllers\Auth;
 
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Notifications\RegisterVerification;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 
 class VerificationController extends Controller
 {
@@ -46,11 +50,12 @@ class VerificationController extends Controller
      * Mark the authenticated user's email address as verified.
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
+     * @throws AuthorizationException
      */
     public function verify(Request $request)
     {
-        if ($request->id !== $request->user()->getKey()) {
+        if ((int)$request->id !== (int)$request->user()->getKey()) {
             throw new AuthorizationException;
         }
 
@@ -68,8 +73,8 @@ class VerificationController extends Controller
     /**
      * Resend the email verification notification.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function resend(Request $request)
     {
