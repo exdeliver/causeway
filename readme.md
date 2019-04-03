@@ -26,6 +26,10 @@ Run migrations:
 
     php artisan migrate --path=vendor/exdeliver/causeway/database/migrations
     
+Add to your routes:
+
+    Route::get('/{pageSlug?}', 'Exdeliver\Causeway\Controllers\PageController@getSlug');
+
 ##### CW helpers
 
     // Return specific menu items.
@@ -33,3 +37,5 @@ Run migrations:
     
     // Return specific page.
     CW::getPage('<(string)page slug'>);
+    
+  

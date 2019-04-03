@@ -165,5 +165,3 @@ Route::group(['middleware' => ['verified', 'causewayAuth'], 'namespace'], functi
         Route::get('/', 'Auth\UserProfileController@show')->name('profile');
     });
 });
-
-//Route::get('/{pageSlug?}', 'PageController@getSlug');
