@@ -28,7 +28,7 @@ Run migrations:
     
 Add to your routes:
 
-    Route::get('/{pageSlug?}', 'Exdeliver\Causeway\Controllers\PageController@getSlug');
+    Route::get('/{pageSlug?}', '\Exdeliver\Causeway\Controllers\PageController@getSlug');
 
 ##### CW helpers
 
