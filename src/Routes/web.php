@@ -72,6 +72,12 @@ Route::group(['middleware' => ['verified', 'causewayAuth'], 'namespace'], functi
             Route::group(['prefix' => 'forum'], function () {
                 Route::get('index', 'Admin\ForumController@getAjaxCategories')->name('ajax.forum.index');
             });
+
+            Route::group(['prefix' => 'authorisation'], function () {
+                Route::get('users/index', 'Admin\Authorisation\UserController@getAjaxUsers')->name('ajax.authorisation.users.index');
+                Route::get('roles/index', 'Admin\Authorisation\RoleController@getAjaxRoles')->name('ajax.authorisation.roles.index');
+                Route::get('permission/index', 'Admin\Authorisation\PermissionController@getAjaxPermissions')->name('ajax.authorisation.permission.index');
+            });
         });
     });
 
@@ -158,6 +164,35 @@ Route::group(['middleware' => ['verified', 'causewayAuth'], 'namespace'], functi
             'update' => 'admin.menu.update.store',
         ]);
         Route::post('menu/show/{menu}/sort', 'MenuController@sort')->name('admin.menu.show.sort');
+
+        Route::group(['prefix' => 'authorisation', 'namespace' => 'Authorisation'], function () {
+            Route::resource('user', 'UserController')->names([
+                'index' => 'admin.authorisation.user.index',
+                'create' => 'admin.authorisation.user.create',
+                'edit' => 'admin.authorisation.user.update',
+                'store' => 'admin.authorisation.user.store',
+                'update' => 'admin.authorisation.user.update.store',
+                'destroy' => 'admin.authorisation.user.remove',
+            ]);
+
+            Route::resource('role', 'RoleController')->names([
+                'index' => 'admin.authorisation.role.index',
+                'create' => 'admin.authorisation.role.create',
+                'edit' => 'admin.authorisation.role.update',
+                'store' => 'admin.authorisation.role.store',
+                'update' => 'admin.authorisation.role.update.store',
+                'destroy' => 'admin.authorisation.role.remove',
+            ]);
+
+            Route::resource('permission', 'PermissionController')->names([
+                'index' => 'admin.authorisation.permission.index',
+                'create' => 'admin.authorisation.permission.create',
+                'edit' => 'admin.authorisation.permission.update',
+                'store' => 'admin.authorisation.permission.store',
+                'update' => 'admin.authorisation.permission.update.store',
+                'destroy' => 'admin.authorisation.permission.remove',
+            ]);
+        });
     });
 
     Route::group(['prefix' => 'profile'], function () {

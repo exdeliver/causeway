@@ -137,7 +137,7 @@ class EventController extends Controller
                         </form>
                         ';
             })
-            ->rawColumns(['name', 'start_datetime', 'end_datetime', 'manage'])
+            ->rawColumns(['title', 'start_datetime', 'end_datetime', 'manage'])
             ->make(true);
     }
 
