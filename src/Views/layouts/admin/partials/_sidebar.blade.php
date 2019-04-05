@@ -3,7 +3,7 @@
         <li>
             <a class="list-group-item"><i class="fa fa-home"></i> <span>Navigation</span></a>
         </li>
-        <li><a href="{{ route('admin.dashboard') }}" class="list-group-item {{ (request()->is('admin/dashboard'))? 'active' :'' }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+        <li><a href="{{ route('causeway.dashboard') }}" class="list-group-item {{ (request()->is('admin/dashboard'))? 'active' :'' }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
         </li>
         <li><a href="{{ route('admin.pages.index') }}" class="list-group-item {{ (request()->is('admin/pages*'))? 'active' :'' }}"><i class="fa fa-file"></i> <span>Pages</span></a>
             <ul class="submenu" style="display: {{ (request()->is('admin/photo/album/new'))? 'block' :'' }};">

@@ -13,6 +13,7 @@
                                 csrf_token="{{ csrf_token() }}"
                                 request_password_route="{{ route('causeway.password.request') }}"
                                 login_route="{{ route('causeway.login') }}"
+                                redirect_route="{{ route('causeway.dashboard') }}"
                         ></login-component>
                     </div>
                 </div>

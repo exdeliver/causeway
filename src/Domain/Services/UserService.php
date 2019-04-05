@@ -61,7 +61,7 @@ class UserService extends AbstractService
         $json = request()->wantsJson();
 
         if (Auth::attempt($params)) {
-            return $json === true ? response()->json(['status' => true]) : redirect()->to('/causeway/dashboard');
+            return $json === true ? response()->json(['status' => true, 'redirect_url' => route('causeway.dashboard')]) : redirect()->route('causeway.dashboard');
         }
 
         if ($json === true) {
@@ -74,7 +74,7 @@ class UserService extends AbstractService
         }
 
         return redirect()
-            ->back()
+            ->to()
             ->withErrors();
 
     }

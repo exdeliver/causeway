@@ -36,11 +36,11 @@
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             @role('admin')
-                            <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                            <a class="dropdown-item" href="{{ route('causeway.dashboard') }}">
                                 Admin Settings
                             </a>
                             @endrole
-                            <a class="dropdown-item" href="{{ route('logout') }}"
+                            <a class="dropdown-item" href="{{ route('causeway.logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}

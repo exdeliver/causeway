@@ -73,7 +73,7 @@
                 this.flash(this.message)
             }
         },
-        props: ['csrf_token', 'login_route', 'request_password_route'],
+        props: ['csrf_token', 'login_route', 'request_password_route', 'redirect_route'],
 
         methods: {
             loginPost: function (event) {
@@ -89,7 +89,7 @@
                         var result = response.data;
                         if (result.status === true) {
                             vm.$refs.formMessage.flash('alert-success', 'Success:', 'You are logged in. Redirecting...');
-                            location.reload();
+                            window.location.href = result.redirect_url;
                         }
                     })
                     .catch(function (error) {

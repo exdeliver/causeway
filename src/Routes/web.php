@@ -1,22 +1,21 @@
 <?php
 
-Route::get('/login', function () {
+Route::get('/causeway/login', function () {
     return redirect()
         ->route('causeway.login');
 });
 
-Route::get('/logout', function () {
+Route::post('/causeway/logout', function () {
     Auth::logout();
     return redirect()
         ->route('causeway.login');
-})->name('logout');
+})->name('causeway.logout');
 
 Route::group(['prefix' => 'causeway', 'middleware' => ['guest']], function () {
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('causeway.login');
     Route::post('/login', 'Auth\LoginController@login')->name('causeway.login');
     Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('causeway.register');
     Route::post('/register', 'Auth\RegisterController@register')->name('causeway.register');
-    Route::post('/logout', 'Auth\LoginController@logout')->name('causeway.logout');
 
     Route::get('/password/request', 'Auth\ResetPasswordController@showResetForm')->name('causeway.password.request');
     Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('causeway.password.update');
@@ -83,10 +82,10 @@ Route::group(['middleware' => ['verified', 'causewayAuth'], 'namespace'], functi
 
         Route::get('/', function () {
             return redirect()
-                ->route('admin.dashboard');
+                ->route('causeway.dashboard');
         });
 
-        Route::get('/dashboard', 'DashboardController@index')->name('admin.dashboard');
+        Route::get('/dashboard', 'DashboardController@index')->name('causeway.dashboard');
 
         Route::group(['prefix' => 'photo'], function () {
 

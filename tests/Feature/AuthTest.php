@@ -104,7 +104,7 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
 
         // Not allowed!
-        $response = $this->actingAs($user)->get(route('admin.dashboard'));
+        $response = $this->actingAs($user)->get(route('causeway.dashboard'));
         $response->assertRedirect('/');
     }
 }
