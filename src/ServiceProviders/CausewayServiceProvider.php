@@ -75,8 +75,7 @@ class CausewayServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom($packageWorkingDir . '/Views', 'causeway');
         $this->loadTranslationsFrom($packageWorkingDir . '/Lang', 'causeway');
-
-        $this->loadMigrationsFrom($packageRootDir . '/database');
+        $this->loadMigrationsFrom($packageRootDir . '/database/migrations');
         $this->registerEloquentFactoriesFrom($packageRootDir . '/database/factories');
     }
 

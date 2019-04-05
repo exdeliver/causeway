@@ -46,6 +46,7 @@ class CreatePhotoAndPhotoAlbumTables extends Migration
      */
     public function down()
     {
-        // Not implemented...
+        Schema::dropIfExists('photo_albums');
+        Schema::dropIfExists('photos');
     }
 }
