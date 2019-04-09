@@ -84,8 +84,6 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        dd(Hash::make('alpha929'));
         return view('causeway::auth.login');
     }
-
 }
