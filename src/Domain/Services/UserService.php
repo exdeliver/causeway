@@ -6,8 +6,8 @@ use App\Exceptions\RegistrationException;
 use Exdeliver\Causeway\Domain\Entities\User\User;
 use Exdeliver\Causeway\Events\CausewayRegistered;
 use Exdeliver\Causeway\Infrastructure\Repositories\UserRepository;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -110,6 +110,28 @@ class UserService extends AbstractService
                     'email' => ['Could not register this user.'],
                 ],
             ], 400);
+        }
+    }
+
+    /**
+     * @param array $match
+     * @param Request $request
+     */
+    public function updateOrCreateWithRoles(array $match, Request $request)
+    {
+        if (!isset($match)) {
+            $request->request->add(['password' => Hash::make(str_random(12))]);
+        }
+
+        /** @var User $user */
+        $user = $this->updateOrCreate($match, $request->only([
+            'name', 'email', 'password', 'first_name', 'last_name',
+        ]));
+
+        $user->syncRoles($request->only(['roles']));
+
+        if (!$user->hasVerifiedEmail()) {
+            event(new CausewayRegistered($user));
         }
     }
 }

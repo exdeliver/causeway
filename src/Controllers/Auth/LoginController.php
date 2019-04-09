@@ -7,6 +7,7 @@ use Exdeliver\Causeway\Domain\Services\UserService;
 use Exdeliver\Causeway\Requests\PostLoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class LoginController
@@ -62,7 +63,7 @@ class LoginController extends Controller
     /**
      * Log the user out of the application.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
@@ -83,6 +84,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
+        dd(Hash::make('alpha929'));
         return view('causeway::auth.login');
     }
 

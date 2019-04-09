@@ -40,7 +40,7 @@
             <tr>
                 <td>
                     <div class="form-check">
-                        {{ Form::checkbox($role->id, 1, isset($user) && $user->hasRole($role->name) ?? false, ['class' => 'form-check-input', 'id' => 'role-'.$role->name]) }}
+                        {{ Form::checkbox('roles[]', $role->id, isset($user) && $user->hasRole($role->name) ?? false, ['class' => 'form-check-input', 'id' => 'role-'.$role->name]) }}
 
                         {{ Form::label('role-'.$role->name, $role->name, ['class' => 'form-check-label']) }}
                     </div>

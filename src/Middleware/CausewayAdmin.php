@@ -4,7 +4,7 @@ namespace Exdeliver\Causeway\Middleware;
 
 use Closure;
 
-class Admin
+class CausewayAdmin
 {
     /**
      * Handle an incoming request.

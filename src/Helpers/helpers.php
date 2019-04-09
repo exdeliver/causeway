@@ -50,3 +50,10 @@ if (!function_exists('causewayAsset')) {
         return asset('vendor/exdeliver/causeway' . '/' . $path);
     }
 }
+
+if (!function_exists('causewayStrDot')) {
+    function causewayStrDot($value)
+    {
+        return str_replace(str_slug($value), '-', '.');
+    }
+}

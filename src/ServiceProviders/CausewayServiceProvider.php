@@ -9,11 +9,13 @@ use Exdeliver\Causeway\Domain\Entities\PhotoAlbum\PhotoAlbum;
 use Exdeliver\Causeway\Domain\Services\CausewayService;
 use Exdeliver\Causeway\Events\CausewayRegistered;
 use Exdeliver\Causeway\Listeners\AccountVerificationNotification;
-use Exdeliver\Causeway\Middleware\Admin;
+use Exdeliver\Causeway\Middleware\CausewayAdmin;
 use Exdeliver\Causeway\Middleware\CausewayAuth;
+use Exdeliver\Causeway\Middleware\CausewayGuest;
 use Exdeliver\Causeway\ViewComposers\NavigationComposer;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -41,6 +43,13 @@ class CausewayServiceProvider extends ServiceProvider
     ];
 
     /**
+     * The policy mappings for the application.
+     *
+     * @var array
+     */
+    protected $policies = [];
+
+    /**
      *
      */
     public function boot()
@@ -54,6 +63,7 @@ class CausewayServiceProvider extends ServiceProvider
         $this->getCommands();
         $this->getRoutes();
         $this->getEventListeners();
+        $this->registerPolicies();
     }
 
     /**
@@ -170,8 +180,9 @@ class CausewayServiceProvider extends ServiceProvider
      */
     protected function registerMiddleware()
     {
-        $this->app['router']->aliasMiddleware('admin', Admin::class);
+        $this->app['router']->aliasMiddleware('causewayAdmin', CausewayAdmin::class);
         $this->app['router']->aliasMiddleware('causewayAuth', CausewayAuth::class);
+        $this->app['router']->aliasMiddleware('causewayGuest', CausewayGuest::class);
     }
 
     /**
@@ -194,5 +205,17 @@ class CausewayServiceProvider extends ServiceProvider
         $this->app->bind('causewayservice', function () {
             return app(CausewayService::class);
         });
+    }
+
+    /**
+     * Register the application's policies.
+     *
+     * @return void
+     */
+    public function registerPolicies()
+    {
+        foreach ($this->policies as $key => $value) {
+            Gate::policy($key, $value);
+        }
     }
 }

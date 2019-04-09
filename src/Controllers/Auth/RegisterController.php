@@ -55,7 +55,7 @@ class RegisterController extends Controller
     public function register(PostRegisterRequest $request)
     {
         return $this->userService->register($request->only([
-            'email', 'password', 'first_name', 'last_name'
+            'email', 'password', 'first_name', 'last_name', 'name',
         ]));
     }
 }
