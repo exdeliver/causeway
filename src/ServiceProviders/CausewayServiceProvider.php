@@ -165,6 +165,10 @@ class CausewayServiceProvider extends ServiceProvider
         Route::bind('pageSlug', function ($value) {
             return Page::whereTranslation('slug', $value)->first();
         });
+
+        Route::bind('user', function ($value) {
+            return config('auth.providers.users.model')::findOrFail($value);
+        });
     }
 
     /**
