@@ -98,7 +98,7 @@ class UserController extends Controller
      */
     public function getAjaxUsers()
     {
-        $users = User::get();
+        $users = config('auth.providers.users.model')::get();
 
         return Datatables::of($users)
             ->addColumn('name', function (User $row) {
