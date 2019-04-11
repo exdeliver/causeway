@@ -22,10 +22,6 @@ And run the publish command:
 
     php artisan vendor:publish --tag=public --force
     
-Run migrations:
-
-    php artisan migrate --path=vendor/exdeliver/causeway/database/migrations
-    
 Add to your routes:
 
     Route::get('/{pageSlug?}', '\Exdeliver\Causeway\Controllers\PageController@getSlug');
