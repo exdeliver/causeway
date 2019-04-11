@@ -14,18 +14,20 @@ Route::group(['prefix' => 'causeway'], function () {
         Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('causeway.register');
         Route::post('/register', 'Auth\RegisterController@register')->name('causeway.register');
 
-        Route::get('/password/request', 'Auth\ResetPasswordController@showResetForm')->name('causeway.password.request');
-        Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('causeway.password.update');
+        Route::get('/password/request', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('causeway.password.request');
+        Route::post('/password/reset', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('causeway.password.email');
+        Route::get('/password/reset', 'Auth\VerificationController@verify')->name('causeway.verification.verify');
     });
 
     Route::group(['middleware' => ['causewayAuth']], function () {
-        Route::get('/password/reset', 'Auth\VerificationController@verify')->name('causeway.verification.verify');
+        Route::get('/account/verified', 'Auth\VerificationController@show')->name('causeway.verification.notice');
+        Route::get('/account/verified/resend', 'Auth\VerificationController@resend')->name('causeway.verification.resend');
     });
 
     /**
      * Protected routes for verified users...
      */
-    Route::group(['middleware' => ['verified', 'causewayAuth'], 'namespace'], function () {
+    Route::group(['middleware' => ['causewayVerified', 'causewayAuth'], 'namespace'], function () {
         Route::post('/upload/file', 'UploadController@upload')->name('site.upload');
         Route::group(['prefix' => 'forum'], function () {
             Route::get('/get-quote', 'ForumController@getQuoteByComment')->name('site.forum.quote');

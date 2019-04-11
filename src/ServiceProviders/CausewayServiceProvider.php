@@ -12,6 +12,7 @@ use Exdeliver\Causeway\Listeners\AccountVerificationNotification;
 use Exdeliver\Causeway\Middleware\CausewayAdmin;
 use Exdeliver\Causeway\Middleware\CausewayAuth;
 use Exdeliver\Causeway\Middleware\CausewayGuest;
+use Exdeliver\Causeway\Middleware\CausewayVerified;
 use Exdeliver\Causeway\ViewComposers\NavigationComposer;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 use Illuminate\Support\Facades\Event;
@@ -187,6 +188,7 @@ class CausewayServiceProvider extends ServiceProvider
         $this->app['router']->aliasMiddleware('causewayAdmin', CausewayAdmin::class);
         $this->app['router']->aliasMiddleware('causewayAuth', CausewayAuth::class);
         $this->app['router']->aliasMiddleware('causewayGuest', CausewayGuest::class);
+        $this->app['router']->aliasMiddleware('causewayVerified', CausewayVerified::class);
     }
 
     /**

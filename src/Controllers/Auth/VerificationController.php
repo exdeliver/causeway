@@ -47,6 +47,17 @@ class VerificationController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|RedirectResponse|Redirector|\Illuminate\View\View
+     */
+    public function show(Request $request)
+    {
+        return $request->user()->hasVerifiedEmail()
+            ? redirect($this->redirectPath())
+            : view('causeway::auth.verify');
+    }
+
+    /**
      * Mark the authenticated user's email address as verified.
      *
      * @param Request $request

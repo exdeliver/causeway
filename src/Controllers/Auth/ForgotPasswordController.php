@@ -33,6 +33,16 @@ class ForgotPasswordController extends Controller
     }
 
     /**
+     * Display the form to request a password reset link.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLinkRequestForm()
+    {
+        return view('causeway::auth.passwords.email');
+    }
+
+    /**
      * Send a reset link to the given user.
      *
      * @param PostRequestPasswordRequest $request
