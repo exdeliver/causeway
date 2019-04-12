@@ -1,9 +1,18 @@
 <div class="form-group">
-    <label for="name">Name</label>
+    <label for="name">Title</label>
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
     @if ($errors->has('name'))
         <span class="invalid-feedback  d-block" role="alert">
                     <strong>{{ $errors->first('name') }}</strong>
+                </span>
+    @endif
+</div>
+<div class="form-group">
+    <label for="name">Subtitle</label>
+    {!! Form::text('subtitle', null, ['class' => 'form-control']) !!}
+    @if ($errors->has('subtitle'))
+        <span class="invalid-feedback  d-block" role="alert">
+                    <strong>{{ $errors->first('subtitle') }}</strong>
                 </span>
     @endif
 </div>

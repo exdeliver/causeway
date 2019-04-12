@@ -37,12 +37,14 @@ Route::group(['prefix' => 'causeway'], function () {
             Route::post('/category/{forumCategory}/thread/new', 'ForumController@postNewThread')->name('site.forum.thread.store');
             Route::get('/category/{forumCategory}/thread/{forumThread}', 'ForumController@getThread')->name('site.forum.thread');
         });
-// Ajax routing
+
+        // Ajax routing
         Route::group(['prefix' => 'ajax'], function () {
             Route::get('reset/points', 'UserController@reset');
             Route::get('like/type/{type}/id/{id}', 'LikeController@like')->name('like.toggle');
             Route::post('comment/type/{type}/id/{id}', 'CommentController@comment')->name('comment.store');
-// Ajax group actions
+
+            // Ajax group actions
             Route::group(['prefix' => 'group'], function () {
                 Route::get('{label}/members', 'GroupController@getUsersOverviewGroup')->name('ajax.group.members');
                 Route::get('index', 'GroupController@getGroupsByUser')->name('ajax.group.index');

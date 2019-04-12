@@ -29,7 +29,7 @@ class PageService extends AbstractService
     public function savePage(Request $request, int $id = null)
     {
         $request->request->add(['user_id' => auth()->user()->id,
-            'en' => $request->only(['name', 'slug', 'content', 'meta_title', 'meta_description', 'tags']),
+            'en' => $request->only(['name', 'subtitle', 'slug', 'content', 'meta_title', 'meta_description', 'tags']),
         ]);
 
         $page = $this->repository->updateOrCreate([
