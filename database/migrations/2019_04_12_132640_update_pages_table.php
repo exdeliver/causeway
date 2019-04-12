@@ -16,7 +16,7 @@ class UpdatePagesTable extends Migration
      */
     public function up()
     {
-        Schema::table('pages', function (Blueprint $table) {
+        Schema::table('page_translations', function (Blueprint $table) {
             $table->string('subtitle')->nullable();
         });
     }
@@ -28,7 +28,7 @@ class UpdatePagesTable extends Migration
      */
     public function down()
     {
-        Schema::table('pages', function (Blueprint $table) {
+        Schema::table('page_translations', function (Blueprint $table) {
             $table->dropColumn('subtitle');
         });
     }

@@ -19,7 +19,7 @@ class Page extends AggregateRoot implements Likeable
     /**
      * @var array
      */
-    public $translatedAttributes = ['name', 'slug', 'content', 'meta_title', 'meta_description', 'tags'];
+    public $translatedAttributes = ['name', 'slug', 'subtitle', 'content', 'meta_title', 'meta_description', 'tags'];
 
     /**
      * @var array
