@@ -67,7 +67,7 @@ Route::group(['prefix' => 'causeway'], function () {
                 });
 
                 Route::group(['prefix' => 'sound'], function () {
-                    Route::get('index', 'Admin\SoundController@getAjaxPages')->name('ajax.sound.index');
+                    Route::get('index', 'Admin\SoundController@getAjaxSounds')->name('ajax.sound.index');
                 });
 
                 Route::group(['prefix' => 'forum'], function () {
@@ -137,6 +137,7 @@ Route::group(['prefix' => 'causeway'], function () {
                 'edit' => 'admin.sound.update',
                 'store' => 'admin.sound.new.store',
                 'update' => 'admin.sound.update.store',
+                'destroy' => 'admin.sound.destroy',
             ]);
 
             Route::resource('forum', 'ForumController')->names([

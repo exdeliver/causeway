@@ -35,7 +35,7 @@
                 <li><a href="{{ route('admin.sound.create') }}" class="list-group-item"><i class="fa fa-music"></i> <span>New sound</span></a></li>
             </ul>
         </li>
-        <li><a href="#" class="list-group-item {{ (request()->is('admin/authorisation/*'))? 'active' :'' }}"><i class="fa fa-music"></i> <span>Authorisation</span></a>
+        <li><a href="#" class="list-group-item {{ (request()->is('admin/authorisation/*'))? 'active' :'' }}"><i class="fa fa-user"></i> <span>Authorisation</span></a>
             <ul class="submenu" style="display: {{ (request()->is('admin/photo/album/new'))? 'block' :'' }};">
                 <li><a href="{{ route('admin.authorisation.user.index') }}" class="list-group-item"><i class="fa fa-user"></i> <span>Users</span></a></li>
                 <li><a href="{{ route('admin.authorisation.role.index') }}" class="list-group-item"><i class="fa fa-hand-rock-o"></i> <span>Roles</span></a></li>

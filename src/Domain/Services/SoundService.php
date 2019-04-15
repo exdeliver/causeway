@@ -2,8 +2,8 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
-use App\Jobs\GenerateWaveform;
 use Exdeliver\Causeway\Infrastructure\Repositories\SoundRepository;
+use Exdeliver\Causeway\Jobs\GenerateWaveform;
 
 /**
  * Class SoundService
@@ -24,6 +24,7 @@ class SoundService extends AbstractService
     /**
      * SoundService constructor.
      * @param SoundRepository $soundRepository
+     * @param UploadService $uploadService
      */
     public function __construct(SoundRepository $soundRepository, UploadService $uploadService)
     {
@@ -44,9 +45,11 @@ class SoundService extends AbstractService
             'id' => $id ?? null,
         ], $params);
 
-        $this->uploadService->upload($params['filename'], storage_path($this->path));
+        if (isset($params['filename'])) {
+            $this->uploadService->upload($params['filename'], storage_path($this->path));
 
-        GenerateWaveform::dispatch($sound);
+            GenerateWaveform::dispatch($sound);
+        }
 
         return $sound;
     }

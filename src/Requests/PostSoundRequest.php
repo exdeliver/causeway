@@ -26,7 +26,7 @@ class PostSoundRequest extends FormRequest
         return [
             'artist' => 'required',
             'name' => 'required',
-            'filename' => 'required|mimes:mpga,wav',
+            'filename' => 'mimes:wav,mp3,mpga',
         ];
     }
 

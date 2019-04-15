@@ -33,7 +33,7 @@
 @push('scripts')
     <script>
         $(function () {
-            $('#pages-table').DataTable({
+            $('#sounds-table').DataTable({
                 processing: true,
                 serverSide: true,
                 scrollX: true,
