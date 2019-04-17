@@ -15,6 +15,6 @@ class PermissionController extends Controller
      */
     public function __construct()
     {
-        abort('404', 'Not Implemented yet...');
+        return null;
     }
 }
