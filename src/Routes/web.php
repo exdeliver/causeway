@@ -1,5 +1,14 @@
 <?php
 
+Route::group(['prefix' => 'forum', 'middleware' => ['auth']], function () {
+    Route::get('/get-quote', 'ForumController@getQuoteByComment')->name('site.forum.quote');
+    Route::get('/', 'ForumController@index')->name('site.forum.index');
+    Route::get('/category/{forumCategory}', 'ForumController@getCategory')->name('site.forum.category');
+    Route::get('/category/{forumCategory}/thread/new', 'ForumController@getNewThread')->name('site.forum.thread.new');
+    Route::post('/category/{forumCategory}/thread/new', 'ForumController@postNewThread')->name('site.forum.thread.store');
+    Route::get('/category/{forumCategory}/thread/{forumThread}', 'ForumController@getThread')->name('site.forum.thread');
+});
+
 Route::group(['prefix' => 'causeway'], function () {
 
     Route::post('/logout', function () {
@@ -29,14 +38,6 @@ Route::group(['prefix' => 'causeway'], function () {
      */
     Route::group(['middleware' => ['causewayVerified', 'causewayAuth'], 'namespace'], function () {
         Route::post('/upload/file', 'UploadController@upload')->name('site.upload');
-        Route::group(['prefix' => 'forum'], function () {
-            Route::get('/get-quote', 'ForumController@getQuoteByComment')->name('site.forum.quote');
-            Route::get('/', 'ForumController@index')->name('site.forum.index');
-            Route::get('/category/{forumCategory}', 'ForumController@getCategory')->name('site.forum.category');
-            Route::get('/category/{forumCategory}/thread/new', 'ForumController@getNewThread')->name('site.forum.thread.new');
-            Route::post('/category/{forumCategory}/thread/new', 'ForumController@postNewThread')->name('site.forum.thread.store');
-            Route::get('/category/{forumCategory}/thread/{forumThread}', 'ForumController@getThread')->name('site.forum.thread');
-        });
 
         // Ajax routing
         Route::group(['prefix' => 'ajax'], function () {
