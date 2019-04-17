@@ -35,7 +35,13 @@ class ForumController extends Controller
      */
     public function index()
     {
-        return view('forum.index', [
+        $pageView = 'causeway::forum.index';
+
+        if (view()->exists('forum.custom.index')) {
+            $pageView = 'forum.custom.index';
+        }
+
+        return view($pageView, [
             'forumCategories' => $this->forumService->getActiveCategories(),
         ]);
     }
@@ -47,7 +53,13 @@ class ForumController extends Controller
      */
     public function getCategory(Request $request, Category $forumCategory)
     {
-        return view('forum.threadList', [
+        $pageView = 'causeway::forum.threadList';
+
+        if (view()->exists('forum.custom.threadList')) {
+            $pageView = 'forum.custom.threadList';
+        }
+
+        return view($pageView, [
             'category' => $forumCategory,
             'threads' => $forumCategory->threads()->orderBy('forum_threads.created_at', 'desc')->paginate(25),
         ]);
@@ -60,7 +72,7 @@ class ForumController extends Controller
      */
     public function getNewThread(Request $request, Category $forumCategory)
     {
-        return view('forum.newThread', [
+        return view('causeway::forum.newThread', [
             'category' => $forumCategory,
         ]);
     }
@@ -98,7 +110,13 @@ class ForumController extends Controller
      */
     public function getThread(Request $request, Category $forumCategory, Thread $forumThread)
     {
-        return view('forum.thread', [
+        $pageView = 'causeway::forum.thread';
+
+        if (view()->exists('forum.custom.thread')) {
+            $pageView = 'forum.custom.thread';
+        }
+
+        return view($pageView, [
             'category' => $forumCategory,
             'thread' => $forumThread,
         ]);
