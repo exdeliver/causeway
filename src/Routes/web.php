@@ -3,12 +3,12 @@
 Route::group(['prefix' => 'forum'], function () {
     Route::get('/', 'ForumController@index')->name('site.forum.index');
     Route::get('/category/{forumCategory}', 'ForumController@getCategory')->name('site.forum.category');
-    Route::get('/category/{forumCategory}/thread/{forumThread}', 'ForumController@getThread')->name('site.forum.thread');
     Route::group(['middleware' => ['auth']], function () {
         Route::get('/category/{forumCategory}/thread/new', 'ForumController@getNewThread')->name('site.forum.thread.new');
         Route::post('/category/{forumCategory}/thread/new', 'ForumController@postNewThread')->name('site.forum.thread.store');
         Route::get('/get-quote', 'ForumController@getQuoteByComment')->name('site.forum.quote');
     });
+    Route::get('/category/{forumCategory}/thread/{forumThread}', 'ForumController@getThread')->name('site.forum.thread');
 });
 
 Route::group(['prefix' => 'causeway'], function () {
