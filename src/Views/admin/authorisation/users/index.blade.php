@@ -12,7 +12,7 @@
         <div class="card-body">
             @include('causeway::layouts.partials._status_messages')
 
-            <a href="{{ route('admin.authorisation.user.create') }}" class="btn btn-primary float-right">Create Event</a>
+            <a href="{{ route('admin.authorisation.user.create') }}" class="btn btn-primary float-right">Create User</a>
             <div class="clearfix"></div>
 
             <hr/>
