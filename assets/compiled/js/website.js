@@ -1448,6 +1448,24 @@ window.jQuery(document).ready(function () {
 
 /***/ }),
 
+/***/ "./js/causewayAdmin/cwLanguageSwitcher.js":
+/*!************************************************!*\
+  !*** ./js/causewayAdmin/cwLanguageSwitcher.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+window.cwChangeLanguage = function (url, selection) {
+  var language = selection.value || selection.options[selection.selectedIndex].value;
+  var url = new URL(url);
+  url.searchParams.append('language', language); // var result = confirm('Are you sure?');
+  // if (result === true) {
+
+  window.location.href = url; // }
+};
+
+/***/ }),
+
 /***/ "./js/copyLinkButton/copyLinkButton.js":
 /*!*********************************************!*\
   !*** ./js/copyLinkButton/copyLinkButton.js ***!
@@ -2203,6 +2221,8 @@ __webpack_require__(/*! ./bar-ui.js */ "./js/bar-ui.js");
 __webpack_require__(/*! ./jquery.mjs.nestedSortable.js */ "./js/jquery.mjs.nestedSortable.js");
 
 __webpack_require__(/*! ./vueMethods.js */ "./js/vueMethods.js");
+
+__webpack_require__(/*! ./causewayAdmin/cwLanguageSwitcher.js */ "./js/causewayAdmin/cwLanguageSwitcher.js");
 
 window.jQuery(document).ready(function () {
   $(function () {

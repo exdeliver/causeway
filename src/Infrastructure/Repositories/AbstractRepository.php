@@ -55,6 +55,36 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
     }
 
     /**
+     * @param int $id
+     * @param array $params
+     * @param string $language
+     * @return
+     */
+    public function updateOrCreateTranslation(int $id = null, array $params, string $language)
+    {
+        $params = collect($params);
+
+        $model = $this->model->find($id);
+
+        // Create model
+        if (!$model instanceof Model) {
+            $model = new $this->model;
+            foreach ($params->except([$language])->toArray() as $key => $value) {
+                $model->{$key} = $value;
+            }
+        }
+
+        // Save translation attributes
+        foreach ($params->only([$language])->get($language)as $key => $value) {
+            $model->translateOrNew($language)->{$key} = $value;
+        }
+
+        $model->save();
+
+        return $model;
+    }
+
+    /**
      * @param array $attributes
      * @param $id
      * @return mixed

@@ -132,6 +132,8 @@ class MenuController extends Controller
      */
     public function editItem(Request $request, Menu $menu, MenuItem $item)
     {
+        $item = $this->getTranslatedResult($request, $item);
+
         return view('causeway::admin.menu.item.update', [
             'menu' => $menu,
             'item' => $item,
@@ -159,9 +161,7 @@ class MenuController extends Controller
     {
         $request->request->add(['menu_id' => $menu->id]);
 
-        $this->menuService->updateOrCreateItem([
-            'id' => $item->id ?? null,
-        ], $request);
+        $this->menuService->updateOrCreateItem($request, $item->id ?? null);
 
         return redirect()
             ->route('admin.menu.show', ['id' => $menu->id]);

@@ -5,6 +5,7 @@ namespace Exdeliver\Causeway\Domain\Services;
 use Exdeliver\Causeway\Infrastructure\Repositories\PageRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 
 /**
  * Class PageService
@@ -28,15 +29,16 @@ class PageService extends AbstractService
      */
     public function savePage(Request $request, int $id = null)
     {
+        $language = $request->language ?? Lang::locale();
+
         $request->request->add(['user_id' => auth()->user()->id,
-            'en' => $request->only(['name', 'subtitle', 'slug', 'content', 'meta_title', 'meta_description', 'tags']),
+            $language => $request->only(['name', 'subtitle', 'slug', 'content', 'meta_title', 'meta_description', 'tags']),
         ]);
 
-        $page = $this->repository->updateOrCreate([
-            'id' => $id ?? null,
-        ], $request->only(['user_id', 'access_level', 'en']));
-
-        return $page;
+        return $this->repository->updateOrCreateTranslation(
+            $id,
+            $request->only(['user_id', 'access_level', $language]),
+            $language);
     }
 
     /**

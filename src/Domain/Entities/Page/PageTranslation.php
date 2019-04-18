@@ -23,6 +23,11 @@ class PageTranslation extends Model
     protected $guarded = [];
 
     /**
+     * @var array
+     */
+    protected $fillable = ['page_id', 'meta_title', 'meta_description', 'tags', 'name', 'slug', 'content', 'locale', 'subtitle'];
+
+    /**
      * Set the label value.
      *
      * @param $value

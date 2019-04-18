@@ -1,4 +1,9 @@
 <div class="form-group">
+    <label for="name">Language</label>
+    {!! Form::select('language', \Exdeliver\Causeway\Domain\Common\Language::list(), request()->language ?? Lang::locale(), ['class' => 'form-control', 'onchange' => 'cwChangeLanguage("'.url()->current().'",this)']) !!}
+    <small>Reloads page to proper chosen language. Save your changes first!</small>
+</div>
+<div class="form-group">
     <label for="name">Title</label>
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
     @if ($errors->has('name'))

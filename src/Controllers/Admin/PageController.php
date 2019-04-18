@@ -51,6 +51,8 @@ class PageController extends Controller
      */
     public function edit(Request $request, Page $page)
     {
+        $page = $this->getTranslatedResult($request, $page);
+
         return view('causeway::admin.pages.update', [
             'page' => $page,
         ]);

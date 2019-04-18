@@ -10,8 +10,7 @@
             <div class="clearfix"></div>
 
             <hr/>
-
-            {{ Form::model($page, ['url' => route('admin.pages.update.store', ['id' => $page->id]), 'id' => 'page-form', 'method' => 'put']) }}
+            {{ Form::model($page, ['url' => route('admin.pages.update.store', ['id' => $page->page_id ?? $page->id]), 'id' => 'page-form', 'method' => 'put']) }}
             @include('causeway::admin.pages.partials._form')
             {{ Form::close() }}
 

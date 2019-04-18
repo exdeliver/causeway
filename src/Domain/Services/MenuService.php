@@ -4,6 +4,7 @@ namespace Exdeliver\Causeway\Domain\Services;
 
 use Exdeliver\Causeway\Infrastructure\Repositories\MenuItemRepository;
 use Exdeliver\Causeway\Infrastructure\Repositories\MenuRepository;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 /**
@@ -29,19 +30,24 @@ class MenuService extends AbstractService
     }
 
     /**
-     * @param array $match
+     * @param int|null $id
      * @param Request $request
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
-    public function updateOrCreateItem(array $match, Request $request)
+    public function updateOrCreateItem(Request $request, int $id = null)
     {
+        $language = $request->language ?? Lang::locale();
+
         $this->repository = $this->menuitemRepository;
 
         $request->request->add([
-            'en' => $request->only(['label', 'url']),
+            $language => $request->only(['label', 'url']),
         ]);
 
-        return parent::updateOrCreate($match, $request->only(['menu_id', 'access_level', 'en']));
+        return $this->repository->updateOrCreateTranslation(
+            $id,
+            $request->only(['menu_id', 'access_level', $language]),
+            $language);
     }
 
     /**

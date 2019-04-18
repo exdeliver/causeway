@@ -1,11 +1,7 @@
 <div class="form-group">
     <label for="name">Language</label>
-    {!! Form::select('locale', \Exdeliver\Causeway\Domain\Common\Language::list(), null, ['class' => 'form-control']) !!}
-    @if ($errors->has('locale'))
-        <span class="invalid-feedback  d-block" role="alert">
-                    <strong>{{ $errors->first('locale') }}</strong>
-                </span>
-    @endif
+    {!! Form::select('language', \Exdeliver\Causeway\Domain\Common\Language::list(), request()->language ?? Lang::locale(), ['class' => 'form-control', 'onchange' => 'cwChangeLanguage("'.url()->current().'",this)']) !!}
+    <small>Reloads page to proper chosen language. Save your changes first!</small>
 </div>
 
 <div class="form-group">
