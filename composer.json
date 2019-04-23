@@ -9,7 +9,8 @@
         "rennokki/befriended": "^1.2",
         "spatie/laravel-permission": "^2.32",
         "vinkla/hashids": "^5.1",
-        "yajra/laravel-datatables-oracle": "~8.0"
+        "yajra/laravel-datatables-oracle": "~8.0",
+        "van-ons/laraberg": "^0.0.1@beta"
     },
     "autoload": {
         "classmap": [

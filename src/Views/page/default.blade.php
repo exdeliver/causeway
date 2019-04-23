@@ -8,7 +8,7 @@
                     <div class="card-header">{{ $page->name }}</div>
 
                     <div class="card-body">
-                        {!! clean($page->content) !!}
+                        {!! $page->translate()->transform() !!}
                     </div>
                 </div>
             </div>

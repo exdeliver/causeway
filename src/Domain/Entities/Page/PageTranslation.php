@@ -4,6 +4,7 @@ namespace Exdeliver\Causeway\Domain\Entities\Page;
 
 use Exdeliver\Causeway\Domain\Common\SlugTrait;
 use Illuminate\Database\Eloquent\Model;
+use VanOns\Laraberg\Models\Gutenbergable;
 
 /**
  * Class PageTranslation
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PageTranslation extends Model
 {
+    use CustomGutenbergTrait;
     use SlugTrait;
 
     /**

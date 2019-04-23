@@ -42,7 +42,7 @@
 
 <div id="gridEditor"></div>
 
-{{ Form::textarea('content', null, ['id' => 'page-content', 'class' => 'd-none']) }}
+{{ Form::textarea('content', null, ['id' => 'page-content']) }}
 
 <div class="form-group">
     <hr/>
@@ -51,44 +51,46 @@
 
 @push('scripts')
     <script type="application/javascript">
-        $('#gridEditor').gridEditor({
-            source_textarea: 'textarea#page-content',
-            content_types: ['summernote'],
-            summernote: {
-                config: {
-                    shortcuts: false,
-                    popover: {
-                        image: [
-                            ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
-                            ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                            ['remove', ['removeMedia']]
-                        ],
-                        link: [
-                            ['link', ['linkDialogShow', 'unlink']]
-                        ],
-                        table: [
-                            ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
-                            ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
-                        ],
-                        air: [
-                            ['style', ['style']],
-                            ['font', ['bold', 'italic', 'underline', 'clear']],
-                            ['fontname', ['fontname']],
-                            ['color', ['color']],
-                            ['para', ['ul', 'ol', 'paragraph']],
-                            ['height', ['height']],
-                            ['table', ['table']],
-                            ['insert', ['link', 'picture', 'hr']],
-                            ['help', ['help']]
-                        ]
-                    },
-                }
-            }
-        });
-
-        $('#page-form').on('submit', function (event) {
-            var html = $('#gridEditor').gridEditor('getHtml');
-            $('textarea#page-content').val(html);
-        });
+        Laraberg.initGutenberg('page-content', { height: '500px' })
+        //
+        // $('#gridEditor').gridEditor({
+        //     source_textarea: 'textarea#page-content',
+        //     content_types: ['summernote'],
+        //     summernote: {
+        //         config: {
+        //             shortcuts: false,
+        //             popover: {
+        //                 image: [
+        //                     ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+        //                     ['float', ['floatLeft', 'floatRight', 'floatNone']],
+        //                     ['remove', ['removeMedia']]
+        //                 ],
+        //                 link: [
+        //                     ['link', ['linkDialogShow', 'unlink']]
+        //                 ],
+        //                 table: [
+        //                     ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+        //                     ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+        //                 ],
+        //                 air: [
+        //                     ['style', ['style']],
+        //                     ['font', ['bold', 'italic', 'underline', 'clear']],
+        //                     ['fontname', ['fontname']],
+        //                     ['color', ['color']],
+        //                     ['para', ['ul', 'ol', 'paragraph']],
+        //                     ['height', ['height']],
+        //                     ['table', ['table']],
+        //                     ['insert', ['link', 'picture', 'hr']],
+        //                     ['help', ['help']]
+        //                 ]
+        //             },
+        //         }
+        //     }
+        // });
+        //
+        // $('#page-form').on('submit', function (event) {
+        //     var html = $('#gridEditor').gridEditor('getHtml');
+        //     $('textarea#page-content').val(html);
+        // });
     </script>
 @endpush

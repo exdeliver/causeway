@@ -15,6 +15,7 @@
 
     <!-- Styles -->
     <link href="{{ causewayAsset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('vendor/laraberg/css/laraberg.css')}}">
 
     <script>
         window.Laravel = <?php echo json_encode([

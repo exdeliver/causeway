@@ -19,6 +19,7 @@
     <link href="{{ causewayAsset('css/app.css') }}" rel="stylesheet">
     <link href="{{ causewayAsset('css/website.css') }}" rel="stylesheet">
     <link href="{{ causewayAsset('css/datatables.css') }}" rel="stylesheet">
+    <link href="{{asset('vendor/laraberg/css/laraberg.css')}}" rel="stylesheet">
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
@@ -114,6 +115,10 @@
 <script src="{{ causewayAsset('js/app.js') }}"></script>
 <script src="{{ causewayAsset('js/website.js') }}"></script>
 <script src="{{ causewayAsset('js/datatables.min.js') }}"></script>
+<script src="https://unpkg.com/react@16.6.3/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@16.6.3/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/moment@2.22.1/min/moment.min.js"></script>
+<script src="{{ asset('vendor/laraberg/js/laraberg.js') }}"></script>
 @stack('headerScripts')
 @stack('scripts')
 </body>
