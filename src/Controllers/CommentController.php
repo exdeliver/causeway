@@ -51,7 +51,7 @@ class CommentController extends Controller
                 break;
             case 'photoComment':
                 break;
-            case Thread::class:
+            case str_replace('Exdeliver\Causeway\\', '', Thread::class):
                 $thread = Thread::find($id);
                 auth()->user()->commentOn($thread, $id, [
                     'comment' => $request->comment,

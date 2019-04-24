@@ -2,7 +2,7 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
-use App\Events\CommentNotificationCreated;
+use Exdeliver\Causeway\Events\CommentNotificationCreated;
 use App\Exceptions\CommentNotificationException;
 use Exdeliver\Causeway\Infrastructure\Repositories\CommentRepository;
 

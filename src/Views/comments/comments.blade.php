@@ -26,11 +26,11 @@
                             <div class="clearfix">
                                 <span class="date sub-text btn btn-sm btn-like btn-outline-dark">on <span class="commentDate">{{ $comment->created_at->diffForHumans() }}</span></span>
 
-                                @include('causeway::like.like', [
-                                'likeObject' => $comment,
-                                'likeId' => $comment->id,
-                                'likeType' => 'comment'
-                                ])
+{{--                                @include('causeway::like.like', [--}}
+{{--                                'likeObject' => $comment,--}}
+{{--                                'likeId' => $comment->id,--}}
+{{--                                'likeType' => 'comment'--}}
+{{--                                ])--}}
 
                                 <a href="#" class="btn btn-sm btn-primary btn-like pull-right btn-quote-action" data-comment-id="{{ $comment->id }}">
                                     Quote
