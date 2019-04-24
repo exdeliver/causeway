@@ -30,12 +30,11 @@ trait SlugTrait
 
         $columns = $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
 
-
         $result = $existing->where($column, 'LIKE', "{$name}%")
             ->orderBy($column, 'desc');
 
         if (in_array('locale', $columns, true)) {
-            $result->where('locale', 'en');
+            $result->where('locale', request()->language ?? 'en');
         }
 
         $result = $result->get();
