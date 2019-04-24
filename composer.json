@@ -12,6 +12,16 @@
         "yajra/laravel-datatables-oracle": "~8.0",
         "van-ons/laraberg": "^0.0.1@beta"
     },
+    "scripts": {
+        "post-package-install": [
+            "php artisan migrate",
+            "php artisan vendor:publish --tag=public --force"
+        ],
+        "post-package-update": [
+            "php artisan migrate",
+            "php artisan vendor:publish --tag=public --force"
+        ]
+    },
     "autoload": {
         "classmap": [
             "database/seeds",
