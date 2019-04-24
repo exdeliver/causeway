@@ -1,5 +1,12 @@
 ## Causeway CMS
 Content Management System for Laravel 5.7
+Written by Jason Hoendervanger - EXdeliver.nl
+
+### Requirements
+System requirements for running this content management system:
+
+    MariaDB 10.3
+    PHP 7.1.3 or later
 
 ##### Howto install
 composer require exdeliver/causeway
