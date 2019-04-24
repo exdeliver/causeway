@@ -5,7 +5,7 @@
                 <p><strong>Discussion</strong></p>
                 {{ Form::open(['url' => route('comment.store', ['type' => $type, 'id' => $commentsObject->id]), 'method' => 'post', 'autocomplete' => 'off', 'role' => 'form', 'class' => 'replyForm']) }}
                 <div class="form-group">
-                    {{ Form::textarea('comment', ['placeholder' => 'Your thoughts...', 'id' => 'summernote', 'class' => 'form-control']) }}
+                    {{ Form::textarea('comment', null, ['placeholder' => 'Your thoughts...', 'id' => 'summernote', 'class' => 'form-control']) }}
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary" type="submit">Post</button>
