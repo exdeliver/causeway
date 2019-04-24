@@ -24,6 +24,10 @@ Update your config/auth.php
             'driver' => 'eloquent',
             'model' => Exdeliver\Causeway\Domain\Entities\User\User::class,
         ],
+        
+Run the migrations
+
+    php artisan migrate
 
 And run the publish command:
 
