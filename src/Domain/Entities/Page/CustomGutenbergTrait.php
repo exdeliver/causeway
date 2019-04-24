@@ -3,6 +3,7 @@
 namespace Exdeliver\Causeway\Domain\Entities\Page;
 
 use VanOns\Laraberg\Helpers\BlockHelper;
+use VanOns\Laraberg\Helpers\EmbedHelper;
 use VanOns\Laraberg\Models\Content;
 use VanOns\Laraberg\Events\ContentCreated;
 use VanOns\Laraberg\Events\ContentUpdated;
@@ -48,9 +49,12 @@ trait CustomGutenbergTrait
         return $this->body->rendered_content;
     }
 
+    /**
+     * @return string
+     */
     public function transform()
     {
-        $html = BlockHelper::renderBlocks($this->content);
+        $html = BlockHelper::renderBlocks(EmbedHelper::renderEmbeds($this->content));
         return "<div class='gutenberg__content wp-embed-responsive'>$html</div>";
     }
 
