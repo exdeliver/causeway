@@ -28,11 +28,11 @@
             </td>
             <td class="footable-visible footable-last-column">
         			  <span class="last-wrapper text-overflow">
-                            <a class="lastsubject" data-original-title="" href="#" title="">Re: Responsive Images</a><br/>
-								by&nbsp;<a class="username" data-original-title="" href="#" title="">deliac</a>
-				            <a class="moderator-item" data-original-title="View the latest post" href="#" title=""><i
+                            <a class="lastsubject" data-original-title="" :href="subcategory.latest_replied_thread_link" title="">Re: {{ subcategory.latest_replied_thread_title }}</a><br/>
+								by&nbsp;<a class="username" data-original-title="" :href="subcategory.latest_replied_thread_link" title="">{{ subcategory.latest_replied_user }}</a>
+				            <a class="moderator-item" data-original-title="View the latest post" :href="subcategory.latest_replied_thread_link" title=""><i
                                     class="mobile-post fa fa-sign-out"></i></a><br/>
-                          <span class="forum-time">My last post date</span>
+                          <span class="forum-time">{{ subcategory.latest_replied_date }}</span>
                       </span>
             </td>
         </tr>

@@ -25,7 +25,7 @@ class Category extends AggregateRoot
     /**
      * @var array
      */
-    protected $appends = ['json_children', 'fqn_slug', 'count_threads', 'count_replies'];
+    protected $appends = ['json_children', 'fqn_slug', 'latest_replied_thread_link', 'latest_replied_thread_title', 'latest_replied_user', 'latest_replied_date', 'count_threads', 'count_replies'];
 
     /**
      * @param $id
@@ -120,5 +120,53 @@ class Category extends AggregateRoot
     public function threads(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Thread::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model|HasMany|object|null
+     */
+    public function getLatestRepliedThreadAttribute()
+    {
+        return $this->threads()->orderBy('created_at', 'asc')->first();
+    }
+
+    /**
+     * @return |null
+     */
+    public function getLatestRepliedThreadTitleAttribute()
+    {
+        return $this->latest_replied_thread->title ?? null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLatestRepliedThreadLinkAttribute()
+    {
+        if(isset($this->latest_replied_thread->slug)) {
+            return route('site.forum.thread', ['forumCategory' => $this->slug, 'forumThread' => $this->latest_replied_thread->slug]);
+        }
+        return null;
+    }
+
+    /**
+     * @return |null
+     */
+    public function getLatestRepliedUserAttribute()
+    {
+        return $this->latest_replied_thread->user->name ?? null;
+    }
+
+    /**
+     * @return |null
+     */
+    public function getLatestRepliedDateAttribute()
+    {
+        try {
+            return $this->latest_replied_thread->created_at->format('d-m-Y H:i') ?? null;
+        }catch(\Exception $e)
+        {
+            return null;
+        }
     }
 }
