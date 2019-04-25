@@ -78,7 +78,7 @@ class Comment extends AggregateRoot implements Likeable
      */
     public function getLikesCountAttribute()
     {
-        return $this->likers(Exdeliver\Causeway\Domain\Entities\User\User::class)->count();
+        return $this->likers(User::class)->count();
     }
 
     /**
@@ -86,6 +86,6 @@ class Comment extends AggregateRoot implements Likeable
      */
     public function getLikesByUsersAttribute()
     {
-        return $this->likers(Exdeliver\Causeway\Domain\Entities\User\User::class)->get();
+        return $this->likers(User::class)->get();
     }
 }
