@@ -2,6 +2,7 @@
 
 namespace Exdeliver\Causeway\ServiceProviders;
 
+use Exdeliver\Causeway\Commands\CreateAdminCommand;
 use Exdeliver\Causeway\Domain\Entities\Forum\Category;
 use Exdeliver\Causeway\Domain\Entities\Forum\Thread;
 use Exdeliver\Causeway\Domain\Entities\Page\Page;
@@ -118,12 +119,11 @@ class CausewayServiceProvider extends ServiceProvider
      */
     protected function getCommands()
     {
-//        if ($this->app->runningInConsole()) {
-//            $this->commands([
-//                FooCommand::class,
-//                BarCommand::class,
-//            ]);
-//        }
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                CreateAdminCommand::class
+            ]);
+        }
     }
 
     /**
