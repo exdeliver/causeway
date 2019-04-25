@@ -22,10 +22,17 @@ window.jQuery(document).ready(function () {
             processData: false, // important
             contentType: false, // important
             data: formData,
+            success: function (data) {
+
+                if (data.event === false) {
+                    location.reload();
+                }
+            },
+            error: function (data) {
+                alert('something went wrong..');
+            }
         });
-
         $(this)[0].reset();
-
         return false;
     });
 });

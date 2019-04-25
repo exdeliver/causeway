@@ -24,11 +24,12 @@ trait CommentTrait
      * @param $object
      * @param $id
      * @param $data
+     * @return array
      */
     public function commentOn($object, $id, $data)
     {
         $comment = new CommentService(new CommentRepository(new Comment()));
 
-        $comment->commentSubjectByTypeAndId($object, $id, $data);
+        return $comment->commentSubjectByTypeAndId($object, $id, $data);
     }
 }

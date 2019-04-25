@@ -114,7 +114,15 @@ window.jQuery(document).ready(function () {
       // important
       contentType: false,
       // important
-      data: formData
+      data: formData,
+      success: function success(data) {
+        if (data.event === false) {
+          location.reload();
+        }
+      },
+      error: function error(data) {
+        alert('something went wrong..');
+      }
     });
     $(this)[0].reset();
     return false;

@@ -39,7 +39,7 @@ class CommentController extends Controller
         switch ($type) {
             case 'groupNotification':
                 $notification = Notification::where('id', $id)->firstOrFail();
-                auth()->user()->commentOn($notification, $id, [
+                $result = auth()->user()->commentOn($notification, $id, [
                     'comment' => clean($request->comment),
                     'profile_picture' => '/images/' . auth()->user()->profile_picture,
                     'name' => auth()->user()->name,
@@ -53,7 +53,7 @@ class CommentController extends Controller
                 break;
             case str_replace('Exdeliver\Causeway\\', '', Thread::class):
                 $thread = Thread::find($id);
-                auth()->user()->commentOn($thread, $id, [
+                $result = auth()->user()->commentOn($thread, $id, [
                     'comment' => $request->comment,
                     'formatted_date' => Carbon::now()->diffForHumans(),
                     'profile_picture' => '/images/' . auth()->user()->profile_picture,
@@ -63,7 +63,7 @@ class CommentController extends Controller
         }
 
         if ($request->wantsJson()) {
-            return response()->json(['status' => true]);
+            return response()->json($result);
         }
 
         $request->session()->flash('info', 'Comment posted.');

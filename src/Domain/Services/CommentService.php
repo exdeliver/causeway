@@ -5,6 +5,7 @@ namespace Exdeliver\Causeway\Domain\Services;
 use Exdeliver\Causeway\Events\CommentNotificationCreated;
 use App\Exceptions\CommentNotificationException;
 use Exdeliver\Causeway\Infrastructure\Repositories\CommentRepository;
+use Illuminate\Broadcasting\BroadcastException;
 
 /**
  * Class PandaCommentService
@@ -25,6 +26,7 @@ class CommentService extends AbstractService
      * @param $type
      * @param string $id
      * @param array $data
+     * @return array
      */
     public function commentSubjectByTypeAndId($type, string $id, array $data)
     {
@@ -37,8 +39,10 @@ class CommentService extends AbstractService
 
         try {
             event(new CommentNotificationCreated($comment));
-        } catch (CommentNotificationException $e) {
+            return ['status' => true, 'event' => true];
+        } catch (BroadcastException $e) {
             report($e);
+            return ['status' => true, 'event' => false];
         }
     }
 }
