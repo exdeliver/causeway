@@ -33,9 +33,17 @@ And run the publish command:
 
     php artisan vendor:publish --tag=public --force
     
+Create a admin user by running the command below:
+
+    php artisan causeway:admin <username> <password>
+    
 Add to your routes:
 
     Route::get('/{pageSlug?}', '\Exdeliver\Causeway\Controllers\PageController@getSlug');
+    
+Login:
+
+    http://yoursite.nl/causeway/login
 
 ##### CW helpers
 
@@ -44,5 +52,3 @@ Add to your routes:
     
     // Return specific page.
     CW::getPage('<(string)page slug'>);
-    
-  
