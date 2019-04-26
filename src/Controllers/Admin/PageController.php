@@ -108,7 +108,7 @@ class PageController extends Controller
 
         return Datatables::of($pages)
             ->addColumn('name', function ($row) {
-                return $row->name;
+                return '<a href="'.url($row->slug).'" target="_blank">' . $row->name . ' <i class="fa fa-external-link"></i></a>';
             })
             ->addColumn('url', function ($row) {
                 return $row->slug;
