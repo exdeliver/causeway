@@ -2,6 +2,7 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -29,7 +30,7 @@ class UploadService extends AbstractService
     {
         $uploadPaths = [];
 
-        $this->uploadPhotoPath = storage_path(config('panda.photo_uploads', '/public/uploads/photos'));
+        $this->uploadPhotoPath = config('panda.photo_uploads', 'public/uploads/photos');
 
         $uploadPaths[] = $this->uploadPhotoPath;
 
@@ -65,11 +66,9 @@ class UploadService extends AbstractService
      * @param $path
      * @return \stdClass
      */
-    public function upload($file, $path): \stdClass
+    public function upload(UploadedFile $file, $path = ''): \stdClass
     {
         // Set relative path.
-        $path = str_replace(storage_path(), '', $path);
-
         $fullFileName = $file->store($path);
 
         $fileName = ltrim(str_replace($path, '', '/' . $fullFileName), '/');
@@ -86,13 +85,20 @@ class UploadService extends AbstractService
     /**
      * @param $image
      * @param $name
+     * @throws \Exception
      */
     public function resizeImage($image, $name)
     {
         // create instance
-        $img = Image::make(storage_path('app/' . $image));
+        $image = storage_path('app/public/' . $image);
 
-        $path = str_replace($name, '', storage_path('app/') . $image);
+        if (!File::exists($image)) {
+            throw new \Exception('File not found');
+        }
+
+        $img = Image::make($image);
+
+        $path = str_replace($name, '', $image);
 
         foreach ($this->imageSizes as $imageSize) {
 

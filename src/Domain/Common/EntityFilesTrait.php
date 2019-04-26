@@ -2,6 +2,8 @@
 
 namespace Exdeliver\Causeway\Domain\Common;
 
+use Illuminate\Support\Facades\Storage;
+
 /**
  * Trait EntityFilesTrait
  * @package Domain\Common
@@ -13,7 +15,8 @@ trait EntityFilesTrait
      */
     public function getCoverAttribute()
     {
-        return '/storage/uploads/photos/' . $this->file;
+        $file = Storage::url('uploads/photos/'.$this->file);
+        return $file;
     }
 
     /**

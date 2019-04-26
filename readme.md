@@ -37,6 +37,10 @@ Create a admin user by running the command below:
 
     php artisan causeway:admin <username> <password>
     
+If you haven't already made a symlink, do accordingly.
+
+    php artisan storage:link
+    
 Add to your routes:
 
     Route::get('/{pageSlug?}', '\Exdeliver\Causeway\Controllers\PageController@getSlug');

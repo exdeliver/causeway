@@ -46,10 +46,10 @@
                                onclick="return confirm('Delete album and childalbums and all pictures?')" data-placement="top" data-toggle="tooltip" title="Delete album"><i
                                         class="fa fa-remove"></i></a>
                             <a href="{{ route('admin.photo.album.index', ['album' => $subAlbum->label]) }}">
-                                @if(file_exists(asset($subAlbum->cover)))
+
                                     <img data-src="{{ $subAlbum->cover }}" alt="100%x280" style="height: 280px; width: 100%; display: block;" src="{{ asset($subAlbum->cover) }}"
                                          data-holder-rendered="true"/>
-                                @endif
+
                                 <strong>{{ $subAlbum->label }}</strong>
                             </a>
                             <p class="card-text">{{ $subAlbum->name }}</p>
