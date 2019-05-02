@@ -2,6 +2,8 @@
 
 namespace Exdeliver\Causeway\Domain\Common;
 
+use Illuminate\Support\Facades\App;
+
 /**
  * Trait SlugTrait
  * @package Domain\Common
@@ -34,7 +36,11 @@ trait SlugTrait
             ->orderBy($column, 'desc');
 
         if (in_array('locale', $columns, true)) {
-            $result->where('locale', request()->language ?? 'en');
+            $language = App::getLocale();
+            if (isset(request()->language)) {
+                $language = request()->language;
+            }
+            $result->where('locale', $language);
         }
 
         $result = $result->get();

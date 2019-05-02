@@ -31,6 +31,14 @@ class PageTest extends TestCase
                 'slug' => str_slug($title),
             ]);
 
+            $thread->translateOrNew('nl')->name = $title;
+            $thread->translateOrNew('nl')->slug = str_slug($title);
+            $thread->save();
+
+            $threads = $thread->translations->toArray();
+
+            $this->assertCount(2, $threads);
+
             $this->assertEquals($thread->slug, str_slug($title) . '-' . ($i + 1));
         }
     }
