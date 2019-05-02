@@ -2,6 +2,7 @@
 
 namespace Exdeliver\Causeway\Domain\Entities\Page;
 
+use Dimsav\Translatable\Translatable;
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
 use Rennokki\Befriended\Contracts\Likeable;
 use Rennokki\Befriended\Traits\CanBeLiked;
@@ -12,7 +13,7 @@ use Rennokki\Befriended\Traits\CanBeLiked;
  */
 class Page extends AggregateRoot implements Likeable
 {
-    use \Dimsav\Translatable\Translatable;
+    use Translatable;
 
     use CanBeLiked;
 

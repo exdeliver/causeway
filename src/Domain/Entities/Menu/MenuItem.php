@@ -2,6 +2,7 @@
 
 namespace Exdeliver\Causeway\Domain\Entities\Menu;
 
+use Dimsav\Translatable\Translatable;
 use Exdeliver\Causeway\Domain\Common\Entity;
 
 /**
@@ -10,7 +11,7 @@ use Exdeliver\Causeway\Domain\Common\Entity;
  */
 class MenuItem extends Entity
 {
-    use \Dimsav\Translatable\Translatable;
+    use Translatable;
 
     /**
      * @var array
