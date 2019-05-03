@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\File;
 
 /**
  * Class GenerateWaveform
@@ -53,14 +54,12 @@ class GenerateWaveform implements ShouldQueue
      */
     public function handle()
     {
-        $path = $this->soundService->path;
-
         $filename = $this->sound->filename;
 
-        $this->waveformService->loadFile($filename);
+        $this->waveformService->loadFile($this->sound);
 
         $this->waveformService->process();
 
-        $this->waveformService->saveImage($filename); // Saves image to file
+        $this->waveformService->saveImage(storage_path('app/' . $filename)); // Saves image to file
     }
 }

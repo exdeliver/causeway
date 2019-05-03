@@ -36,20 +36,29 @@ class SoundService extends AbstractService
      * @param array $params
      * @param int|null $id
      * @return \Illuminate\Database\Eloquent\Model
+     * @throws \Exception
      */
     public function saveSound(array $params, int $id = null)
     {
         $params['user_id'] = auth()->user()->id;
 
+        if (!isset($params['filename'])) {
+            throw new \Exception('File is required');
+        }
+
+        $file = $this->uploadService->upload($params['filename'], 'public/uploads/' . $this->path);
+
+        if (!file_exists(storage_path('app/' . $file->file_path))) {
+            throw new \Exception('Missing');
+        }
+
+        $params['filename'] = $file->file_path;
+
         $sound = $this->repository->updateOrCreate([
             'id' => $id ?? null,
         ], $params);
 
-        if (isset($params['filename'])) {
-            $this->uploadService->upload($params['filename'], storage_path($this->path));
-
-            GenerateWaveform::dispatch($sound);
-        }
+        GenerateWaveform::dispatch($sound);
 
         return $sound;
     }

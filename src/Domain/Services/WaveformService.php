@@ -186,8 +186,9 @@ class WaveformService
      * @param string $file file path
      * @throws \Exception
      */
-    public function loadFile(string $file)
+    public function loadFile($sound)
     {
+        $file = storage_path('app/' . $sound->filename);
 
         if (!file_exists($file))
             throw new \Exception(sprintf('The file "%s" does not exist', $file));
@@ -508,12 +509,11 @@ class WaveformService
      */
     public function saveImage($filename = '')
     {
-        if ($filename == '')
-            $filename = sprintf("%s.png", uniqid(rand(), true));
+        $uniqueRand = basename(str_replace('.mp3', '.png', $filename));
 
-        imagepng($this->img, $filename);
+        imagepng($this->img, storage_path('app/public/uploads/sounds/' . $uniqueRand));
 
-        return $filename;
+        return $uniqueRand;
     }
 
 }
