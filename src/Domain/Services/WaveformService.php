@@ -2,6 +2,8 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
+use Illuminate\Support\Facades\File;
+
 /**
  * Class Waveform2Png
  * @link https://github.com/slruslan/php-waveform2png/
@@ -81,6 +83,11 @@ class WaveformService
         $this->img = false;
         $this->colors = [];
         $this->type = 'waveform';
+
+        $storageWaveformDir = storage('app/public/uploads/sounds/');
+        if (!is_dir($storageWaveformDir)) {
+            File::makeDirectory($storageWaveformDir, 0777, true);
+        }
 
         // Change max script execution time
         ini_set("max_execution_time", "30000");
