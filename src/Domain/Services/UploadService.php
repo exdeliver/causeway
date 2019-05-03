@@ -101,7 +101,7 @@ class UploadService extends AbstractService
         $path = str_replace($name, '', $image);
 
         foreach ($this->imageSizes as $imageSize) {
-            if (!is_dir($path)) {
+            if (!is_dir($path . $imageSize)) {
                 File::makeDirectory($path . $imageSize, 0777, true);
             }
             $img->resize($imageSize, null, function ($constraint) {
