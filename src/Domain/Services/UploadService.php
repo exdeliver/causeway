@@ -102,7 +102,7 @@ class UploadService extends AbstractService
 
         foreach ($this->imageSizes as $imageSize) {
             if (!is_dir($path)) {
-                File::makeDirectory($path, 0777, true);
+                File::makeDirectory($path . $imageSize, 0777, true);
             }
             $img->resize($imageSize, null, function ($constraint) {
                 $constraint->aspectRatio();
