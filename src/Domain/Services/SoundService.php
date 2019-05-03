@@ -4,6 +4,7 @@ namespace Exdeliver\Causeway\Domain\Services;
 
 use Exdeliver\Causeway\Infrastructure\Repositories\SoundRepository;
 use Exdeliver\Causeway\Jobs\GenerateWaveform;
+use Illuminate\Support\Facades\File;
 
 /**
  * Class SoundService
@@ -44,6 +45,11 @@ class SoundService extends AbstractService
 
         if (!isset($params['filename'])) {
             throw new \Exception('File is required');
+        }
+
+        $storageWaveformDir = storage('app/public/uploads/sounds/');
+        if (!is_dir($storageWaveformDir)) {
+            File::makeDirectory($storageWaveformDir, 0777, true);
         }
 
         $file = $this->uploadService->upload($params['filename'], 'public/uploads/' . $this->path);

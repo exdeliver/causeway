@@ -84,11 +84,6 @@ class WaveformService
         $this->colors = [];
         $this->type = 'waveform';
 
-        $storageWaveformDir = storage('app/public/uploads/sounds/');
-        if (!is_dir($storageWaveformDir)) {
-            File::makeDirectory($storageWaveformDir, 0777, true);
-        }
-
         // Change max script execution time
         ini_set("max_execution_time", "30000");
     }
