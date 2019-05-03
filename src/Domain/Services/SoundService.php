@@ -47,7 +47,7 @@ class SoundService extends AbstractService
             throw new \Exception('File is required');
         }
 
-        $storageWaveformDir = storage('app/public/uploads/sounds/');
+        $storageWaveformDir = storage_path('app/public/uploads/sounds/');
         if (!is_dir($storageWaveformDir)) {
             File::makeDirectory($storageWaveformDir, 0777, true);
         }
