@@ -14,5 +14,8 @@ class CausewayServiceFacade extends Facade
     /**
      * @return string
      */
-    protected static function getFacadeAccessor() { return 'causewayservice'; }
+    protected static function getFacadeAccessor()
+    {
+        return 'causewayservice';
+    }
 }

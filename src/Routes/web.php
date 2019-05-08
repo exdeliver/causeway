@@ -16,7 +16,6 @@ Route::group(['prefix' => 'forum'], function () {
 });
 
 Route::group(['prefix' => 'causeway'], function () {
-
     Route::post('/logout', function () {
         Auth::logout();
         return redirect()
@@ -93,7 +92,6 @@ Route::group(['prefix' => 'causeway'], function () {
          * Admin protected routes
          */
         Route::group(['namespace' => 'Admin', 'middleware' => ['causewayAdmin']], function () {
-
             Route::get('/', function () {
                 return redirect()
                     ->route('causeway.dashboard');
@@ -102,7 +100,6 @@ Route::group(['prefix' => 'causeway'], function () {
             Route::get('/dashboard', 'DashboardController@index')->name('causeway.dashboard');
 
             Route::group(['prefix' => 'photo'], function () {
-
                 Route::group(['prefix' => 'album'], function () {
                     Route::get('/new', 'PhotoAlbumController@createAlbum')->name('admin.photo.album.new');
                     Route::post('/new', 'PhotoAlbumController@storeAlbum')->name('admin.photo.album.new.store');

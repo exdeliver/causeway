@@ -51,6 +51,5 @@ trait SlugTrait
         } else {
             return $name;
         }
-
     }
 }

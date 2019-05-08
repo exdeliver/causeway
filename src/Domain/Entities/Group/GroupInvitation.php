@@ -11,5 +11,4 @@ use Exdeliver\Causeway\Domain\Common\Entity;
  */
 class GroupInvitation extends Entity
 {
-
 }

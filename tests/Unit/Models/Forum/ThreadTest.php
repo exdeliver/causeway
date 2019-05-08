@@ -52,6 +52,5 @@ class ThreadTest extends TestCase
             ]);
 
         $this->assertCount($replies, $thread->comments);
-
     }
 }

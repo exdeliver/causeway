@@ -59,7 +59,9 @@ class RegisterVerification extends Notification
     protected function verificationUrl($notifiable)
     {
         return URL::temporarySignedRoute(
-            'causeway.verification.verify', Carbon::now()->addMinutes(60), ['id' => $notifiable->getKey()]
+            'causeway.verification.verify',
+            Carbon::now()->addMinutes(60),
+            ['id' => $notifiable->getKey()]
         );
     }
 

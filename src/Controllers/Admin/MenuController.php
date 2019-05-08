@@ -242,5 +242,4 @@ class MenuController extends Controller
 
         return json_encode(['status' => true]);
     }
-
 }

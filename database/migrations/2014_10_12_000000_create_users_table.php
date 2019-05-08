@@ -33,6 +33,5 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-
     }
 }

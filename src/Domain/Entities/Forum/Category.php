@@ -143,7 +143,7 @@ class Category extends AggregateRoot
      */
     public function getLatestRepliedThreadLinkAttribute()
     {
-        if(isset($this->latest_replied_thread->slug)) {
+        if (isset($this->latest_replied_thread->slug)) {
             return route('site.forum.thread', ['forumCategory' => $this->slug, 'forumThread' => $this->latest_replied_thread->slug]);
         }
         return null;
@@ -164,8 +164,7 @@ class Category extends AggregateRoot
     {
         try {
             return $this->latest_replied_thread->created_at->format('d-m-Y H:i') ?? null;
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             return null;
         }
     }

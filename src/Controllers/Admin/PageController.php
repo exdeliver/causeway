@@ -81,7 +81,6 @@ class PageController extends Controller
 
         return redirect()
             ->to(route('admin.pages.index'));
-
     }
 
     /**
@@ -127,5 +126,4 @@ class PageController extends Controller
             ->rawColumns(['name', 'url', 'access_level', 'manage'])
             ->make(true);
     }
-
 }

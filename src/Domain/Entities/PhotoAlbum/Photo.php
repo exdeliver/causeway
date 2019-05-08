@@ -36,5 +36,4 @@ class Photo extends Entity implements Likeable
 
         return '/storage/uploads/photos/' . ($size . '/' ?? null) . $this->file;
     }
-
 }

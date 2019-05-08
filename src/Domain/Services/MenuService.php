@@ -47,7 +47,8 @@ class MenuService extends AbstractService
         return $this->repository->updateOrCreateTranslation(
             $id,
             $request->only(['menu_id', 'access_level', $language]),
-            $language);
+            $language
+        );
     }
 
     /**

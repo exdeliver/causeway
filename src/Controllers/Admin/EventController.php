@@ -140,5 +140,4 @@ class EventController extends Controller
             ->rawColumns(['title', 'start_datetime', 'end_datetime', 'manage'])
             ->make(true);
     }
-
 }

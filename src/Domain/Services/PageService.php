@@ -38,7 +38,8 @@ class PageService extends AbstractService
         return $this->repository->updateOrCreateTranslation(
             $id,
             $request->only(['user_id', 'access_level', $language]),
-            $language);
+            $language
+        );
     }
 
     /**

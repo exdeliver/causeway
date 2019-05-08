@@ -25,8 +25,6 @@ class CreateSoundsTable extends Migration
                 ->on('users')
                 ->onDelete('cascade');
             $table->timestamps();
-
-
         });
     }
 

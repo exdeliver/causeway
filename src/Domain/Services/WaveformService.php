@@ -22,13 +22,15 @@ class WaveformService
      * Width and height of output image
      * @var int
      */
-    private $width, $height;
+    private $width;
+    private $height;
 
     /**
      * HTML code for foreground and background colors
      * @var string
      */
-    private $foreground, $background;
+    private $foreground;
+    private $background;
 
     /**
      * Defines the level of waveform detail.
@@ -162,8 +164,9 @@ class WaveformService
     {
         $availableTypes = ['waveform', 'bars'];
 
-        if (!in_array($type, $availableTypes))
+        if (!in_array($type, $availableTypes)) {
             throw new Exception(sprintf("Type %s not found.", $type));
+        }
 
         $this->type = $type;
     }
@@ -192,13 +195,15 @@ class WaveformService
     {
         $file = storage_path('app/' . $sound->filename);
 
-        if (!file_exists($file))
+        if (!file_exists($file)) {
             throw new \Exception(sprintf('The file "%s" does not exist', $file));
+        }
 
         $availableTypes = ['audio/mpeg', 'application/octet-stream'];
 
-        if (!in_array(mime_content_type($file), $availableTypes))
+        if (!in_array(mime_content_type($file), $availableTypes)) {
             throw new Exception(sprintf('Invalid file type %s, expected to be audio/mpeg', mime_content_type($file)));
+        }
 
         $fileWithoutMP3 = str_replace(".mp3", "", $file);
 
@@ -213,8 +218,9 @@ class WaveformService
      */
     public function process()
     {
-        if ($this->file == null)
+        if ($this->file == null) {
             throw new Exception("File not loaded");
+        }
 
         $wavList = $this->generateWavFiles();
 
@@ -295,10 +301,11 @@ class WaveformService
                             break;
                         // Get value for 16-bit wav
                         case 2:
-                            if (ord($bytes[1]) & 128)
+                            if (ord($bytes[1]) & 128) {
                                 $temp = 0;
-                            else
+                            } else {
                                 $temp = 128;
+                            }
                             $temp = chr((ord($bytes[1]) & 127) + $temp);
                             $data = floor($this->findValues($bytes[0], $temp) / 256);
                             break;
@@ -314,17 +321,20 @@ class WaveformService
                     // Data values can range between 0 and 255
                     $v = (int)($data / 255 * $this->height);
 
-                    $time = $this->getCurrentTime(ftell($handle),
+                    $time = $this->getCurrentTime(
+                        ftell($handle),
                         $header['bits'],
                         $header['channels'],
-                        $header['samplerate']);
+                        $header['samplerate']
+                    );
 
                     list($r, $g, $b) = $this->htmlToRGB($this->foreground);
 
                     if (!empty($this->colors)) {
                         foreach ($this->colors as $color) {
-                            if ($time >= $color['min'] && $time <= $color['max'])
+                            if ($time >= $color['min'] && $time <= $color['max']) {
                                 list($r, $g, $b) = $this->htmlToRGB($color['color']);
+                            }
                         }
                     }
 
@@ -440,8 +450,9 @@ class WaveformService
      */
     private function getCurrentTime($bytesRead, $bits, $channels, $sampleRate)
     {
-        if ($bits == 0 || $channels == 0 || $sampleRate == 0)
+        if ($bits == 0 || $channels == 0 || $sampleRate == 0) {
             return 0;
+        }
 
         $bytesRead = floor($bytesRead - 44);
 
@@ -462,13 +473,18 @@ class WaveformService
         imagealphablending($resampledImage, false);
 
         // Copy to resized
-        imagecopyresampled($resampledImage,
+        imagecopyresampled(
+            $resampledImage,
             $this->img,
-            0, 0, 0, 0,
+            0,
+            0,
+            0,
+            0,
             $this->width,
             $this->height,
             imagesx($this->img),
-            imagesy($this->img));
+            imagesy($this->img)
+        );
 
         // Change original image
         $this->img = $resampledImage;
@@ -517,5 +533,4 @@ class WaveformService
 
         return $uniqueRand;
     }
-
 }

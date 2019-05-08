@@ -76,7 +76,6 @@ class UserService extends AbstractService
         return redirect()
             ->to()
             ->withErrors();
-
     }
 
     /**

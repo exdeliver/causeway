@@ -15,7 +15,6 @@ use VanOns\Laraberg\Models\Content as LaContent;
  */
 trait CustomGutenbergTrait
 {
-
     public function body()
     {
         return $this->morphOne(LaContent::class, 'contentable');
@@ -65,10 +64,14 @@ trait CustomGutenbergTrait
      */
     public function setContent($content, $save = false)
     {
-        if (!$this->body) { $this->createContent(); }
+        if (!$this->body) {
+            $this->createContent();
+        }
 
         $this->body->setContent($content);
-        if ($save) { $this->body->save(); }
+        if ($save) {
+            $this->body->save();
+        }
         event(new ContentUpdated($this->body));
     }
 

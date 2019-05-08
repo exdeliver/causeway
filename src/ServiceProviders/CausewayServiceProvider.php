@@ -58,7 +58,8 @@ class CausewayServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(
-            'layouts.partials._navigation', NavigationComposer::class
+            'layouts.partials._navigation',
+            NavigationComposer::class
         );
 
         $this->getConfiguration();

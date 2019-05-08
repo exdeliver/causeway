@@ -32,7 +32,7 @@ class PostGroupRequest extends FormRequest
         if (isset($this->group)) {
             $rules['label'] = 'required|unique:groups,label,' . $this->group->id . ',id';
             $rules['name'] = 'required|unique:groups,name,' . $this->group->id . ',id';
-        } elsE {
+        } else {
             $rules['name'] = 'required|unique:groups,name';
         }
 

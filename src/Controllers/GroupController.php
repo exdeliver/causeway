@@ -123,14 +123,12 @@ class GroupController extends Controller
         }
 
         if (!auth()->check()) {
-
             $request->session()->flash('info', 'You need to be logged in.');
 
             return redirect()->route('login');
         }
 
         if ($group->findUserInGroup(auth()->user()->id)) {
-
             $request->session()->flash('info', 'You are already a member of this group.');
 
             return redirect()->route('group.index');

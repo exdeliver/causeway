@@ -47,8 +47,10 @@ class CreatePermissionTables extends Migration
                     ->on($tableNames['permissions'])
                     ->onDelete('cascade');
 
-                $table->primary(['permission_id', $columnNames['model_morph_key'], 'model_type'],
-                    'model_has_permissions_permission_model_type_primary');
+                $table->primary(
+                    ['permission_id', $columnNames['model_morph_key'], 'model_type'],
+                    'model_has_permissions_permission_model_type_primary'
+                );
             });
         }
 
@@ -65,8 +67,10 @@ class CreatePermissionTables extends Migration
                     ->on($tableNames['roles'])
                     ->onDelete('cascade');
 
-                $table->primary(['role_id', $columnNames['model_morph_key'], 'model_type'],
-                    'model_has_roles_role_model_type_primary');
+                $table->primary(
+                    ['role_id', $columnNames['model_morph_key'], 'model_type'],
+                    'model_has_roles_role_model_type_primary'
+                );
             });
         }
 

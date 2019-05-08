@@ -9,5 +9,4 @@ namespace Exdeliver\Causeway\Domain\Common;
  */
 class AggregateRoot extends Entity
 {
-
 }
