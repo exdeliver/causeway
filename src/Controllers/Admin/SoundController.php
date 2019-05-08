@@ -139,7 +139,7 @@ class SoundController extends Controller
 
         return Datatables::of($pages)
             ->addColumn('name', function ($row) {
-                return $row->name;
+                return $row->name . ' <a href="' . route('causeway.sound.play', ['name' => $row->name]) . '" target="_blank"><i class="fa fa-play-circle"></i></a>';
             })
             ->addColumn('artist', function ($row) {
                 return $row->artist;

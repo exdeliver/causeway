@@ -1,5 +1,9 @@
 <?php
 
+Route::group(['prefix' => 'sound', 'middleware' => ['web']], function () {
+    Route::get('{soundName}', 'SoundController@getSound')->name('causeway.sound.play');
+});
+
 Route::group(['prefix' => 'forum'], function () {
     Route::get('/', 'ForumController@index')->name('site.forum.index');
     Route::get('/category/{forumCategory}', 'ForumController@getCategory')->name('site.forum.category');

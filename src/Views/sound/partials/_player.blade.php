@@ -17,7 +17,7 @@
                 <div class="sm2-row">
                     <div class="sm2-inline-time">0:00</div>
                     <div class="sm2-progress-bd">
-                        <div class="sm2-progress-track" style="background: url('waveform_example.png'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
+                        <div class="sm2-progress-track" style="background: url({{asset($sound->waveform)}}); background-size: cover; background-repeat: no-repeat; background-position: center center;">
                             <div class="sm2-progress-bar"></div>
                             <div class="sm2-progress-ball">
                             </div>
@@ -43,7 +43,7 @@
             <ul class="sm2-playlist-bd">
                 <!-- Enter all sound clips as list items, per the example code below -->
                 <li>
-                    <a href="{{ '/test.mp3' }}">Foobar - I got the power</a>
+                    <a href="{{ asset($sound->filename) }}">{{ $sound->artist }} - {{ $sound->name }}</a>
                 </li>
             </ul>
         </div>

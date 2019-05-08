@@ -7,6 +7,7 @@ use Exdeliver\Causeway\Domain\Entities\Forum\Category;
 use Exdeliver\Causeway\Domain\Entities\Forum\Thread;
 use Exdeliver\Causeway\Domain\Entities\Page\Page;
 use Exdeliver\Causeway\Domain\Entities\PhotoAlbum\PhotoAlbum;
+use Exdeliver\Causeway\Domain\Entities\Sound\Sound;
 use Exdeliver\Causeway\Domain\Services\CausewayService;
 use Exdeliver\Causeway\Events\CausewayRegistered;
 use Exdeliver\Causeway\Listeners\AccountVerificationNotification;
@@ -121,7 +122,7 @@ class CausewayServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                CreateAdminCommand::class
+                CreateAdminCommand::class,
             ]);
         }
     }
@@ -165,6 +166,10 @@ class CausewayServiceProvider extends ServiceProvider
 
         Route::bind('pageSlug', function ($value) {
             return Page::whereTranslation('slug', $value)->first();
+        });
+
+        Route::bind('soundName', function ($value) {
+            return Sound::where('name', $value)->first();
         });
 
         Route::bind('user', function ($value) {
