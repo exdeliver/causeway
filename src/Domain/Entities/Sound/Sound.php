@@ -42,15 +42,11 @@ class Sound extends Entity implements Likeable
      */
     public function getWaveformAttribute()
     {
-        $waveform = basename(str_replace('.mp3', '.png', $this->filename));
-        $path = '/uploads/sounds/';
+        if (isset($this->filename)) {
+            $waveform = basename(str_replace('.mp3', '.png', $this->filename));
+            $path = '/uploads/sounds/';
 
-        $fileExists = \File::exists(asset($path . $waveform));
-
-        return asset($path . $waveform);
-        dd(storage_path($path . $waveform));
-        if ($fileExists) {
-            return storage_path($path . $waveform);
+            return asset($path . $waveform);
         }
         return null;
     }
