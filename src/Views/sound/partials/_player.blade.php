@@ -43,7 +43,7 @@
             <ul class="sm2-playlist-bd">
                 <!-- Enter all sound clips as list items, per the example code below -->
                 <li>
-                    <a href="{{ asset($sound->filename) }}">{{ $sound->artist }} - {{ $sound->name }}</a>
+                    <a href="{{ asset($sound->public_filename) }}">{{ $sound->artist }} - {{ $sound->name }}</a>
                 </li>
             </ul>
         </div>

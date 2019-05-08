@@ -54,7 +54,7 @@ class Sound extends Entity implements Likeable
     /**
      * @return string|null
      */
-    public function getFilenameAttribute()
+    public function getPublicFilenameAttribute()
     {
         if (isset($this->attributes['filename'])) {
             return str_replace('public', '', $this->attributes['filename']);
