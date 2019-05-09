@@ -44,7 +44,7 @@ class Sound extends Entity implements Likeable
     {
         if (isset($this->filename)) {
             $waveform = basename(str_replace('.mp3', '.png', $this->filename));
-            $path = '/uploads/sounds/';
+            $path = '/storage/uploads/sounds/';
 
             return asset($path . $waveform);
         }
