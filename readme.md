@@ -7,6 +7,7 @@ System requirements for running this content management system:
 
     MariaDB 10.3
     PHP 7.1.3 or later
+    (optional for sound plugin) LAME encoder (apt-get install lame)
 
 ##### Howto install
 composer require exdeliver/causeway

@@ -218,7 +218,7 @@ class WaveformService
      */
     public function process()
     {
-        if ($this->file == null) {
+        if ($this->file === null) {
             throw new Exception("File not loaded");
         }
 
@@ -390,7 +390,7 @@ class WaveformService
         $filename = $this->file;
         $result = [];
 
-        copy($filename, sprintf("%s_o.mp3", $filename));
+        copy($filename, sprintf('%s_o.mp3', $filename));
 
         if ($this->stereo) {
             // scale right channel down (a scale of 0 does not work)
