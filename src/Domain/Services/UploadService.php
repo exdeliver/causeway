@@ -93,10 +93,10 @@ class UploadService extends AbstractService
     public function resizeImage($image, $name)
     {
         // create instance
-        $image = storage_path('app/public/' . $image);
+        $image = storage_path('app/' . $image);
 
         if (!File::exists($image)) {
-            throw new \Exception('File not found');
+            throw new \Exception('File not found: '. $image);
         }
 
         $img = Image::make($image);
@@ -107,6 +107,7 @@ class UploadService extends AbstractService
             if (!is_dir($path . $imageSize)) {
                 File::makeDirectory($path . $imageSize, 0777, true);
             }
+
             $img->resize($imageSize, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($path . $imageSize . '/' . $name);

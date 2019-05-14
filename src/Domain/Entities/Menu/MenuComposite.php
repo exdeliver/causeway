@@ -2,8 +2,8 @@
 
 namespace Exdeliver\Causeway\Domain\Entities\Menu;
 
-use Exdeliver\Causeway\Domain\Common\Interfaces\MenuItemInterface;
 use Exdeliver\Causeway\Domain\Common\Interfaces\RenderableInterface;
+use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * Class MenuComposite
@@ -17,7 +17,7 @@ class MenuComposite implements RenderableInterface
     protected $items;
 
     /**
-     * @return string
+     * @return \Illuminate\Contracts\View\View
      */
     public function render(): string
     {
@@ -35,9 +35,9 @@ class MenuComposite implements RenderableInterface
     }
 
     /**
-     * @param MenuItemInterface $item
+     * @param Arrayable $item
      */
-    public function addItem(MenuItemInterface $item)
+    public function addItem(Arrayable $item)
     {
         $this->items[] = $item;
     }

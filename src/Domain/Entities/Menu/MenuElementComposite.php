@@ -9,12 +9,12 @@ use Exdeliver\Causeway\Domain\Common\Interfaces\RenderableInterface;
  * Class MenuElementComposite
  * @package Exdeliver\Causeway\Domain\Entities\Menu
  */
-class MenuElementComposite implements RenderableInterface
+class MenuElementComposite implements MenuItemInterface, RenderableInterface
 {
     /**
      * @var MenuItemInterface
      */
-    public $item;
+    protected $item;
 
     /**
      * MenuElementComposite constructor.
@@ -34,15 +34,20 @@ class MenuElementComposite implements RenderableInterface
     }
 
     /**
-     * @param boolean $sub
-     * @return string
+     * @return \Illuminate\Contracts\View\View
      */
-    public function render(bool $sub = false): string
+    public function render(): string
     {
-        $this->item->isSub = $sub;
-
         return view('causeway::layouts.partials._menu_item', [
             'item' => $this->item,
         ]);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSubmenu()
+    {
+        return $this->item->isSubmenu();
     }
 }

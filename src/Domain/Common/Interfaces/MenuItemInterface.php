@@ -8,5 +8,5 @@ namespace Exdeliver\Causeway\Domain\Common\Interfaces;
  */
 interface MenuItemInterface
 {
-
+    public function isSubmenu();
 }

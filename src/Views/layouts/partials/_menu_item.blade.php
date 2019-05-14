@@ -4,12 +4,12 @@
            aria-expanded="false">{{ $item->label }}</a>
         <div class="dropdown-menu" aria-labelledby="navbar{{ str_slug($item->label) }}">
             @foreach($item->items as $item)
-                {!! $item->render(true) !!}
+                {!! $item->render() !!}
             @endforeach
         </div>
     </li>
 @else
-    @if(isset($item->isSub) && $item->isSub === true)
+    @if($item->isSubmenu())
         <a class="dropdown-item" href="{{ $item->url }}">{{ $item->label }}</a>
     @else
         <li class="nav-item">

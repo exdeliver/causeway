@@ -32,4 +32,12 @@ class MenuItem extends Entity implements MenuItemInterface
         return $this->hasMany(self::class, 'parent_id', 'id')
             ->orderBy('sequence', 'desc');
     }
+
+    /**
+     * @return bool
+     */
+    public function isSubmenu()
+    {
+        return $this->parent_id !== null;
+    }
 }
