@@ -4,12 +4,13 @@ namespace Exdeliver\Causeway\Domain\Entities\Menu;
 
 use Dimsav\Translatable\Translatable;
 use Exdeliver\Causeway\Domain\Common\Entity;
+use Exdeliver\Causeway\Domain\Common\Interfaces\MenuItemInterface;
 
 /**
  * Class MenuItem
  * @package Domain\Entities\Menu
  */
-class MenuItem extends Entity
+class MenuItem extends Entity implements MenuItemInterface
 {
     use Translatable;
 
@@ -28,6 +29,7 @@ class MenuItem extends Entity
      */
     public function items()
     {
-        return $this->hasMany(self::class, 'parent_id', 'id')->orderBy('sequence', 'desc');
+        return $this->hasMany(self::class, 'parent_id', 'id')
+            ->orderBy('sequence', 'desc');
     }
 }

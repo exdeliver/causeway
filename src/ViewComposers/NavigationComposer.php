@@ -17,9 +17,7 @@ class NavigationComposer
     public function compose($view)
     {
         try {
-            $siteMenu = Menu::where('name', 'site-menu')
-                ->getParents()
-                ->firstOrFail();
+            $siteMenu = \CW::getMenu('site-menu');
         } catch (\Exception $e) {
             Log::error('No site-menu found.');
             $siteMenu = null;

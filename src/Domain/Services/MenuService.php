@@ -2,6 +2,8 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
+use Exdeliver\Causeway\Domain\Entities\Menu\Menu;
+use Exdeliver\Causeway\Domain\Entities\Menu\MenuComposite;
 use Exdeliver\Causeway\Infrastructure\Repositories\MenuItemRepository;
 use Exdeliver\Causeway\Infrastructure\Repositories\MenuRepository;
 use Illuminate\Database\Eloquent\Model;
@@ -59,7 +61,15 @@ class MenuService extends AbstractService
     {
         try {
             $menu = $this->repository->where('name', '=', $name)->firstOrFail();
-            return $menu->items;
+
+            $menuCollection = new MenuComposite();
+
+            foreach($menu->items as $item) {
+                $menuCollection->addItem($item);
+            }
+
+            return $menuCollection->render();
+
         } catch (\Exception $e) {
             \Log::warning('Missing menu called: ' . $name);
             return [];
