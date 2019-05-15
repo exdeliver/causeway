@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
  * Class MenuService
  * @package Domain\Services
  */
-class MenuService extends AbstractService
+final class MenuService extends AbstractService
 {
     /**
      * @var MenuItemRepository

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Hash;
  *
  * @package Domain\Services
  */
-class UserService extends AbstractService
+final class UserService extends AbstractService
 {
     use RegistersUsers;
 

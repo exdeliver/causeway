@@ -15,9 +15,8 @@ use Illuminate\Support\Facades\File;
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.
  */
-class WaveformService
+final class WaveformService
 {
-
     /**
      * Width and height of output image
      * @var int

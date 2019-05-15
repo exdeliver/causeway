@@ -8,7 +8,7 @@ use Exdeliver\Causeway\Infrastructure\Repositories\EventRepository;
  * Class EventService
  * @package Domain\Services
  */
-class EventService extends AbstractService
+final class EventService extends AbstractService
 {
     /**
      * PhotoAlbumService constructor.

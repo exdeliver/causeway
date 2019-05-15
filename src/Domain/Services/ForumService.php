@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
  * Class ForumService
  * @package Domain\Services
  */
-class ForumService extends AbstractService
+final class ForumService extends AbstractService
 {
     /** @var ForumThreadRepository */
     protected $threadRepository;

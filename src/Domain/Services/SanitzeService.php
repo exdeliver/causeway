@@ -2,7 +2,7 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
-class SanitzeService
+final class SanitzeService
 {
     /**
      * Strip inline javascript tags.

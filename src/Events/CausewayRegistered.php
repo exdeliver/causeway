@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
  * Class CausewayRegistered
  * @package Exdeliver\Causeway\Events
  */
-class CausewayRegistered
+final class CausewayRegistered
 {
     use SerializesModels;
 

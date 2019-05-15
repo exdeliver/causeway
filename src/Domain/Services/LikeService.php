@@ -11,7 +11,7 @@ use Exdeliver\Causeway\Domain\Entities\PandaComment\PandaComment;
  *
  * @package Domain\Services
  */
-class LikeService extends AbstractService
+final class LikeService extends AbstractService
 {
     /**
      * @var array

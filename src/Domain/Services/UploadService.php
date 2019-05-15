@@ -11,7 +11,7 @@ use Intervention\Image\Facades\Image;
  * Class UploadService
  * @package Domain\Services
  */
-class UploadService extends AbstractService
+final class UploadService extends AbstractService
 {
     /**
      * @var array

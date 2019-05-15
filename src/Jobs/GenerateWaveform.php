@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\File;
  * Class GenerateWaveform
  * @package App\Jobs
  */
-class GenerateWaveform implements ShouldQueue
+final class GenerateWaveform implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

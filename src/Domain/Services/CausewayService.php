@@ -6,7 +6,7 @@ namespace Exdeliver\Causeway\Domain\Services;
  * Class CausewayService
  * @package Exdeliver\Causeway\Domain\Services
  */
-class CausewayService
+final class CausewayService
 {
     /**
      * Get Menu.

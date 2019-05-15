@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Hash;
  *
  * @package Domain\Services
  */
-class PermissionService extends AbstractService
+final class PermissionService extends AbstractService
 {
     /**
      * PandaUserService constructor.

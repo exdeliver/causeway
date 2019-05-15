@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\File;
  * Class SoundService
  * @package Domain\Services
  */
-class SoundService extends AbstractService
+final class SoundService extends AbstractService
 {
     /**
      * @var string

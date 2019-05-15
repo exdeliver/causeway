@@ -66,7 +66,7 @@ class CommentController extends Controller
             return response()->json($result);
         }
 
-        $request->session()->flash('info', 'Comment posted.');
+        $request->session()->flash('success', 'Comment posted.');
 
         return redirect()
             ->back();

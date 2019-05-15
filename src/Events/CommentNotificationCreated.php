@@ -16,7 +16,7 @@ use Illuminate\Queue\SerializesModels;
  *
  * @package App\Events
  */
-class CommentNotificationCreated implements ShouldBroadcast
+final class CommentNotificationCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

@@ -11,7 +11,7 @@ use Illuminate\Broadcasting\BroadcastException;
  * Class PandaCommentService
  * @package Domain\Services
  */
-class CommentService extends AbstractService
+final class CommentService extends AbstractService
 {
     /**
      * PandaCommentService constructor.

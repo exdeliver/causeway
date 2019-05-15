@@ -1,4 +1,4 @@
-<a href="/ajax/like/type/{{ $likeType }}/id/{{$likeId}}" class="btn-like btn-like-action btn btn-sm btn-primary btn-counter"
+<a href="/causeway/ajax/like/type/{{ $likeType }}/id/{{$likeId}}" class="btn-like btn-like-action btn btn-sm btn-primary btn-counter"
    data-placement="bottom" data-count="{{ $likeObject->likesCount ?? 0 }}" data-html="true"
    data-toggle="tooltip"
    @if($likeObject->likesCount > 0)

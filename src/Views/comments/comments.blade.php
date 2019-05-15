@@ -17,6 +17,9 @@
                 @endif
             </li>
             @if(isset($commentsObject->comments))
+                <li class="list-group-item list-group-item-action flex-column align-items-start">
+                    @include('causeway::layouts.partials._status_messages')
+                </li>
                 @foreach($commentsObject->comments()->limit(30)->get() as $comment)
                     <li class="list-group-item list-group-item-action flex-column align-items-start">
                         <div class="commenterImage">

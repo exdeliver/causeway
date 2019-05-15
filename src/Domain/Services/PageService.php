@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Lang;
  * Class PageService
  * @package Domain\Services
  */
-class PageService extends AbstractService
+final class PageService extends AbstractService
 {
     /**
      * PageService constructor.

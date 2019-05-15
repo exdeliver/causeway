@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
  * Class PhotoService
  * @package Domain\Services
  */
-class PhotoService extends AbstractService
+final class PhotoService extends AbstractService
 {
     /**
      * PhotoService constructor.

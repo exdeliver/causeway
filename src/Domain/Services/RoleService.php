@@ -11,7 +11,7 @@ use Spatie\Permission\Models\Role;
  *
  * @package Domain\Services
  */
-class RoleService extends AbstractService
+final class RoleService extends AbstractService
 {
     /**
      * PandaUserService constructor.

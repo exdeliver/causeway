@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
  * Class PandaGroupService
  * @package Domain\Services
  */
-class GroupService extends AbstractService
+final class GroupService extends AbstractService
 {
     /**
      * PandaGroupService constructor.

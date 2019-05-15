@@ -80,7 +80,7 @@ try {
                 '<p><strong>' + result.name + '</strong></p>\n' +
                 '<p>' + result.comment + '</p>\n' +
                 '<div class="clearfix"><span class="date sub-text btn btn-sm btn-like btn-outline-dark">on ' + result.formatted_date + '</span>\n' +
-                '<a href="/ajax/like/type/#LIKETYPE#/id/#LIKEID#" class="btn-like btn btn-sm btn-primary btn-counter"\n' +
+                '<a href="/causeway/ajax/like/type/#LIKETYPE#/id/#LIKEID#" class="btn-like btn btn-sm btn-primary btn-counter"\n' +
                 '><i class="fa fa-heart"></i></a>' +
                 '<a href="#" class="btn btn-sm btn-primary btn-like pull-right">\n' +
                 'Quote\n' +
