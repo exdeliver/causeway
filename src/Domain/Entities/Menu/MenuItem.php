@@ -34,6 +34,14 @@ class MenuItem extends Entity implements MenuItemInterface
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class);
+    }
+
+    /**
      * @return bool
      */
     public function isSubmenu()

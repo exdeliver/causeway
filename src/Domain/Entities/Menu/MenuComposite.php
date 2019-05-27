@@ -17,6 +17,11 @@ class MenuComposite implements RenderableInterface
     protected $items;
 
     /**
+     * @var
+     */
+    protected $template;
+
+    /**
      * @return \Illuminate\Contracts\View\View
      */
     public function render(): string
@@ -26,10 +31,19 @@ class MenuComposite implements RenderableInterface
                 return $item->parent_id === null;
             })->map(function ($item) {
                 $item = new MenuElementComposite($item);
+                if ($this->template !== null) {
+                    $item->setTemplate($this->template);
+                }
                 return $item;
             });
 
-        return view('causeway::layouts.partials._menu', [
+        if (view()->exists('menu.custom.' . $this->template)) {
+            return view('menu.custom.' . $this->template, [
+                'items' => $items,
+            ]);
+        }
+
+        return view('causeway::menu._default', [
             'items' => $items,
         ]);
     }
@@ -40,5 +54,15 @@ class MenuComposite implements RenderableInterface
     public function addItem(Arrayable $item)
     {
         $this->items[] = $item;
+    }
+
+    /**
+     * @param string|null $template
+     * @return $this
+     */
+    public function setTemplate(string $template = null)
+    {
+        $this->template = $template;
+        return $this;
     }
 }

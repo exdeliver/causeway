@@ -40,5 +40,8 @@
                 "Exdeliver\\Causeway\\ServiceProviders\\CausewayServiceProvider"
             ]
         }
+    },
+    "require-dev": {
+        "nunomaduro/larastan": "^0.3.16"
     }
 }

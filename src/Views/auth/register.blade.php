@@ -1,20 +1,15 @@
-@extends('causeway::layouts.site')
+@extends('causeway::layouts.auth')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Register') }}</div>
+    <div class="w-1/2">
+        <div class="border-teal-100 p-8 border-t-12 bg-white mb-6 rounded-lg shadow-lg  mt-1">
+            <h2 class="font-hairline mb-6 text-center p-0 mt-1">{{ __('Create account') }}</h2>
 
-                    <div class="card-body">
-                        <register-component
-                                csrf_token="{{ csrf_token() }}"
-                                register_route="{{ route('causeway.register') }}"
-                                login_route="{{ route('causeway.login') }}"></register-component>
-                    </div>
-                </div>
-            </div>
+            <register-component
+                    csrf_token="{{ csrf_token() }}"
+                    register_route="{{ route('causeway.register') }}"
+                    login_route="{{ route('causeway.login') }}"></register-component>
+
         </div>
     </div>
 @endsection

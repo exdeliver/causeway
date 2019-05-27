@@ -82,7 +82,7 @@ class CalendarItem extends AggregateRoot implements Likeable, \MaddHatter\Larave
     /**
      * Get the start time
      *
-     * @return DateTime
+     * @return Carbon
      */
     public function getStart()
     {
@@ -92,7 +92,7 @@ class CalendarItem extends AggregateRoot implements Likeable, \MaddHatter\Larave
     /**
      * Get the end time
      *
-     * @return DateTime
+     * @return Carbon
      */
     public function getEnd()
     {

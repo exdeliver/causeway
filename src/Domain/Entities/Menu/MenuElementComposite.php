@@ -17,6 +17,11 @@ class MenuElementComposite implements MenuItemInterface, RenderableInterface
     protected $item;
 
     /**
+     * @var
+     */
+    protected $template;
+
+    /**
      * MenuElementComposite constructor.
      * @param MenuItemInterface $item
      */
@@ -38,7 +43,13 @@ class MenuElementComposite implements MenuItemInterface, RenderableInterface
      */
     public function render(): string
     {
-        return view('causeway::layouts.partials._menu_item', [
+        if ($this->template !== null && view()->exists('menu.custom.' . $this->template . '_item')) {
+            return view('menu.custom.' . $this->template . '_item', [
+                'item' => $this->item,
+            ]);
+        }
+
+        return view('causeway::menu._default_item', [
             'item' => $this->item,
         ]);
     }
@@ -49,5 +60,15 @@ class MenuElementComposite implements MenuItemInterface, RenderableInterface
     public function isSubmenu()
     {
         return $this->item->isSubmenu();
+    }
+
+    /**
+     * @param string|null $template
+     * @return $this
+     */
+    public function setTemplate(string $template = null)
+    {
+        $this->template = $template;
+        return $this;
     }
 }

@@ -208,13 +208,15 @@ class MenuController extends Controller
                 return count($row->items);
             })
             ->addColumn('manage', function ($row) {
-                return '<a href="' . route('admin.menu.show', ['id' => $row->id]) . '" class="btn btn-sm btn-primary">Manage</a>
-                        <a href="' . route('admin.menu.update', ['id' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="' . route('admin.menu.remove', ['id' => $row->id]) . '" method="post" class="delete-inline">
+                $menuRemoval = '<form action="' . route('admin.menu.remove', ['id' => $row->id]) . '" method="post" class="delete-inline">
                             ' . method_field('DELETE') . csrf_field() . '
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
-                        </form>
-                        ';
+                        </form>';
+
+                return '<a href="' . route('admin.menu.show', ['id' => $row->id]) . '" class="btn btn-sm btn-primary">Manage</a>
+                        <a href="' . route('admin.menu.update', ['id' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>' .
+                    $menuRemoval;
+
             })
             ->rawColumns(['label', 'name', 'items', 'manage'])
             ->make(true);

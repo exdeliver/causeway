@@ -30,7 +30,7 @@ class LikeController extends Controller
      * @param Request $request
      * @param string $type
      * @param string $id
-     * @return bool
+     * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
     public function like(Request $request, string $type, string $id)
