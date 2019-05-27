@@ -13,11 +13,11 @@ trait SlugTrait
     /**
      * Generates an unique iterated name.
      *
-     * @param $column
-     * @param $name
+     * @param string $column
+     * @param string $name
      * @return string
      */
-    protected function generateIteratedName($column, $name): string
+    protected function generateIteratedName(string $column, string $name): string
     {
         $entity = new $this;
 

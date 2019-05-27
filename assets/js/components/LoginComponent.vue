@@ -6,13 +6,13 @@
             <label class="col-md-4 col-form-label text-md-right" for="email">E-mail address</label>
 
             <div class="col-md-6">
-                <input autofocus class="form-control" id="email" name="email" type="email" v-model="loginDetails.email">
+                <input autofocus class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow" id="email" name="email" type="email" v-model="loginDetails.email">
                 <span class="help-block text-danger" v-if="formErrors.email">{{ formErrors.email[0] }}</span>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-md-4 col-form-label text-md-right" for="password">Password</label>
+            <label class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow" for="password">Password</label>
 
             <div class="col-md-6">
                 <input class="form-control" id="password" name="password" type="password" v-model="loginDetails.password">

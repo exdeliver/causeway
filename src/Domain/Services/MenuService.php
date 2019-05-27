@@ -2,7 +2,6 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
-use Exdeliver\Causeway\Domain\Entities\Menu\Menu;
 use Exdeliver\Causeway\Domain\Entities\Menu\MenuComposite;
 use Exdeliver\Causeway\Infrastructure\Repositories\MenuItemRepository;
 use Exdeliver\Causeway\Infrastructure\Repositories\MenuRepository;
@@ -57,14 +56,20 @@ final class MenuService extends AbstractService
      * @param string $name
      * @return mixed
      */
-    public function render(string $name)
+    public function render(string $name, $template = null)
     {
         try {
             $menu = $this->repository->where('name', '=', $name)->firstOrFail();
 
             $menuCollection = new MenuComposite();
+            if ($template !== null) {
+                if (!view()->exists('menu.custom.' . $template)) {
+                    return "Missing blade file: menu.custom.{$template}";
+                }
+                $menuCollection->setTemplate($template);
+            }
 
-            foreach($menu->items as $item) {
+            foreach ($menu->items as $item) {
                 $menuCollection->addItem($item);
             }
 
