@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 /**
  * Class UpdatePagesTable
  */
-class UpdatePagesTable extends Migration
+class AddSiteMenuToMenuTable extends Migration
 {
     /**
      * Run the migrations.
