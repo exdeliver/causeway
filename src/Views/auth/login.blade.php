@@ -1,7 +1,7 @@
 @extends('causeway::layouts.auth')
 
 @section('content')
-        <div class="w-1/2">
+        <div class="sm:w-auto md:w-full lg:w-1/2">
             <div class="border-teal-100 p-8 border-t-12 bg-white mb-6 rounded-lg shadow-lg  mt-1">
                 <p class="text-center font-hairline m-0">
                     <small><a href="http://www.exdeliver.nl" target="_blank">EXdeliver</a> presents...</small>
