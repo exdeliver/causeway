@@ -3,6 +3,11 @@
 namespace Exdeliver\Causeway\Domain\Entities\Shop;
 
 use Exdeliver\Causeway\Domain\Common\Entity;
+use Exdeliver\Causeway\Domain\Entities\Shop\ProductAttributes\Attribute;
+use Exdeliver\Causeway\Domain\Entities\Shop\ProductAttributes\AttributeValue;
+use Exdeliver\Causeway\Domain\Entities\Shop\ProductBookingDates\BookingDate;
+use Exdeliver\Causeway\Domain\Entities\Shop\ProductVariants\Variant;
+use Exdeliver\Causeway\Domain\Entities\Shop\ProductVariants\VariantValue;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
@@ -143,5 +148,45 @@ class Product extends Entity implements Auditable
     public function getStockAttribute()
     {
         return $this->quantity;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function variants()
+    {
+        return $this->hasMany(Variant::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function attributes()
+    {
+        return $this->hasMany(Attribute::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function attribute()
+    {
+        return $this->belongsTo(AttributeValue::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function variant()
+    {
+        return $this->belongsToMany(VariantValue::class, 'shop_product_variant_value_product', 'product_id', 'value_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bookingDates()
+    {
+        return $this->hasMany(BookingDate::class);
     }
 }

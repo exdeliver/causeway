@@ -1,0 +1,103 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+/**
+ * Class CreateShopBookingDatesTable
+ */
+class CreateShopProductOptionsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        // May be size, color, type of harddrive (SSD or Sata?)
+        Schema::create('shop_product_attributes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')
+                ->references('id')
+                ->on('shop_products')
+                ->onDelete('cascade');
+            $table->string('name');
+            $table->integer('sequence');
+            $table->string('value_type')->default('text');
+        });
+
+        Schema::create('shop_product_attribute_values', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('shop_product_attribute_id')->unsigned();
+            $table->foreign('shop_product_attribute_id')
+                ->references('id')
+                ->on('shop_product_attributes')
+                ->onDelete('cascade');
+            $table->string('attribute_value');
+            $table->integer('sequence');
+        });
+
+        // May be size, color, type of harddrive (SSD or Sata?)
+        Schema::create('shop_product_variants', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')
+                ->references('id')
+                ->on('shop_products')
+                ->onDelete('cascade');
+            $table->string('name');
+            $table->integer('sequence');
+            $table->string('value_type')->default('text');
+        });
+
+        Schema::create('shop_product_variant_values', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('shop_product_variant_id')->unsigned();
+            $table->foreign('shop_product_variant_id')
+                ->references('id')
+                ->on('shop_product_variants')
+                ->onDelete('cascade');
+            $table->string('variant_value');
+            $table->integer('sequence');
+        });
+
+        Schema::create('shop_product_variant_products', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')
+                ->references('id')
+                ->on('shop_products')
+                ->onDelete('cascade');
+        });
+
+        Schema::create('shop_product_variant_value_product', function (Blueprint $table) {
+            $table->integer('variant_value_id')->unsigned();
+            $table->foreign('variant_value_id')
+                ->references('id')
+                ->on('shop_product_variant_values')
+                ->onDelete('cascade');
+            $table->integer('variant_product_id')->unsigned();
+            $table->foreign('variant_product_id')
+                ->references('id')
+                ->on('shop_product_variant_products')
+                ->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('shop_product_attributes');
+        Schema::drop('shop_product_attribute_values');
+        Schema::drop('shop_product_variants');
+        Schema::drop('shop_product_variant_values');
+    }
+}

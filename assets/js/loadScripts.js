@@ -21,6 +21,7 @@ try {
     require('lightbox2');
     require('soundmanager2');
     require('magicsuggest-alpine');
+    require('v-calendar');
 
 } catch (e) {
     console.log(e);
