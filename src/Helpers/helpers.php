@@ -57,3 +57,51 @@ if (!function_exists('causewayStrDot')) {
         return str_replace(str_slug($value), '-', '.');
     }
 }
+
+if (!function_exists('causewayVatPercentages')) {
+    function causewayVatPercentages()
+    {
+        try {
+            $vats = json_decode(config('causeway.vat_percentages'), true);
+            if (!is_array($vats)) {
+                throw new \Exception('Error VATS configuration in .env or config file.');
+            } else {
+                foreach ($vats as $key => $value) {
+                    if (!is_float((float)$key)) {
+                        throw new \Exception('Error VATS configuration in .env or config file. Key should be float.');
+                    }
+                }
+            }
+            return $vats;
+
+        } catch (\Exception $e) {
+            throw new \Exception('Error VATS configuration in .env or config file.');
+        }
+    }
+}
+
+if (!function_exists('orderedArray')) {
+    function orderedArray($collection, $parent_id = 0)
+    {
+        $temp_array = [];
+        foreach ($collection as $objectModel) {
+            $objectModel->subs = orderedArray($objectModel->children, $objectModel['id']);
+            $temp_array[] = $objectModel->toArray();
+        }
+        return $temp_array;
+    }
+}
+
+if (!function_exists('causewayDate')) {
+    function causewayDate(string $value = null, string $format = 'j M Y')
+    {
+        return $value !== null ? \Carbon\Carbon::parse($value)->format($format) : '';
+    }
+}
+
+if (!function_exists('causewayCompanyInformation')) {
+    function causewayCompanyInformation()
+    {
+        return json_decode(config('causeway.shop_company_information'), false);
+    }
+}

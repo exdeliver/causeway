@@ -4,10 +4,9 @@ namespace Exdeliver\Causeway\Domain\Services;
 
 use App\Models\Notification;
 use Exdeliver\Causeway\Domain\Entities\Comment\Comment;
-use Exdeliver\Causeway\Domain\Entities\PandaComment\PandaComment;
 
 /**
- * Class PandaLikeService
+ * Class LikeService
  *
  * @package Domain\Services
  */
@@ -19,7 +18,7 @@ final class LikeService extends AbstractService
     public $likeAbleTypes;
 
     /**
-     * PandaLikeService constructor.
+     * LikeService constructor.
      */
     public function __construct()
     {

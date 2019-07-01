@@ -4,14 +4,15 @@ namespace Exdeliver\Causeway\Domain\Entities\Page;
 
 use Exdeliver\Causeway\Domain\Common\SlugTrait;
 use Illuminate\Database\Eloquent\Model;
-use VanOns\Laraberg\Models\Gutenbergable;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class PageTranslation
  * @package Domain\Entities\Page
  */
-class PageTranslation extends Model
+class PageTranslation extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use CustomGutenbergTrait;
     use SlugTrait;
 

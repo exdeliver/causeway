@@ -31,6 +31,18 @@ Vue.component('datepicker-component', require('./components/DatepickerComponent'
 
 Vue.component('forum-category-component', require('./components/ForumCategoryComponent').default);
 
+Vue.component('cart-component', require('./components/CartComponent').default);
+
+Vue.component('cart-totals-component', require('./components/CartTotalsComponent').default);
+
+Vue.component('add-to-cart-component', require('./components/AddToCartComponent').default);
+
+Vue.component('cart-items-count-component', require('./components/CartItemsCountComponent').default);
+
+Vue.component('product-price-calculation-component', require('./components/ProductPriceCalculationComponent').default);
+
+window.EventBus = new Vue();
+
 const app = new Vue({
     el: '#app',
 });

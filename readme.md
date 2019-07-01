@@ -17,6 +17,8 @@ Add to your app.php providers & Aliases
     \Exdeliver\Causeway\ServiceProviders\CausewayServiceProvider::class,
     
     'CW' => \Exdeliver\Causeway\Facades\CausewayServiceFacade::class,
+    
+    'CWCart' => \Exdeliver\Causeway\Facades\CausewayCartServiceFacade::class,
 
 Update your config/auth.php
 
@@ -25,6 +27,13 @@ Update your config/auth.php
             'driver' => 'eloquent',
             'model' => Exdeliver\Causeway\Domain\Entities\User\User::class,
         ],
+        
+Update your .env
+
+    MOLLIE_LIVE_API_KEY=
+    MOLLIE_TEST_API_KEY=test_MeT7ZndwP8wVBkGpDSGnpAa88npKLe
+    CAUSEWAY_VAT_PERCENTAGES='{"0.00": "0%", "9.00": "9%", "21.00": "21%"}'
+    CAUSEWAY_COMPANY_INFORMATION='{"company": "EXdeliver", "address": "YourCompanyStreet 22", "zipcode": "0000 TT", "city": "Rotterdam", "country": "The Netherlands", "vat_no": "NL6500000", "coc_no": "20000000", "email": "info@mail.nl", "bank_account": "NL00INGB000123456", "bank_name": "ING"}'
         
 Run the migrations
 

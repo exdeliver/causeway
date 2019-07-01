@@ -1,0 +1,1 @@
+<img src="https://via.placeholder.com/900x650.png?text=product" class="img-fluid p-2" alt="">

@@ -47,8 +47,8 @@
                                         class="fa fa-remove"></i></a>
                             <a href="{{ route('admin.photo.album.index', ['album' => $subAlbum->label]) }}">
 
-                                    <img data-src="{{ $subAlbum->cover }}" alt="100%x280" style="height: 280px; width: 100%; display: block;" src="{{ asset($subAlbum->cover) }}"
-                                         data-holder-rendered="true"/>
+                                <img data-src="{{ $subAlbum->cover }}" alt="100%x280" style="height: 280px; width: 100%; display: block;" src="{{ asset($subAlbum->cover) }}"
+                                     data-holder-rendered="true"/>
 
                                 <strong>{{ $subAlbum->label }}</strong>
                             </a>

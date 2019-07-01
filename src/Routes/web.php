@@ -1,9 +1,15 @@
 <?php
 
+/**
+ * Prefix: sound/
+ */
 Route::group(['prefix' => 'sound', 'middleware' => ['web']], function () {
     Route::get('{soundName}', 'SoundController@getSound')->name('causeway.sound.play');
 });
 
+/**
+ * Prefix: forum/
+ */
 Route::group(['prefix' => 'forum'], function () {
     Route::get('/', 'ForumController@index')->name('site.forum.index');
     Route::get('/category/{forumCategory}', 'ForumController@getCategory')->name('site.forum.category');
@@ -15,6 +21,11 @@ Route::group(['prefix' => 'forum'], function () {
     Route::get('/category/{forumCategory}/thread/{forumThread}', 'ForumController@getThread')->name('site.forum.thread');
 });
 
+include('shop_routes.php');
+
+/**
+ * Prefix: causeway/
+ */
 Route::group(['prefix' => 'causeway'], function () {
     Route::post('/logout', function () {
         Auth::logout();
@@ -41,16 +52,24 @@ Route::group(['prefix' => 'causeway'], function () {
     /**
      * Protected routes for verified users...
      */
-    Route::group(['middleware' => ['causewayVerified', 'causewayAuth'], 'namespace'], function () {
+    Route::group(['middleware' => ['causewayVerified', 'causewayAuth']], function () {
         Route::post('/upload/file', 'UploadController@upload')->name('site.upload');
 
-        // Ajax routing
+        /**
+         * Ajax routing
+         *
+         * Prefix: causeway/ajax
+         */
         Route::group(['prefix' => 'ajax'], function () {
             Route::get('reset/points', 'UserController@reset');
             Route::get('like/type/{type}/id/{id}', 'LikeController@like')->name('like.toggle');
             Route::post('comment/type/{type}/id/{id}', 'CommentController@comment')->name('comment.store');
 
-            // Ajax group actions
+            /**
+             * Ajax group actions
+             *
+             * Prefix: causeway/ajax/group
+             */
             Route::group(['prefix' => 'group'], function () {
                 Route::get('{label}/members', 'GroupController@getUsersOverviewGroup')->name('ajax.group.members');
                 Route::get('index', 'GroupController@getGroupsByUser')->name('ajax.group.index');
@@ -60,18 +79,30 @@ Route::group(['prefix' => 'causeway'], function () {
              * Admin protected ajax calls.
              */
             Route::group(['middleware' => ['causewayAdmin']], function () {
+                /**
+                 * Prefix: causeway/ajax/events
+                 */
                 Route::group(['prefix' => 'events'], function () {
                     Route::get('index', 'Admin\EventController@getAjaxEvents')->name('ajax.events.index');
                 });
 
+                /**
+                 * Prefix: causeway/ajax/pages
+                 */
                 Route::group(['prefix' => 'pages'], function () {
                     Route::get('index', 'Admin\PageController@getAjaxPages')->name('ajax.pages.index');
                 });
 
+                /**
+                 * Prefix: causeway/ajax/menu
+                 */
                 Route::group(['prefix' => 'menu'], function () {
                     Route::get('index', 'Admin\MenuController@getAjaxMenu')->name('ajax.menu.index');
                 });
 
+                /**
+                 * Prefix: causeway/ajax/sound
+                 */
                 Route::group(['prefix' => 'sound'], function () {
                     Route::get('index', 'Admin\SoundController@getAjaxSounds')->name('ajax.sound.index');
                 });
@@ -80,6 +111,9 @@ Route::group(['prefix' => 'causeway'], function () {
                     Route::get('index', 'Admin\ForumController@getAjaxCategories')->name('ajax.forum.index');
                 });
 
+                /**
+                 * Prefix: causeway/ajax/authorisation
+                 */
                 Route::group(['prefix' => 'authorisation'], function () {
                     Route::get('users/index', 'Admin\Authorisation\UserController@getAjaxUsers')->name('ajax.authorisation.users.index');
                     Route::get('roles/index', 'Admin\Authorisation\RoleController@getAjaxRoles')->name('ajax.authorisation.roles.index');
@@ -99,7 +133,13 @@ Route::group(['prefix' => 'causeway'], function () {
 
             Route::get('/dashboard', 'DashboardController@index')->name('causeway.dashboard');
 
+            /**
+             * Prefix: causeway/photo/
+             */
             Route::group(['prefix' => 'photo'], function () {
+                /**
+                 * Prefix: causeway/photo/album
+                 */
                 Route::group(['prefix' => 'album'], function () {
                     Route::get('/new', 'PhotoAlbumController@createAlbum')->name('admin.photo.album.new');
                     Route::post('/new', 'PhotoAlbumController@storeAlbum')->name('admin.photo.album.new.store');
@@ -135,6 +175,11 @@ Route::group(['prefix' => 'causeway'], function () {
                 'destroy' => 'admin.pages.destroy',
             ]);
 
+            /**
+             * Prefix: causeway/shop
+             */
+            include 'admin_shop_routes.php';
+
             Route::resource('sound', 'SoundController')->names([
                 'index' => 'admin.sound.index',
                 'create' => 'admin.sound.create',
@@ -152,6 +197,7 @@ Route::group(['prefix' => 'causeway'], function () {
                 'update' => 'admin.forum.update.store',
                 'destroy' => 'admin.forum.remove',
             ]);
+
             Route::get('forum/index/sort', 'ForumController@sortCategory')->name('admin.forum.index.sort');
 
             Route::get('menu/item/create/{menu}', 'MenuController@createItem')->name('admin.menu.item.create');
@@ -171,6 +217,9 @@ Route::group(['prefix' => 'causeway'], function () {
             ]);
             Route::post('menu/show/{menu}/sort', 'MenuController@sort')->name('admin.menu.show.sort');
 
+            /**
+             * Prefix: causeway/authorisation
+             */
             Route::group(['prefix' => 'authorisation', 'namespace' => 'Authorisation'], function () {
                 Route::resource('user', 'UserController')->names([
                     'index' => 'admin.authorisation.user.index',
@@ -201,6 +250,9 @@ Route::group(['prefix' => 'causeway'], function () {
             });
         });
 
+        /**
+         * Prefix: causeway/profile
+         */
         Route::group(['prefix' => 'profile'], function () {
             //Route::get('/', 'Auth\UserProfileController@show')->name('profile');
         });

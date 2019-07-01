@@ -9,7 +9,7 @@ class SoundController extends Controller
     public function getSound(Sound $soundName)
     {
         return view('causeway::sound.play', [
-            'sound' => $soundName
+            'sound' => $soundName,
         ]);
     }
 }

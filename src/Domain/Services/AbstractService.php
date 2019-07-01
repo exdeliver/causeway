@@ -15,33 +15,6 @@ abstract class AbstractService
      */
     public $repository;
 
-    /**
-     * @param array $params
-     * @return mixed
-     */
-    public function create(array $params)
-    {
-        $entity = $this->repository->create($params);
-
-        $entity->save();
-
-        return $entity;
-    }
-
-    /**
-     * @param int $id
-     * @param array $params
-     * @return mixed
-     */
-    public function update(int $id, array $params)
-    {
-        $entity = $this->repository->update($params, $id);
-
-        $entity->save();
-
-        return $entity;
-    }
-
     public function updateOrCreate(array $match, array $params)
     {
         $entity = $this->repository->updateOrCreate($match, $params);
@@ -65,5 +38,46 @@ abstract class AbstractService
     public function delete(int $id)
     {
         $this->repository->delete($id);
+    }
+
+    /**
+     * @param array $params
+     * @param int|null $id
+     * @return mixed
+     */
+    public function save(array $params, int $id = null)
+    {
+        if ($id !== null) {
+            return $this->update($id, $params);
+        }
+
+        return $this->create($params);
+    }
+
+    /**
+     * @param int $id
+     * @param array $params
+     * @return mixed
+     */
+    public function update(int $id, array $params)
+    {
+        $entity = $this->repository->update($params, $id);
+
+        $entity->save();
+
+        return $entity;
+    }
+
+    /**
+     * @param array $params
+     * @return mixed
+     */
+    public function create(array $params)
+    {
+        $entity = $this->repository->create($params);
+
+        $entity->save();
+
+        return $entity;
     }
 }

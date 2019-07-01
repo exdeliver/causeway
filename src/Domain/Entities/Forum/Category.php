@@ -3,7 +3,7 @@
 namespace Exdeliver\Causeway\Domain\Entities\Forum;
 
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
-use Illuminate\Database\Eloquent\Builder;
+use Exdeliver\Causeway\Domain\Common\ChildrenTrait;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Category extends AggregateRoot
 {
+    use ChildrenTrait;
+
     /**
      * @var string
      */
@@ -46,22 +48,6 @@ class Category extends AggregateRoot
     }
 
     /**
-     * @return false|string
-     */
-    public function getJsonChildrenAttribute()
-    {
-        return json_encode($this->children->toArray(), true);
-    }
-
-    /**
-     * @return HasMany
-     */
-    public function children()
-    {
-        return $this->hasMany(Category::class, 'parent_id', 'id')->orderBy('sequence', 'asc');
-    }
-
-    /**
      * Set the slug value.
      *
      * @param $value
@@ -77,17 +63,6 @@ class Category extends AggregateRoot
             // Otherwise empty the slug
             $this->attributes['slug'] = null;
         }
-    }
-
-    /**
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeGetParents(Builder $query)
-    {
-        $query->whereNull('parent_id');
-
-        return $query;
     }
 
     /**

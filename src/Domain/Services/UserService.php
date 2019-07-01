@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Class PandaUserService
+ * Class UserService
  *
  * @package Domain\Services
  */
@@ -29,7 +29,7 @@ final class UserService extends AbstractService
     protected $redirectTo = '/causeway/dashboard';
 
     /**
-     * PandaUserService constructor.
+     * UserService constructor.
      * @param UserRepository $userRepository
      */
     public function __construct(UserRepository $userRepository)

@@ -12,7 +12,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Class PandaGroupCommentCreated
+ * Class CommentNotificationCreated
  *
  * @package App\Events
  */
@@ -26,7 +26,7 @@ final class CommentNotificationCreated implements ShouldBroadcast
     protected $comment;
 
     /**
-     * PandaGroupCommentCreated constructor.
+     * CommentNotificationCreated constructor.
      *
      * @param Comment $comment
      */
