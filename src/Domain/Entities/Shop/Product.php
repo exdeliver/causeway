@@ -25,6 +25,8 @@ class Product extends Entity implements Auditable
         'description' => 'Regular shippable product.'];
     public const COMPLEX_PRODUCT = ['type' => 'complex',
         'description' => 'Configurable complex product.'];
+    public const VARIANT_PRODUCT = ['type' => 'variant',
+        'description' => 'Variant product belongs to a complex product.'];
     public const BOOKING_PRODUCT = ['type' => 'booking',
         'description' => 'Product that is bookable for a period of time.'];
     public const SERVICE_PRODUCT = ['type' => 'service',
@@ -188,5 +190,20 @@ class Product extends Entity implements Auditable
     public function bookingDates()
     {
         return $this->hasMany(BookingDate::class);
+    }
+
+    /**
+     * @return array
+     */
+    public static function getProductTypes()
+    {
+        return [
+            self::REGULAR_PRODUCT,
+            self::COMPLEX_PRODUCT,
+            self::BOOKING_PRODUCT,
+            self::SERVICE_PRODUCT,
+            self::DOWNLOAD_PRODUCT,
+            self::RENTAL_PRODUCT,
+        ];
     }
 }

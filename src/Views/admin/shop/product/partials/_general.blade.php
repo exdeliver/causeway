@@ -32,7 +32,7 @@
 <div class="form-group">
     <label for="categories">Categories</label>
     <select class="form-control" name="categories[]" multiple id="categories" size="7">
-        @include('causeway::admin.shop.category.partials._selectMultiple', ['categories' => $categories, 'parent_id' => 0, 'model' => $product])
+        @include('causeway::admin.shop.category.partials._selectMultiple', ['categories' => $categories, 'parent_id' => 0, 'model' => $product ?? null])
     </select>
     @if ($errors->has('categories'))
         <span class="invalid-feedback  d-block" role="alert">

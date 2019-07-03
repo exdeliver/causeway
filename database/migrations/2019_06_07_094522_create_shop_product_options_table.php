@@ -55,8 +55,8 @@ class CreateShopProductOptionsTable extends Migration
 
         Schema::create('shop_product_variant_values', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('shop_product_variant_id')->unsigned();
-            $table->foreign('shop_product_variant_id')
+            $table->integer('variant_id')->unsigned();
+            $table->foreign('variant_id')
                 ->references('id')
                 ->on('shop_product_variants')
                 ->onDelete('cascade');

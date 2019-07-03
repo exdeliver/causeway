@@ -41,13 +41,21 @@ final class ProductController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
-    public function create()
+    public function create(Request $request)
     {
+        $productType = collect(Product::getProductTypes())->where('type', $request->product_type ?? 'regular')->first();
+
+        if ($productType === null) {
+            throw new \Exception('Unsupported product type');
+        }
+
         return view('causeway::admin.shop.product.new', [
             'categories' => Category::getSelectListHierarchy(),
-            'productType' => request()->product_type ?? 'regular',
+            'productType' => $productType['type'],
         ]);
     }
 

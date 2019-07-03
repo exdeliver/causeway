@@ -105,3 +105,20 @@ if (!function_exists('causewayCompanyInformation')) {
         return json_decode(config('causeway.shop_company_information'), false);
     }
 }
+
+if (!function_exists('generateArrayCombinations')) {
+    function generateArrayCombinations($arrays)
+    {
+        $combination = [[]];
+        foreach ($arrays as $property => $property_values) {
+            $temporaryResult = [];
+            foreach ($combination as $result_item) {
+                foreach ($property_values as $property_value) {
+                    $temporaryResult[] = array_merge($result_item, [$property => $property_value]);
+                }
+            }
+            $combination = $temporaryResult;
+        }
+        return $combination;
+    }
+}
