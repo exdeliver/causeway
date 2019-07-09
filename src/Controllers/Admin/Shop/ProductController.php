@@ -5,9 +5,12 @@ namespace Exdeliver\Causeway\Controllers\Admin\Shop;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Shop\Category;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
+use Exdeliver\Causeway\Domain\Services\ProductBookingsService;
+use Exdeliver\Causeway\Domain\Services\ProductVariantsService;
 use Exdeliver\Causeway\Domain\Services\ShopProductService;
 use Exdeliver\Causeway\Requests\PostShopProductRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 /**
@@ -24,12 +27,26 @@ final class ProductController extends Controller
     protected $productService;
 
     /**
+     * @var ProductVariantsService
+     */
+    protected $productVariantService;
+
+    /**
+     * @var ProductBookingsService
+     */
+    protected $productBookingService;
+
+    /**
      * ProductController constructor.
      * @param ShopProductService $productService
+     * @param ProductVariantsService $productVariantsService
+     * @param ProductBookingsService $productBookingsService
      */
-    public function __construct(ShopProductService $productService)
+    public function __construct(ShopProductService $productService, ProductVariantsService $productVariantsService, ProductBookingsService $productBookingsService)
     {
         $this->productService = $productService;
+        $this->productVariantService = $productVariantsService;
+        $this->productBookingService = $productBookingsService;
     }
 
     /**
@@ -77,6 +94,7 @@ final class ProductController extends Controller
      * @param PostShopProductRequest $request
      * @param Product $product
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Throwable
      */
     public function update(PostShopProductRequest $request, Product $product)
     {
@@ -87,14 +105,31 @@ final class ProductController extends Controller
      * @param PostShopProductRequest $request
      * @param Product|null $product
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Throwable
      */
     public function store(PostShopProductRequest $request, Product $product = null)
     {
-        /** @var Product $product */
-        $product = $this->productService->saveProduct($request->except(['files', 'categories', 'vat_price']), $product->id ?? null);
+        try {
+            $product = DB::transaction(function () use ($request, $product) {
+                /** @var Product $product */
+                $product = $this->productService->saveProduct($request->except(['files', 'categories', 'vat_price', 'variant', 'variantProduct', 'booking']), $product->id ?? null);
 
-        // Display product on categories.
-        $product->categories()->sync($request->categories);
+                if (is_array($request->variant)) {
+                    $variants = $this->productVariantService->saveVariants($request->only('variant', 'variantProduct'), $product);
+                }
+                if (is_array($request->booking)) {
+                    $bookings = $this->productBookingService->saveBookings($request->only('booking'), $product);
+                }
+
+                // Display product on categories.
+                $product->categories()->sync($request->categories);
+
+                return $product;
+            });
+
+        } catch (\Exception $e) {
+            throw new \Exception($e);
+        }
 
         if ($product !== null) {
             $request->session()->flash('status', 'Product ' . $product->title . ' updated');
@@ -114,7 +149,10 @@ final class ProductController extends Controller
      */
     public function getAjaxProducts()
     {
-        $products = Product::get();
+        $filteredTypes = array_column(collect(Product::getProductTypes())
+            ->whereNotIn('type', ['variant'])
+            ->toArray(), 'type');
+        $products = Product::whereIn('type', $filteredTypes)->get();
 
         return Datatables::of($products)
             ->addColumn('pid', function ($row) {

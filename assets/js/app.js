@@ -41,7 +41,9 @@ Vue.component('cart-items-count-component', require('./components/CartItemsCount
 
 Vue.component('product-price-calculation-component', require('./components/ProductPriceCalculationComponent').default);
 
-Vue.component('product-booking-component', require('./components/ProductBookingCalendarComponent').default);
+Vue.component('product-calendar-booking-component', require('./components/ProductBookingCalendarComponent').default);
+
+Vue.component('product-booking-component', require('./components/ProductBookingComponent').default);
 
 Vue.component('product-variant-component', require('./components/ProductVariantComponent').default);
 

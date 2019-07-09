@@ -23,7 +23,8 @@ class CreateShopProductBookingDatesTable extends Migration
                 ->references('id')
                 ->on('shop_products')
                 ->onDelete('cascade');
-            $table->dateTime('booking_date');
+            $table->dateTime('date_from');
+            $table->dateTime('date_to');
             $table->integer('gross_price')->nullable();
             $table->integer('special_price')->nullable();
         });
@@ -34,6 +35,8 @@ class CreateShopProductBookingDatesTable extends Migration
                 ->references('id')
                 ->on('orders')
                 ->onDelete('cascade');
+            $table->boolean('active')->default(0);
+            $table->integer('quantity')->nullable();
             $table->integer('booking_date_id');
             $table->index(['booking_date_id']);
         });

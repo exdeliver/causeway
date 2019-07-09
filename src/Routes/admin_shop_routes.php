@@ -67,6 +67,7 @@ Route::group(['prefix' => 'shop', 'namespace' => 'Shop'], function () {
         'update' => 'admin.shop.product.update.store',
         'destroy' => 'admin.shop.product.destroy',
     ]);
+    Route::get('product/{product}/delete', 'ProductController@destroy')->name('admin.shop.product.getDelete');
 
     Route::resource('category', 'CategoryController')->names([
         'index' => 'admin.shop.category.index',

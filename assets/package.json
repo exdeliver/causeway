@@ -48,6 +48,7 @@
         "v-calendar": "^0.9.7",
         "vue-spinner": "^1.0.3",
         "vuedraggable": "^2.23.0",
+        "vuejs-datepicker": "^1.6.2",
         "vuejs-datetimepicker": "^1.1.9",
         "webpack-plugin-replace-css-url": "^1.0.3"
     }

@@ -25,6 +25,7 @@ class CreateShopProductOptionsTable extends Migration
                 ->on('shop_products')
                 ->onDelete('cascade');
             $table->string('name');
+            $table->string('slug');
             $table->integer('sequence');
             $table->string('value_type')->default('text');
         });
@@ -37,6 +38,7 @@ class CreateShopProductOptionsTable extends Migration
                 ->on('shop_product_attributes')
                 ->onDelete('cascade');
             $table->string('attribute_value');
+            $table->string('slug')->unique();
             $table->integer('sequence');
         });
 
@@ -49,6 +51,7 @@ class CreateShopProductOptionsTable extends Migration
                 ->on('shop_products')
                 ->onDelete('cascade');
             $table->string('name');
+            $table->string('slug')->unique();
             $table->integer('sequence');
             $table->string('value_type')->default('text');
         });
@@ -61,6 +64,7 @@ class CreateShopProductOptionsTable extends Migration
                 ->on('shop_product_variants')
                 ->onDelete('cascade');
             $table->string('variant_value');
+            $table->string('slug')->unique();
             $table->integer('sequence');
         });
 
@@ -84,6 +88,14 @@ class CreateShopProductOptionsTable extends Migration
             $table->foreign('variant_product_id')
                 ->references('id')
                 ->on('shop_product_variant_products')
+                ->onDelete('cascade');
+        });
+
+        Schema::table('products', function (Blueprint $table) {
+            $table->integer('parent_product_id')->unsigned();
+            $table->foreign('parent_product_id')
+                ->references('id')
+                ->on('shop_products')
                 ->onDelete('cascade');
         });
     }

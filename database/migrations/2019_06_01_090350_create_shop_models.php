@@ -48,7 +48,7 @@ class CreateShopModels extends Migration
             $table->string('weight')->nullable();
 
             // Pricing
-            $table->integer('quantity');
+            $table->integer('quantity')->nullable();
             $table->integer('gross_price');
             $table->integer('special_price')->nullable();
             $table->decimal('vat');

@@ -24,6 +24,11 @@ class Variant extends AggregateRoot
     protected $table = 'shop_product_variants';
 
     /**
+     * @var array
+     */
+    protected $guarded = [];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function values()

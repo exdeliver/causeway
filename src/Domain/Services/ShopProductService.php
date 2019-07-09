@@ -45,7 +45,6 @@ final class ShopProductService extends AbstractService
             return $this->update($id, $params);
         }
 
-        $params['uuid'] = Str::uuid();
         return $this->create($params);
     }
 

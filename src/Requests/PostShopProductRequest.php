@@ -32,6 +32,9 @@ class PostShopProductRequest extends FormRequest
             'slug' => 'required',
             'gross_price' => 'required',
             'vat' => 'required',
+            'variant.*.name' => 'required',
+            'booking.*.date_from' => 'required',
+            'booking.*.date_to' => 'required',
         ];
     }
 
@@ -41,7 +44,7 @@ class PostShopProductRequest extends FormRequest
     public function prepareForValidation()
     {
         $input = $this->all();
-dd($input);
+
         $input['title'] = strip_tags($this->title);
         $input['description'] = clean($this->description);
         $input['slug'] = str_slug($this->title);

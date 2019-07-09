@@ -13,7 +13,8 @@
                                 <div class="input-group-prepend">
                                     <button class="btn btn-danger" type="button" @click="removeVariant(index)"><i class="fa fa-remove"></i></button>
                                 </div>
-                                <input type="text" v-model="element.name" :name="'variant['+element.id+'][name]'" class="form-control" id="variant_type"/>
+                                <input type="text" v-model="element.name" :name="'variant['+element.id+'][name]'" class="form-control" id="variant_type" :form="form"/>
+                                <input type="hidden" v-model="element.sequence" :name="'variant['+element.id+'][sequence]'" class="form-control" id="variant_type_sequence" :form="form"/>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" @click="newVariant(index)">Add</button>
                                 </div>
@@ -31,7 +32,8 @@
                                         <div class="input-group-prepend">
                                             <button class="btn btn-danger" type="button" @click="removeValue(index, valueIndex)"><i class="fa fa-remove"></i></button>
                                         </div>
-                                        <input type="text" v-model="elementValue.name" :name="'variant['+element.id+'][values]['+elementValue.id+'][name]'" class="form-control" id="variant_value"/>
+                                        <input type="text" v-model="elementValue.name" :name="'variant['+element.id+'][values]['+elementValue.id+'][name]'" class="form-control" id="variant_value" :form="form"/>
+                                        <input type="hidden" v-model="elementValue.sequence" :name="'variant['+element.id+'][values]['+elementValue.id+'][sequence]'" class="form-control" id="variant_value_sequence" :form="form"/>
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-secondary" type="button" @click="newValue(index)">Add</button>
                                         </div>
@@ -53,32 +55,35 @@
         components: {
             draggable
         },
-        props: ['product', 'variants'],
+        props: ['product', 'variants', 'form', 'formErrors'],
         created() {
-            this.variantsArray = [this.variants];
+            this.variantsArray = this.variants;
+            this.errors = this.formErrors;
+            console.log(this.errors);
         },
         data() {
             return {
-                variantsArray: null,
+                variantsArray: this.variants,
                 productDetails: null,
+                errors: {},
             };
         },
         methods: {
             updateOrderVariant: function () {
                 // get your info then...
-                var items = this.variantsArray.map(function (item, index) {
-                    return {item: item, order: index}
-                });
+                var variants = this.variantsArray;
 
-                //console.log(items);
+                var items = variants.map(function (item, index) {
+                    return item.sequence = index;
+                });
             },
             updateOrderValues: function (elementIndex) {
                 // get your info then...
-                var items = this.variantsArray[elementIndex].map(function (item, index) {
-                    return {item: item, order: index}
+                var variantValues = this.variantsArray[elementIndex].values;
+                console.log(variantValues);
+                var items = variantValues.map(function (item, index) {
+                    return item.sequence = index;
                 });
-
-                //console.log(items);
             },
             newVariant: function (elementIndex) {
                 let variantsCount = this.variantsArray.length + 1;
@@ -90,10 +95,13 @@
                         },
                     ]
                 });
-                console.log(this.variantsArray[elementIndex]);
             },
             removeVariant: function (elementIndex) {
-                this.variantsArray.splice(elementIndex, 1);
+                let variantsCount = this.variantsArray.length;
+
+                if(variantsCount > 1) {
+                    this.variantsArray.splice(elementIndex, 1);
+                }
             },
             newValue: function (elementIndex) {
                 let valuesCount = this.variantsArray[elementIndex].values.length + 1;
@@ -102,7 +110,11 @@
                 })
             },
             removeValue: function (elementIndex, valueIndex) {
-                this.variantsArray[elementIndex].values.splice(valueIndex, 1);
+                let variantValuesCount = this.variantsArray[elementIndex].values;
+
+                if(variantValuesCount > 1) {
+                    this.variantsArray[elementIndex].values.splice(valueIndex, 1);
+                }
             },
         }
     };

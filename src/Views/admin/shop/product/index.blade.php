@@ -11,8 +11,14 @@
 
         <div class="card-body">
             @include('causeway::layouts.partials._status_messages')
-
-            <a href="{{ route('admin.shop.product.create') }}" class="btn btn-primary float-right">Create Product</a>
+            <div class="btn-group dropdown pull-right">
+                <a href="{{ route('admin.shop.product.create') }}" class="btn btn-primary float-right dropdown-toggle" data-toggle="dropdown">Create Product</a>
+                <div class="dropdown-menu">
+                    @foreach(\Exdeliver\Causeway\Domain\Entities\Shop\Product::getProductTypes() as $type)
+                        <a href="{{ route('admin.shop.product.create', ['product_type' => $type['type']]) }}" class="dropdown-item" data-toggle="tooltip" title="{{ $type['description'] }}" data-placement="left">{{ ucfirst($type['type']) }} Product</a>
+                    @endforeach
+                </div>
+            </div>
             <div class="clearfix"></div>
 
             <hr/>

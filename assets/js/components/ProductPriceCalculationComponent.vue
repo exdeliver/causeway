@@ -2,7 +2,7 @@
     <div>
         <div class="form-group">
             <label for="gross_price">Gross price</label>
-            <input name="gross_price" type="text" class="form-control" id="gross_price" v-model="productDetails.gross_price" @change="updateRates">
+            <input name="gross_price" type="text" class="form-control" id="gross_price" v-model="productDetails.gross_price" @change="updateRates" :form="form">
             <span class="invalid-feedback  d-block" role="alert" v-if="formErrors.gross_price">
                  <strong v-for="value in formErrors.gross_price">{{ value }}</strong>
                 </span>
@@ -12,7 +12,7 @@
 
         <div class="form-group">
             <label for="special_price">Special price</label>
-            <input name="special_price" type="text" class="form-control" value="" id="special_price" v-model="productDetails.special_price" @change="updateRates">
+            <input name="special_price" type="text" class="form-control" value="" id="special_price" v-model="productDetails.special_price" @change="updateRates" :form="form">
             <span class="invalid-feedback  d-block" role="alert" v-if="formErrors.special_price">
                  <strong v-for="value in formErrors.special_price">{{ value }}</strong>
                 </span>
@@ -23,7 +23,7 @@
 
         <div class="form-group">
             <label for="vat">VAT amount</label>
-            <select name="vat" class="form-control" id="vat" v-model="productDetails.vat" @change="updateRates">
+            <select name="vat" class="form-control" id="vat" v-model="productDetails.vat" @change="updateRates" :form="form">
                 <option v-for="(value, key) in vat_list" :value="key">{{ value }}</option>
             </select>
             <span class="invalid-feedback  d-block" role="alert" v-if="formErrors.vat">
@@ -36,7 +36,7 @@
         <div class="form-group">
             <label for="vat_price">VAT price</label>
             <p v-if="productDetails.special_price > 0 && productDetails.special_price < productDetails.gross_price"><span class="badge badge-info">Discount</span>&nbsp;<strike>{{ productDetails.vat_gross_price }}</strike></p>
-            <input name="vat_price" type="text" class="form-control" id="vat_price" v-model="productDetails.vat_price" readonly>
+            <input name="vat_price" type="text" class="form-control" id="vat_price" v-model="productDetails.vat_price" readonly :form="form">
             <p class="alert alert-info"><i class="fa fa-question"></i> The VAT price of the product.
             </p>
         </div>
@@ -49,7 +49,7 @@
         mounted() {
             console.log('Shop calculate price product.');
         },
-        props: ['product', 'vat_list', 'errors'],
+        props: ['product', 'vat_list', 'errors', 'form'],
         components: {},
         data: function () {
             return {

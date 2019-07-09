@@ -193,6 +193,66 @@ class Product extends Entity implements Auditable
     }
 
     /**
+     * Get collection of variants.
+     *
+     * @return mixed
+     */
+    public function getVariantsCollection()
+    {
+        $variants = $this->variants->map(function ($variant) {
+
+            $variantType = ['id' => $variant['id'],
+                'name' => $variant->name,
+                'sequence' => $variant->sequence,
+                'values' => $variant->values->map(function ($value) {
+                    return [
+                        'id' => $value['id'],
+                        'name' => $value->variant_value,
+                        'sequence' => $value->sequence,
+                    ];
+                }),
+            ];
+
+            return $variantType;
+        });
+
+        return $variants;
+    }
+
+    /**
+     * Get collection of variants.
+     *
+     * @return mixed
+     */
+    public function getBookingsCollection()
+    {
+        $bookings = $this->bookingDates()->orderBy('date_from')->get()->map(function ($booking) {
+
+            $bookingType = [
+                'id' => $booking['id'],
+                'date_from' => $booking->date_from->format('Y-m-d'),
+                'date_to' => $booking->date_to->format('Y-m-d'),
+                'gross_price' => $booking->gross_price / 100,
+                'special_price' => $booking->special_price / 100,
+                'quantity' => $booking->quantity,
+            ];
+
+            return $bookingType;
+        });
+
+        return $bookings;
+    }
+
+
+    /**
+     * Get product variants
+     */
+    public function getVariants()
+    {
+        return self::where('parent_product_id', $this['id'])->where('type', self::VARIANT_PRODUCT['type'])->get();
+    }
+
+    /**
      * @return array
      */
     public static function getProductTypes()
