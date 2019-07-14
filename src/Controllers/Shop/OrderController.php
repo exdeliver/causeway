@@ -4,13 +4,13 @@ namespace Exdeliver\Causeway\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use Exception;
+use Exdeliver\Cart\Domain\Services\CartService;
 use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
-use Exdeliver\Causeway\Domain\Services\CartService;
 use Exdeliver\Causeway\Domain\Services\CouponCodeService;
 use Exdeliver\Causeway\Domain\Services\CustomerService;
 use Exdeliver\Causeway\Domain\Services\OrderService;
 use Exdeliver\Causeway\Domain\Services\PaymentService;
-use Exdeliver\Causeway\Domain\Services\ShopCalculationService;
+use Exdeliver\Cart\Domain\Services\ShopCalculationService;
 use Exdeliver\Causeway\Requests\PostCheckoutRequest;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;

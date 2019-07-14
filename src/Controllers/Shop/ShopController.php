@@ -2,10 +2,10 @@
 
 namespace Exdeliver\Causeway\Controllers\Shop;
 
+use Exdeliver\Cart\Domain\Services\CartService;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Shop\Category;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
-use Exdeliver\Causeway\Domain\Services\CartService;
 use Exdeliver\Causeway\Domain\Services\MolliePaymentService;
 use Exdeliver\Causeway\Domain\Services\PaymentService;
 use Exdeliver\Causeway\Domain\Services\ShippingMethodService;

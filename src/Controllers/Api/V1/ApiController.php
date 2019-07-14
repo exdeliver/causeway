@@ -4,7 +4,7 @@ namespace Exdeliver\Causeway\Controllers\Api\V1;
 
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
-use Exdeliver\Causeway\Domain\Services\CartService;
+use Exdeliver\Cart\Domain\Services\CartService;
 use Exdeliver\Causeway\Domain\Services\CustomerService;
 use Exdeliver\Causeway\Domain\Services\OrderService;
 use Exdeliver\Causeway\Domain\Services\PaymentService;

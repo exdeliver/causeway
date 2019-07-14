@@ -11,7 +11,6 @@ use Exdeliver\Causeway\Domain\Entities\Shop\CouponCode;
 use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
 use Exdeliver\Causeway\Domain\Entities\Sound\Sound;
-use Exdeliver\Causeway\Domain\Services\CartService;
 use Exdeliver\Causeway\Domain\Services\CausewayService;
 use Exdeliver\Causeway\Events\CausewayRegistered;
 use Exdeliver\Causeway\Listeners\AccountVerificationNotification;
@@ -141,10 +140,6 @@ class CausewayServiceProvider extends ServiceProvider
     {
         $this->app->bind('causewayservice', function () {
             return app(CausewayService::class);
-        });
-
-        $this->app->bind('causewaycartservice', function () {
-            return app(CartService::class);
         });
     }
 

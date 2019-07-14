@@ -2,6 +2,8 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
+use Exdeliver\Cart\Domain\Services\CartService;
+use Exdeliver\Cart\Domain\Services\ShopCalculationService;
 use Exdeliver\Causeway\Domain\Entities\Shop\Customers\Customer;
 use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Item;
 use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
@@ -85,7 +87,7 @@ class OrderService extends AbstractService
                 $productArray['vat'] = $item->vat;
                 $productArray['quantity'] = $item->quantity;
                 $productArray['product_id'] = (int)$item->product_id;
-                $productArray['gross_price'] = ($item->special_price > 0 && $item->special_price < $item->gross_price) ? $item->special_price : $item->gross_price;
+                $productArray['gross_price'] = (isset($item->special_price) && $item->special_price > 0 && $item->special_price < $item->gross_price) ? $item->special_price : $item->gross_price;
             }
 
             Item::create($productArray);

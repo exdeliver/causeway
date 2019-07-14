@@ -2,7 +2,7 @@
 
 namespace Exdeliver\Causeway\Requests;
 
-use Exdeliver\Causeway\Domain\Services\CartService;
+use Exdeliver\Cart\Domain\Services\CartService;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**

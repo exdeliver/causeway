@@ -3,9 +3,9 @@
 namespace Exdeliver\Causeway\Controllers\Admin\Shop;
 
 use Carbon\Carbon;
+use Exdeliver\Cart\Domain\Services\ShopCalculationService;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
-use Exdeliver\Causeway\Domain\Services\ShopCalculationService;
 use Exdeliver\Causeway\Requests\PostOrderStatusRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;

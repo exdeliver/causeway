@@ -19,7 +19,8 @@
         "intervention/image": "^2.4",
         "owen-it/laravel-auditing": "8.*",
         "barryvdh/laravel-snappy": "^0.4.3",
-        "myparcelnl/sdk": "^2.1"
+        "myparcelnl/sdk": "^2.1",
+        "exdeliver/cart": "dev-master"
     },
     "scripts": {
         "post-package-install": [

@@ -3,7 +3,9 @@
 namespace Exdeliver\Causeway\Controllers\Shop;
 
 use Exdeliver\Causeway\Controllers\Controller;
-use Exdeliver\Causeway\Domain\Services\CartService;
+use Exdeliver\Cart\Domain\Services\CartService;
+use Exdeliver\Causeway\Domain\Entities\Shop\Product;
+use Exdeliver\Causeway\Domain\Entities\Shop\ShippingMethods\ShippingMethods;
 use Exdeliver\Causeway\Domain\Services\CouponCodeService;
 use Exdeliver\Causeway\Requests\PostOrderRequest;
 use Illuminate\Http\JsonResponse;
@@ -44,7 +46,15 @@ class CartController extends Controller
     public function addProduct(Request $request)
     {
         foreach ($request->products as $productId => $quantity) {
-            $this->cartService->validateAndAddToCart($productId, $quantity);
+            $product = Product::findOrFail($productId);
+            $this->cartService->validateAndAddToCart([
+                'product_id' => $product->id,
+                'name' => $product->title,
+                '_link' => route('shop.product', ['slug' => $product->slug]),
+                'type' => 'item',
+                'gross_price' => ($product->special_price !== null && $product->gross_price > $product->special_price) ? $product->special_price : $product->gross_price,
+                'vat' => $product->vat,
+            ], $quantity);
         }
 
         return $this->index();
@@ -57,9 +67,49 @@ class CartController extends Controller
      */
     public function addShippingMethod(Request $request)
     {
-        $this->cartService->validateShippingMethodAndAddToCart($request->shippingMethod['id'], 1);
+        $this->validateShippingMethodAndAddToCart($request->shippingMethod['id'], 1);
 
         return $this->index();
+    }
+
+    /**
+     * @param string $shippingMethodId
+     * @param int $quantity
+     * @return mixed
+     * @throws \Exception
+     */
+    public function validateShippingMethodAndAddToCart(string $shippingMethodId, int $quantity = 1)
+    {
+        $shippingMethod = ShippingMethods::findOrFail($shippingMethodId);
+
+        $findExistingProduct = $this->cartService->find([
+            'type' => 'shippingmethod',
+        ]);
+
+        if (count($findExistingProduct) > 0) {
+            foreach ($findExistingProduct as $product) {
+                $this->cartService->remove((string)$product->id);
+            }
+        }
+
+        // Apply free shipping when threshold reached.
+        if (($shippingMethod->total_free_shipping_threshold !== null && $shippingMethod->total_free_shipping_threshold > 0) && $this->cartService->subtotal() > $shippingMethod->total_free_shipping_threshold) {
+            $shippingMethod->gross_price = 0;
+        }
+
+        $productData = [
+            'product_id' => $shippingMethodId,
+            'name' => $shippingMethod->label,
+            'type' => 'shippingmethod',
+            'gross_price' => $shippingMethod->gross_price,
+            'special_price' => ($shippingMethod->special_price > 0 && $shippingMethod->special_price < $shippingMethod->gross_price) ? $shippingMethod->special_price : null,
+            'vat' => $shippingMethod->vat,
+            'quantity' => $quantity,
+        ];
+
+        $this->cartService->add($productData);
+
+        return $shippingMethod;
     }
 
     /**

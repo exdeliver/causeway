@@ -3,7 +3,7 @@
 namespace Exdeliver\Causeway\Controllers\Shop;
 
 use Exdeliver\Causeway\Controllers\Controller;
-use Exdeliver\Causeway\Domain\Services\CartService;
+use Exdeliver\Cart\Domain\Services\CartService;
 use Exdeliver\Causeway\Domain\Services\ShopProductService;
 
 /**
