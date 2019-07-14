@@ -39,6 +39,7 @@ class PostCheckoutRequest extends FormRequest
             'city' => 'required',
             'country' => 'required',
             'zipcode' => 'required',
+            'shipping' => 'required',
             'terms_and_conditions' => 'required',
             'payment' => 'required',
         ];

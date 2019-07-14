@@ -3,6 +3,7 @@
 namespace Exdeliver\Causeway\Domain\Entities\Shop\ProductBookingDates;
 
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
+use Exdeliver\Causeway\Domain\Entities\Shop\PricingTrait;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
 
 /**
@@ -11,6 +12,8 @@ use Exdeliver\Causeway\Domain\Entities\Shop\Product;
  */
 class BookingDate extends AggregateRoot
 {
+    use PricingTrait;
+
     /**
      * @var bool
      */
@@ -40,23 +43,5 @@ class BookingDate extends AggregateRoot
     public function product()
     {
         return $this->belongsTo(Product::class);
-    }
-
-    /**
-     * @param $value
-     * @return float|int
-     */
-    public function setGrossPriceAttribute($value)
-    {
-        return $this->attributes['gross_price'] = ($value * 100);
-    }
-
-    /**
-     * @param $value
-     * @return float|int
-     */
-    public function setSpecialPriceAttribute($value)
-    {
-        return $this->attributes['special_price'] = ($value * 100);
     }
 }

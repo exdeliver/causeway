@@ -37,7 +37,11 @@ Vue.component('cart-totals-component', require('./components/CartTotalsComponent
 
 Vue.component('add-to-cart-component', require('./components/AddToCartComponent').default);
 
+Vue.component('checkout-shippingmethod-component', require('./components/CheckoutShippingMethodComponent').default);
+
 Vue.component('cart-items-count-component', require('./components/CartItemsCountComponent').default);
+
+Vue.component('cart-checkout-component', require('./components/CartCheckoutComponent').default);
 
 Vue.component('product-price-calculation-component', require('./components/ProductPriceCalculationComponent').default);
 

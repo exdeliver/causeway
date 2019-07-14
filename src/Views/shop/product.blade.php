@@ -46,11 +46,13 @@
                                         <hr class="py-0 my-0 border border-grey-lighter"/>
                                         </p>
 
-                                        <add-to-cart-component show_quantity_input="{{ true }}"
-                                                               csrf_token="{{ csrf_token() }}"
-                                                               add_to_cart_route="{{ route('shop.product.add_to_cart') }}"
-                                                               :product="{{ $product->toJson() }}">
-                                        </add-to-cart-component>
+                                        @if($product->type !== \Exdeliver\Causeway\Domain\Entities\Shop\Product::BOOKING_PRODUCT['type'])
+                                            <add-to-cart-component show_quantity_input="{{ true }}"
+                                                                   csrf_token="{{ csrf_token() }}"
+                                                                   add_to_cart_route="{{ route('shop.product.add_to_cart') }}"
+                                                                   :product="{{ $product->toJson() }}">
+                                            </add-to-cart-component>
+                                        @endif
 
                                     </div>
 
@@ -59,7 +61,9 @@
                             </div>
 
                             <hr>
-                            {{--@include('causeway::shop.partials.product-details._additional_information')--}}
+                            @if($product->type === \Exdeliver\Causeway\Domain\Entities\Shop\Product::BOOKING_PRODUCT['type'])
+                                @include('causeway::shop.partials.product-details._booking')
+                            @endif
 
                         </div>
                     </div>

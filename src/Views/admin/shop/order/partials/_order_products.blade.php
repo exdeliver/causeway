@@ -13,7 +13,7 @@
         {{ __(' Gross Total') }}
     </th>
     </thead>
-    @foreach($order->items()->where('type','item')->get() as $item)
+    @foreach($order->items()->orderBy('id','desc')->where('type', '!=', 'discount')->get() as $item)
         <tr>
             <td>
                 {{ $item->name }}

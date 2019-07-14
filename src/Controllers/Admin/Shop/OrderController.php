@@ -23,6 +23,10 @@ final class OrderController extends Controller
      */
     protected $calculationService;
 
+    /**
+     * OrderController constructor.
+     * @param ShopCalculationService $shopCalculationService
+     */
     public function __construct(ShopCalculationService $shopCalculationService)
     {
         $this->calculationService = $shopCalculationService;
@@ -79,7 +83,8 @@ final class OrderController extends Controller
      */
     public function getAjaxOrders()
     {
-        $orders = Order::get();
+        /** @var Order $orders */
+        $orders = Order::orderBy('created_at', 'asc')->get();
 
         return Datatables::of($orders)
             ->addColumn('id', function ($row) {

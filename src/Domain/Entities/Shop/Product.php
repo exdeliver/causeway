@@ -17,6 +17,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Product extends Entity implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
+    use PricingTrait;
 
     /**
      * Product types that Causeway Supports
@@ -60,47 +61,6 @@ class Product extends Entity implements Auditable
     }
 
     /**
-     * VAT amount to pay.
-     *
-     * @return float|int
-     */
-    public function getVatToPayAttribute()
-    {
-        $grossPrice = ($this->special_price > 0 && $this->special_price < $this->gross_price) ? $this->special_price : $this->gross_price;
-
-        return ($grossPrice / 100) * $this->vat;
-    }
-
-    /**
-     * @param $value
-     * @return float|int
-     */
-    public function setGrossPriceAttribute($value)
-    {
-        return $this->attributes['gross_price'] = ($value * 100);
-    }
-
-    /**
-     * @param $value
-     * @return float|int
-     */
-    public function setSpecialPriceAttribute($value)
-    {
-        return $this->attributes['special_price'] = ($value * 100);
-    }
-
-    /**
-     * Get original vat price.
-     *
-     * @return int
-     */
-    public function getOriginalVatPriceAttribute()
-    {
-        $vatToPay = ($this->gross_price / 100) * $this->vat;
-        return $this->gross_price + $vatToPay;
-    }
-
-    /**
      * Set the label value.
      *
      * @param $value
@@ -118,20 +78,6 @@ class Product extends Entity implements Auditable
         }
     }
 
-    /**
-     * Get calculated vat price.
-     *
-     * @return int
-     */
-    public function getVatPriceAttribute()
-    {
-        // Get gross price directly from product depending on special price.
-        $grossPrice = ($this->special_price > 0 && $this->special_price < $this->gross_price) ? $this->special_price : $this->gross_price;
-        $vatToPay = ($grossPrice / 100) * $this->vat;
-
-        // Room for other calculations.
-        return $grossPrice + $vatToPay;
-    }
 
     /**
      * Get fully qualified name slug.
@@ -230,6 +176,7 @@ class Product extends Entity implements Auditable
 
             $bookingType = [
                 'id' => $booking['id'],
+                'type' => $booking['type'],
                 'date_from' => $booking->date_from->format('Y-m-d'),
                 'date_to' => $booking->date_to->format('Y-m-d'),
                 'gross_price' => $booking->gross_price / 100,

@@ -8,6 +8,7 @@ use Exdeliver\Causeway\Domain\Entities\Shop\Product;
 use Exdeliver\Causeway\Domain\Services\CartService;
 use Exdeliver\Causeway\Domain\Services\MolliePaymentService;
 use Exdeliver\Causeway\Domain\Services\PaymentService;
+use Exdeliver\Causeway\Domain\Services\ShippingMethodService;
 use Exdeliver\Causeway\Domain\Services\ShopProductService;
 use Illuminate\Http\Request;
 
@@ -35,17 +36,23 @@ class ShopController extends Controller
     protected $paymentService;
 
     /**
+     * @var ShippingMethodService
+     */
+    protected $shippingService;
+
+    /**
      * ShopController constructor.
      * @param CartService $cartService
      * @param ShopProductService $productService
      * @param MolliePaymentService $paymentService
+     * @param ShippingMethodService $shippingMethodService
      */
-    public function __construct(CartService $cartService, ShopProductService $productService, MolliePaymentService $paymentService)
+    public function __construct(CartService $cartService, ShopProductService $productService, MolliePaymentService $paymentService, ShippingMethodService $shippingMethodService)
     {
         $this->cartService = $cartService;
         $this->productService = $productService;
         $this->paymentService = $paymentService;
-
+        $this->shippingService = $shippingMethodService;
     }
 
     /**
@@ -120,6 +127,7 @@ class ShopController extends Controller
         return view('causeway::shop.checkout', [
             'products' => $this->cartService->all(),
             'paymentMethods' => $this->paymentService->getClient()->methods->all(),
+            'shippingMethods' => $this->shippingService->repository->all(),
         ]);
     }
 

@@ -72,35 +72,6 @@ final class ProductVariantsService
     }
 
     /**
-     * Generate product variants.
-     *
-     * @param Product $product
-     * @return Exception|Collection
-     * @throws Exception
-     */
-    public function generateVariants(Product $product)
-    {
-        $variants = $product->variants()->orderBy('sequence')->get();
-
-        if (count($variants) === 0) {
-            throw new Exception('Cannot generate variants, because its empty.');
-        }
-
-        $variantValues = [];
-
-        foreach ($variants as $variant) {
-            $variantValues[$variant->name] = $variant->values->toArray();
-        }
-
-        try {
-            return collect(generateArrayCombinations($variantValues));
-        } catch (Exception $e) {
-            logger()->error('Could not generate a variant combination with these values.', [$e]);
-            throw new \Exception('Error generating variant combinations.');
-        }
-    }
-
-    /**
      * Create variant products.
      *
      * @param Collection $generatedVariants
@@ -135,5 +106,34 @@ final class ProductVariantsService
         }
 
         return $generatedProducts;
+    }
+
+    /**
+     * Generate product variants.
+     *
+     * @param Product $product
+     * @return Exception|Collection
+     * @throws Exception
+     */
+    public function generateVariants(Product $product)
+    {
+        $variants = $product->variants()->orderBy('sequence')->get();
+
+        if (count($variants) === 0) {
+            throw new Exception('Cannot generate variants, because its empty.');
+        }
+
+        $variantValues = [];
+
+        foreach ($variants as $variant) {
+            $variantValues[$variant->name] = $variant->values->toArray();
+        }
+
+        try {
+            return collect(generateArrayCombinations($variantValues));
+        } catch (Exception $e) {
+            logger()->error('Could not generate a variant combination with these values.', [$e]);
+            throw new \Exception('Error generating variant combinations.');
+        }
     }
 }

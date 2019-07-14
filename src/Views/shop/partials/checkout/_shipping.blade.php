@@ -4,7 +4,14 @@
     </div>
     <div class="p-3 bg-white">
         <p class="alert alert-info">
-            Please submit your personal information.
+            Please select a shipping method
         </p>
+        @include('causeway::layouts.partials.common._error', ['name' => 'shipping'])
+
+        @foreach ($shippingMethods as $method)
+            <checkout-shippingmethod-component csrf_token="{{ csrf_token() }}"
+                                               add_to_cart_route="{{ route('shop.product.add_shipping_method') }}"
+                                               :shipping="{{ $method->toJson() }}"></checkout-shippingmethod-component>
+        @endforeach
     </div>
 </div>

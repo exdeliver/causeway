@@ -60,7 +60,7 @@
             }
         },
         created() {
-console.log(this.product);
+
         },
         methods: {
             plusProduct: function (e) {

@@ -13,7 +13,7 @@ use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
  *
  * @package Domain\Services
  */
-final class PaymentService extends AbstractService implements PaymentInterface
+final class PaymentService extends AbstractApiService implements PaymentInterface
 {
     /**
      * @param Order $order
@@ -22,7 +22,7 @@ final class PaymentService extends AbstractService implements PaymentInterface
      */
     public function generate(Order $order)
     {
-        $service = $this->getProvider($order);
+        $service = $this->getProvider($order->payment_service);
 
         $payment = $service->generate($order);
 
@@ -35,24 +35,6 @@ final class PaymentService extends AbstractService implements PaymentInterface
         $order->payment_link = $payment->_links->checkout->href;
 
         return $order;
-    }
-
-    /**
-     * @param Order $order
-     * @return \Illuminate\Foundation\Application|mixed
-     * @throws \Exception
-     */
-    public function getProvider(Order $order)
-    {
-        $class = "\\Exdeliver\\Causeway\\Domain\\Services\\{$order->payment_service}";
-
-        if (!class_exists($class)) {
-            throw new \Exception('PaymentService not found.');
-        }
-
-        $service = app($class);
-
-        return $service;
     }
 
     /**

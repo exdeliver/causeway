@@ -5,6 +5,7 @@ namespace Exdeliver\Causeway\Domain\Services;
 use Akaunting\Money\Money;
 use Exdeliver\Causeway\Domain\Entities\Cart\Item;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
+use Exdeliver\Causeway\Domain\Entities\Shop\ShippingMethods\ShippingMethods;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Collection;
@@ -361,6 +362,7 @@ class CartService extends ShopCalculationService
             'gross_price' => $product->gross_price,
             'special_price' => ($product->special_price > 0 && $product->special_price < $product->gross_price) ? $product->special_price : null,
             'vat' => $product->vat,
+            'weight' => $product->weight ?? null,
             'quantity' => $quantity,
         ];
 
@@ -370,12 +372,54 @@ class CartService extends ShopCalculationService
     }
 
     /**
-     * @param string $productId
+     * @param string $shippingMethodId
+     * @param int $quantity
+     * @return mixed
      * @throws \Exception
      */
-    public function findRemoveProduct(string $productId): void
+    public function validateShippingMethodAndAddToCart(string $shippingMethodId, int $quantity = 1)
+    {
+        $shippingMethod = ShippingMethods::findOrFail($shippingMethodId);
+
+        $findExistingProduct = $this->find([
+            'type' => 'shippingmethod',
+        ]);
+
+        if (count($findExistingProduct) > 0) {
+            foreach ($findExistingProduct as $product) {
+                $this->remove((string)$product->id);
+            }
+        }
+
+        // Apply free shipping when threshold reached.
+        if (($shippingMethod->total_free_shipping_threshold !== null && $shippingMethod->total_free_shipping_threshold > 0) && $this->subtotal() > $shippingMethod->total_free_shipping_threshold) {
+            $shippingMethod->gross_price = 0;
+        }
+
+        $productData = [
+            'product_id' => $shippingMethodId,
+            'name' => $shippingMethod->label,
+            'type' => 'shippingmethod',
+            'gross_price' => $shippingMethod->gross_price,
+            'special_price' => ($shippingMethod->special_price > 0 && $shippingMethod->special_price < $shippingMethod->gross_price) ? $shippingMethod->special_price : null,
+            'vat' => $shippingMethod->vat,
+            'quantity' => $quantity,
+        ];
+
+        $this->add($productData);
+
+        return $shippingMethod;
+    }
+
+    /**
+     * @param string $productId
+     * @param string $type
+     * @throws \Exception
+     */
+    public function findRemoveProduct(string $productId, $type = 'item'): void
     {
         $findExistingProduct = $this->find([
+            'type' => $type,
             'product_id' => $productId,
         ]);
 
@@ -604,6 +648,16 @@ class CartService extends ShopCalculationService
         $collection = $this->items()->where('type', 'item');
 
         return $collection->sum('quantity');
+    }
+
+    /**
+     * @return integer
+     */
+    public function weight()
+    {
+        $collection = $this->items()->where('type', 'item');
+
+        return $collection->sum('weight');
     }
 
     public function discountTotal()

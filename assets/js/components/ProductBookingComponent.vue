@@ -7,22 +7,22 @@
         <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th width="10%">
-                    Date from
-                </th>
-                <th width="10%">
-                    Date To
+                <th width="20%">
+                    Type
                 </th>
                 <th width="20%">
+                    Date from / Date To
+                </th>
+                <th width="10%">
                     Gross Price
                 </th>
-                <th width="20%">
+                <th width="10%">
                     Special Price
                 </th>
                 <th width="10%">
                     Available
                 </th>
-                <th width="30%">
+                <th width="10%">
 
                 </th>
             </tr>
@@ -31,11 +31,20 @@
             <tr v-for="(booking, index) in bookingsArray" :key="booking.id">
                 <td>
                     <div class="form-group">
-                        <datepicker placeholder="Select Date" :disabledDates="disabledDates" v-model="booking.date_from" :name="'booking['+booking.id+'][date_from]'" class="form-control"></datepicker>
+                        <input v-model="booking.type" :name="'booking['+booking.id+'][type]'" type="text" class="form-control">
                     </div>
                 </td>
                 <td>
-                    <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">From</span>
+                        </div>
+                        <datepicker placeholder="Select Date" :disabledDates="disabledDates" v-model="booking.date_from" :name="'booking['+booking.id+'][date_from]'" class="form-control"></datepicker>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">To</span>
+                        </div>
                         <datepicker placeholder="Select Date" :disabledDates="disabledDates" v-model="booking.date_to" :name="'booking['+booking.id+'][date_to]'" class="form-control"></datepicker>
                     </div>
                 </td>
@@ -77,18 +86,16 @@
         components: {
             Datepicker
         },
-        props: ['product', 'bookings', 'form', 'formErrors'],
+        props: ['product', 'bookings', 'form', 'formErrors', 'booking_disabled_dates'],
         created() {
             this.bookingsArray = this.bookings;
             this.errors = this.formErrors;
-            console.log(this.errors);
+            console.log(this.booking_disabled_dates);
         },
         data() {
             return {
                 bookingsArray: this.bookings,
-                disabledDates: {
-                    to: new Date(Date.now() - 8640000)
-                },
+                disabledDates: this.booking_disabled_dates,
                 errors: {},
             };
         },

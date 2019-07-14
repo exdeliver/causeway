@@ -51,6 +51,18 @@ class CartController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function addShippingMethod(Request $request)
+    {
+        $this->cartService->validateShippingMethodAndAddToCart($request->shippingMethod['id'], 1);
+
+        return $this->index();
+    }
+
+    /**
      * @return \Illuminate\Http\JsonResponse
      */
     public function index()

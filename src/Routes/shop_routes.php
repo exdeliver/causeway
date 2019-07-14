@@ -10,6 +10,8 @@ Route::group(['prefix' => 'shop', 'namespace' => 'Shop'], function () {
 
     Route::post('/product/add-to-cart', 'CartController@addProduct')->name('shop.product.add_to_cart');
 
+    Route::post('/product/add-shipping-method-to-cart', 'CartController@addShippingMethod')->name('shop.product.add_shipping_method');
+
     Route::get('/cart', 'ShopController@getCart')->name('shop.cart');
 
     Route::get('/cart-details', 'CartController@index')->name('shop.cart.details');

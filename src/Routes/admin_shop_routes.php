@@ -38,6 +38,13 @@ Route::group(['prefix' => 'shop', 'namespace' => 'Shop'], function () {
         });
 
         /**
+         * Prefix: causeway/shop/ajax/shipping-method
+         */
+        Route::group(['prefix' => 'shipping-method'], function () {
+            Route::get('index', 'ShippingMethodController@getAjaxShippingMethods')->name('ajax.shop.shipping-method.index');
+        });
+
+        /**
          * Prefix: causeway/shop/ajax/couponcode
          */
         Route::group(['prefix' => 'couponcode'], function () {
@@ -95,5 +102,14 @@ Route::group(['prefix' => 'shop', 'namespace' => 'Shop'], function () {
         'store' => 'admin.shop.couponcode.new.store',
         'update' => 'admin.shop.couponcode.update.store',
         'destroy' => 'admin.shop.couponcode.destroy',
+    ]);
+
+    Route::resource('shipping-method', 'ShippingMethodController')->names([
+        'index' => 'admin.shop.shipping-method.index',
+        'create' => 'admin.shop.shipping-method.create',
+        'edit' => 'admin.shop.shipping-method.update',
+        'store' => 'admin.shop.shipping-method.new.store',
+        'update' => 'admin.shop.shipping-method.update.store',
+        'destroy' => 'admin.shop.shipping-method.destroy',
     ]);
 });
