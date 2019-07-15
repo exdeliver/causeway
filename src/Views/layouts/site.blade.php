@@ -35,6 +35,7 @@
 </div>
 
 <!-- Scripts -->
+<script src="/js/lang.js"></script>
 <script src="{{ causewayAsset('js/app.js') }}"></script>
 <script src="{{ causewayAsset('js/website.js') }}"></script>
 <script src="{{ causewayAsset('js/datatables.min.js') }}"></script>

@@ -3,9 +3,33 @@
 /**
  * Prefix: sound/
  */
-Route::group(['prefix' => 'sound', 'middleware' => ['web']], function () {
+Route::group(['prefix' => 'sound'], function () {
     Route::get('{soundName}', 'SoundController@getSound')->name('causeway.sound.play');
 });
+
+/**
+ * Localisation
+ *
+ * Prefix: js/
+ */
+Route::get('/js/lang.js', function () {
+    $strings = Cache::rememberForever('lang.js', function () {
+        $lang = config('app.locale');
+        $files   = glob(__DIR__.'/../Lang/' . $lang . '/*.php');
+        $strings = [];
+
+        foreach ($files as $file) {
+            $name           = basename($file, '.php');
+            $strings[$name] = require $file;
+        }
+
+        return $strings;
+    });
+
+    header('Content-Type: text/javascript');
+    echo('window.i18n = ' . json_encode($strings) . ';');
+    exit();
+})->name('assets.lang');
 
 /**
  * Prefix: forum/
@@ -107,6 +131,9 @@ Route::group(['prefix' => 'causeway'], function () {
                     Route::get('index', 'Admin\SoundController@getAjaxSounds')->name('ajax.sound.index');
                 });
 
+                /**
+                 * Prefix: causeway/ajax/forum
+                 */
                 Route::group(['prefix' => 'forum'], function () {
                     Route::get('index', 'Admin\ForumController@getAjaxCategories')->name('ajax.forum.index');
                 });

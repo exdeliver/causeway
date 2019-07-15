@@ -7,11 +7,15 @@ require('../js/loadScripts.js');
 
 window.Vue = require('vue');
 
+const _ = require('lodash');
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
+Vue.prototype.trans = string => _.get(window.i18n, string);
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 

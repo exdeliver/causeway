@@ -91,7 +91,7 @@ class CreateShopProductOptionsTable extends Migration
                 ->onDelete('cascade');
         });
 
-        Schema::table('products', function (Blueprint $table) {
+        Schema::table('shop_products', function (Blueprint $table) {
             $table->integer('parent_product_id')->unsigned();
             $table->foreign('parent_product_id')
                 ->references('id')
