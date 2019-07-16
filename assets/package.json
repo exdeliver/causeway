@@ -46,6 +46,7 @@
         "soundmanager2": "^2.97.20170602",
         "summernote": "^0.8.11",
         "v-calendar": "^0.9.7",
+        "vue-router": "^3.0.7",
         "vue-spinner": "^1.0.3",
         "vuedraggable": "^2.23.0",
         "vuejs-datepicker": "^1.6.2",

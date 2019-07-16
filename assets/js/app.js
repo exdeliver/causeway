@@ -5,7 +5,9 @@
  */
 require('../js/loadScripts.js');
 
-window.Vue = require('vue');
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+window.EventBus = new Vue();
 
 const _ = require('lodash');
 
@@ -17,46 +19,22 @@ const _ = require('lodash');
 
 Vue.prototype.trans = string => _.get(window.i18n, string);
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+const req = require.context('./components/', true, /\.(js|vue)$/i);
+req.keys().map(key => {
+    const name = key.match(/\w+/)[0];
+    return Vue.component(name, req(key).default)
+});
 
-Vue.component('login-component', require('./components/LoginComponent.vue').default);
+Vue.use(VueRouter);
 
-Vue.component('register-component', require('./components/RegisterComponent.vue').default);
+var webRoutes = require('./components/routes/web');
 
-Vue.component('request-password-component', require('./components/RequestPasswordComponent.vue').default);
+var router = new VueRouter(
+    webRoutes
+);
 
-Vue.component('modal-component', require('./components/DialogComponent.vue').default);
-
-Vue.component('message-component', require('./components/MessageComponent.vue').default);
-
-Vue.component('pulse-loader', require('vue-spinner/src/PulseLoader.vue').default);
-
-Vue.component('datepicker-component', require('./components/DatepickerComponent').default);
-
-Vue.component('forum-category-component', require('./components/ForumCategoryComponent').default);
-
-Vue.component('cart-component', require('./components/CartComponent').default);
-
-Vue.component('cart-totals-component', require('./components/CartTotalsComponent').default);
-
-Vue.component('add-to-cart-component', require('./components/AddToCartComponent').default);
-
-Vue.component('checkout-shippingmethod-component', require('./components/CheckoutShippingMethodComponent').default);
-
-Vue.component('cart-items-count-component', require('./components/CartItemsCountComponent').default);
-
-Vue.component('cart-checkout-component', require('./components/CartCheckoutComponent').default);
-
-Vue.component('product-price-calculation-component', require('./components/ProductPriceCalculationComponent').default);
-
-Vue.component('product-calendar-booking-component', require('./components/ProductBookingCalendarComponent').default);
-
-Vue.component('product-booking-component', require('./components/ProductBookingComponent').default);
-
-Vue.component('product-variant-component', require('./components/ProductVariantComponent').default);
-
-window.EventBus = new Vue();
-
+console.log(router);
 const app = new Vue({
     el: '#app',
+    router
 });

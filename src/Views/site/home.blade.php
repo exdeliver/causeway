@@ -9,6 +9,10 @@
 
                     <div class="card-body">
                         Foobar has some time. Do you know?
+
+                        <p><router-link to="/user">Go to Foo</router-link></p>
+
+                        <router-view></router-view>
                     </div>
                 </div>
             </div>

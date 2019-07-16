@@ -82,9 +82,9 @@ class ShopController extends Controller
         $products = $this->productService->queryProducts($shopCategorySlug, $request);
         $activeFilters = $this->productService->getActiveFilters();
 
-        $customView = 'causeway.shop.category';
+        $customView = 'site::hop.category';
 
-        return view()->first([$customView, 'causeway::shop.category'], [
+        return view()->first([$customView, 'site::shop.category'], [
             'category' => $shopCategorySlug,
             'products' => $products->paginate($request->numberPerPage ?? self::DEFAULT_PAGINATOR_SIZE),
             'numberOfColumns' => $numberOfColumns,
@@ -99,9 +99,9 @@ class ShopController extends Controller
      */
     public function getProduct(Product $shopProductSlug)
     {
-        $customView = 'causeway.shop.product';
+        $customView = 'site::shop.product';
 
-        return view()->first([$customView, 'causeway::shop.product'], [
+        return view()->first([$customView, 'site::shop.product'], [
             'product' => $shopProductSlug,
         ]);
     }
@@ -111,9 +111,9 @@ class ShopController extends Controller
      */
     public function getCart()
     {
-        $customView = 'causeway.shop.cart';
+        $customView = 'site::shop.cart';
 
-        return view()->first([$customView, 'causeway::shop.cart'], [
+        return view()->first([$customView, 'site::shop.cart'], [
             'products' => $this->cartService->all(),
         ]);
     }
@@ -130,9 +130,9 @@ class ShopController extends Controller
                 ->withErrors(['cart' => __('No items in cart.')]);
         }
 
-        $customView = 'causeway.shop.checkout';
+        $customView = 'site::shop.checkout';
 
-        return view()->first([$customView, 'causeway::shop.checkout'], [
+        return view()->first([$customView, 'site::shop.checkout'], [
             'products' => $this->cartService->all(),
             'paymentMethods' => $this->paymentService->getClient()->methods->all(),
             'shippingMethods' => $this->shippingService->repository->all(),
