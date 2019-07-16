@@ -5,12 +5,12 @@ namespace Exdeliver\Causeway\Controllers\Shop;
 use App\Http\Controllers\Controller;
 use Exception;
 use Exdeliver\Cart\Domain\Services\CartService;
+use Exdeliver\Cart\Domain\Services\ShopCalculationService;
 use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
 use Exdeliver\Causeway\Domain\Services\CouponCodeService;
 use Exdeliver\Causeway\Domain\Services\CustomerService;
 use Exdeliver\Causeway\Domain\Services\OrderService;
 use Exdeliver\Causeway\Domain\Services\PaymentService;
-use Exdeliver\Cart\Domain\Services\ShopCalculationService;
 use Exdeliver\Causeway\Requests\PostCheckoutRequest;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -72,7 +72,7 @@ class OrderController extends Controller
             $this->orderService->sendPaymentConfirmationToCustomer($orderUuid);
         }
 
-        return view('causeway::shop.thankyou', [
+        return view('site::shop.thankyou', [
             'order' => $orderUuid,
         ]);
     }
@@ -145,7 +145,7 @@ class OrderController extends Controller
     {
         $shopCalculationService->setCollection($orderUuid->items);
 
-        return view('causeway::shop.summary', [
+        return view('site::shop.summary', [
             'payment_link' => request()->payment_link,
             'order' => $orderUuid,
             'vats' => $shopCalculationService->vats(),

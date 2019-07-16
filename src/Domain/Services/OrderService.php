@@ -130,7 +130,7 @@ class OrderService extends AbstractService
         $shopCalculationService = app(ShopCalculationService::class);
         $shopCalculationService->setCollection($order->items);
 
-        $invoiceHTML = view('causeway::shop.pdf.invoice', [
+        $invoiceHTML = view('site::shop.pdf.invoice', [
             'order' => $order,
             'subtotal' => $shopCalculationService->subtotal(),
             'vats' => $shopCalculationService->vats(),
@@ -149,7 +149,7 @@ class OrderService extends AbstractService
         $pdf = \PDF::setOption('margin-bottom', 0)
             ->setOption('margin-top', 0)
             ->setOption('viewport-size', '1280x1024')
-            ->loadView('causeway::shop.pdf.invoice', [
+            ->loadView('site::shop.pdf.invoice', [
                 'order' => $order,
                 'subtotal' => $shopCalculationService->subtotal(),
                 'vats' => $shopCalculationService->vats(),

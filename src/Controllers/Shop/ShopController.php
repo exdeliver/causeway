@@ -60,7 +60,7 @@ class ShopController extends Controller
      */
     public function index()
     {
-        return view('causeway::shop.index');
+        return view()->first(['causeway.shop.index', 'causeway::shop.index']);
     }
 
     /**
@@ -82,7 +82,9 @@ class ShopController extends Controller
         $products = $this->productService->queryProducts($shopCategorySlug, $request);
         $activeFilters = $this->productService->getActiveFilters();
 
-        return view('causeway::shop.category', [
+        $customView = 'causeway.shop.category';
+
+        return view()->first([$customView, 'causeway::shop.category'], [
             'category' => $shopCategorySlug,
             'products' => $products->paginate($request->numberPerPage ?? self::DEFAULT_PAGINATOR_SIZE),
             'numberOfColumns' => $numberOfColumns,
@@ -97,7 +99,9 @@ class ShopController extends Controller
      */
     public function getProduct(Product $shopProductSlug)
     {
-        return view('causeway::shop.product', [
+        $customView = 'causeway.shop.product';
+
+        return view()->first([$customView, 'causeway::shop.product'], [
             'product' => $shopProductSlug,
         ]);
     }
@@ -107,7 +111,9 @@ class ShopController extends Controller
      */
     public function getCart()
     {
-        return view('causeway::shop.cart', [
+        $customView = 'causeway.shop.cart';
+
+        return view()->first([$customView, 'causeway::shop.cart'], [
             'products' => $this->cartService->all(),
         ]);
     }
@@ -124,7 +130,9 @@ class ShopController extends Controller
                 ->withErrors(['cart' => __('No items in cart.')]);
         }
 
-        return view('causeway::shop.checkout', [
+        $customView = 'causeway.shop.checkout';
+
+        return view()->first([$customView, 'causeway::shop.checkout'], [
             'products' => $this->cartService->all(),
             'paymentMethods' => $this->paymentService->getClient()->methods->all(),
             'shippingMethods' => $this->shippingService->repository->all(),
@@ -137,6 +145,8 @@ class ShopController extends Controller
     public function getThankYou()
     {
         $this->cartService->clear();
-        return view('causeway::shop.thankyou');
+        $customView = 'causeway.shop.thankyou';
+
+        return view()->first([$customView, 'causeway::shop.thankyou']);
     }
 }

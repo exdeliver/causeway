@@ -1,4 +1,4 @@
-@extends('causeway::layouts.auth')
+@extends('causeway::auth.layouts.auth')
 
 @section('content')
     <div class="sm:w-auto md:w-full lg:w-1/2">
@@ -8,7 +8,7 @@
             </p>
             <h4 class="font-hairline mb-6 text-center p-0 m-0">Causeway CMS</h4>
             <h2 class="font-hairline mb-6 text-center p-0 mt-1">{{ __('Login') }}</h2>
-            @include('causeway::layouts.partials._status_messages')
+            @include('causeway::auth.layouts.partials._status_messages')
             <login-component
                     csrf_token="{{ csrf_token() }}"
                     request_password_route="{{ route('causeway.password.request') }}"

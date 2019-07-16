@@ -1,4 +1,4 @@
-@extends('causeway::layouts.backend')
+@extends('causeway::admin.layouts.backend')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="/admin/authorisation/role/index">Roles</a></li>
@@ -10,7 +10,7 @@
         <div class="card-header">Roles</div>
 
         <div class="card-body">
-            @include('causeway::layouts.partials._status_messages')
+            @include('causeway::admin.layouts.partials._status_messages')
 
             <a href="{{ route('admin.authorisation.role.create') }}" class="btn btn-primary float-right">Create Role</a>
             <div class="clearfix"></div>

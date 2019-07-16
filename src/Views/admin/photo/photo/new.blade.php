@@ -1,11 +1,11 @@
-@extends('causeway::layouts.backend')
+@extends('causeway::admin.layouts.backend')
 
 @section('content')
     <div class="card">
         <div class="card-header">Photo Albums</div>
 
         <div class="card-body">
-            @include('causeway::layouts.partials._status_messages')
+            @include('causeway::admin.layouts.partials._status_messages')
 
             <a href="{{ route('admin.photo.album.new') }}" class="btn btn-primary float-right">Create Album</a>
             <div class="clearfix"></div>

@@ -1,4 +1,4 @@
-@extends('causeway::layouts.backend')
+@extends('causeway::admin.layouts.backend')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.shop.dashboard') }}">Shop</a></li>
@@ -11,7 +11,7 @@
         <div class="card-header">Customer</div>
 
         <div class="card-body">
-            @include('causeway::layouts.partials._status_messages')
+            @include('causeway::admin.layouts.partials._status_messages')
             <h4>Create new Customer</h4>
             <div class="clearfix"></div>
 

@@ -1,4 +1,4 @@
-@extends('causeway::layouts.auth')
+@extends('causeway::auth.layouts.auth')
 
 @section('content')
     <div class="sm:w-auto md:w-full lg:w-1/2">

@@ -29,6 +29,6 @@ class AccountController extends Controller
      */
     public function getOrders()
     {
-        return view('causeway::shop.account.orders');
+        return view('site::shop.account.orders');
     }
 }

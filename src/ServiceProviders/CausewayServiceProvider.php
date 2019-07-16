@@ -89,19 +89,20 @@ class CausewayServiceProvider extends ServiceProvider
         $packageRootDir = __DIR__ . '/../..';
         $packageWorkingDir = __DIR__ . '/..';
 
-        /*
-         * NOT PUBLISHABLE YET...
-        $this->publishes([
-            $packageRootDir . '/config/causeway.php' => config_path('causeway.php'),
-        ]);
-        */
         $this->mergeConfigFrom($packageRootDir . '/config/causeway.php', 'causeway');
 
         $this->publishes([
             $packageRootDir . '/assets/compiled' => public_path('vendor/exdeliver/causeway'),
+            $packageWorkingDir . '/Views/site' => $this->app->resourcePath('views/vendor/exdeliver/causeway'),
         ], 'public');
 
         $this->loadViewsFrom($packageWorkingDir . '/Views', 'causeway');
+
+        view()->addNamespace('site', [
+            $this->app->resourcePath('views/vendor/exdeliver/causeway'),
+            $packageWorkingDir . '/Views/site',
+        ]);
+
         $this->loadTranslationsFrom($packageWorkingDir . '/Lang', 'causeway');
         $this->loadMigrationsFrom($packageRootDir . '/database/migrations');
         $this->registerEloquentFactoriesFrom($packageRootDir . '/database/factories');

@@ -1,4 +1,4 @@
-@extends('causeway::layouts.backend')
+@extends('causeway::admin.layouts.backend')
 
 @section('breadcrumb')
     <li class="breadcrumb-item">Dashboard</li>
@@ -13,7 +13,7 @@
         <div class="card-header">Dashboard</div>
 
         <div class="card-body">
-            @include('causeway::layouts.partials._status_messages')
+            @include('causeway::admin.layouts.partials._status_messages')
             <h4>Hello {{ auth()->user()->name }}, welcome to your dashboard</h4>
             <p>Here you may organize and manage your settings.</p>
         </div>
