@@ -26,6 +26,7 @@
         "vinkla/hashids": "^5.1",
         "yajra/laravel-datatables-oracle": "~8.0",
         "van-ons/laraberg": "^0.0.1@beta",
+        "unisharp/laravel-filemanager": "~1.8",
         "dimsav/laravel-translatable": "^9.4",
         "intervention/image": "^2.4",
         "owen-it/laravel-auditing": "8.*",

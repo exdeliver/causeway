@@ -51,7 +51,7 @@
 
 @push('scripts')
     <script type="application/javascript">
-        Laraberg.initGutenberg('page-content', {height: '500px'})
+        Laraberg.initGutenberg('page-content', {height: '500px', laravelFilemanager: true})
         //
         // $('#gridEditor').gridEditor({
         //     source_textarea: 'textarea#page-content',

@@ -38,6 +38,11 @@ Update your .env
 Run the migrations
 
     php artisan migrate
+    
+Publish config for Laravel filemanager
+
+    php artisan vendor:publish --tag=lfm_config
+    php artisan vendor:publish --tag=lfm_public
 
 And run the publish command:
 
