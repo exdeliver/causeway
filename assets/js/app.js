@@ -7,6 +7,9 @@ require('../js/loadScripts.js');
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+
+Vue.use(VueRouter);
+
 window.EventBus = new Vue();
 
 const _ = require('lodash');
@@ -19,22 +22,12 @@ const _ = require('lodash');
 
 Vue.prototype.trans = string => _.get(window.i18n, string);
 
-const req = require.context('./components/', true, /\.(js|vue)$/i);
-req.keys().map(key => {
-    const name = key.match(/\w+/)[0];
-    return Vue.component(name, req(key).default)
-});
+const router = new VueRouter({routes: require('./components/routes/web')});
 
-Vue.use(VueRouter);
+const files = require.context('./', true, /\.vue$/i);
+files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-var webRoutes = require('./components/routes/web');
-
-var router = new VueRouter(
-    webRoutes
-);
-
-console.log(router);
 const app = new Vue({
-    el: '#app',
+    mode: 'history',
     router
-});
+}).$mount('#app');
