@@ -41,7 +41,6 @@
                 serverSide: true,
                 scrollX: true,
                 ajax: '{!! route('ajax.shop.orders.index') !!}',
-                order: [[4, "desc"]],
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},

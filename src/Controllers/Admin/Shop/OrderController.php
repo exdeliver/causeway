@@ -84,9 +84,11 @@ final class OrderController extends Controller
     public function getAjaxOrders()
     {
         /** @var Order $orders */
-        $orders = Order::orderBy('created_at', 'asc')->get();
+        $orders = Order::query();
 
-        return Datatables::of($orders)
+        return Datatables::eloquent($orders)
+            ->orderColumns(['id'], '-:column $1')
+
             ->addColumn('id', function ($row) {
                 return '<a href="' . route('admin.shop.order.show', [
                         'id' => $row->id,
@@ -124,6 +126,6 @@ final class OrderController extends Controller
 
             })
             ->rawColumns(['id', 'name', 'price', 'status', 'created_at', 'manage'])
-            ->make(true);
+            ->toJson();
     }
 }

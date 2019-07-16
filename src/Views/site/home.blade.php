@@ -10,7 +10,7 @@
                     <div class="card-body">
                         Foobar has some time. Do you know?
 
-                        {{-- <router-view></router-view>--}}
+{{--                         <router-view></router-view>--}}
                     </div>
                 </div>
             </div>
