@@ -96,6 +96,10 @@ class CausewayServiceProvider extends ServiceProvider
             $packageWorkingDir . '/Views/site' => $this->app->resourcePath('views/vendor/exdeliver/causeway'),
         ], 'public');
 
+        $this->publishes([
+            $packageWorkingDir . '/Views/site' => $this->app->resourcePath('views/vendor/exdeliver/causeway'),
+        ], 'templates');
+
         $this->loadViewsFrom($packageWorkingDir . '/Views', 'causeway');
 
         view()->addNamespace('site', [

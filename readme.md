@@ -43,6 +43,8 @@ And run the publish command:
 
     php artisan vendor:publish --tag=public --force
     
+    php artisan vendor:publish --tag=templates (--fore optional overwrites all)
+    
 Create a admin user by running the command below:
 
     php artisan causeway:admin <username> <password>
