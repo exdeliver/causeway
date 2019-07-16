@@ -77,7 +77,7 @@ final class MenuService extends AbstractService
 
         } catch (\Exception $e) {
             \Log::warning('Missing menu called: ' . $name);
-            return [];
+            return null;
         }
     }
 }
