@@ -60,7 +60,7 @@ class ShopController extends Controller
      */
     public function index()
     {
-        return view()->first(['causeway.shop.index', 'causeway::shop.index']);
+        return view()->first(['site::shop.index', 'site::shop.index']);
     }
 
     /**
@@ -145,7 +145,7 @@ class ShopController extends Controller
     public function getThankYou()
     {
         $this->cartService->clear();
-        $customView = 'causeway.shop.thankyou';
+        $customView = 'site::shop.thankyou';
 
         return view()->first([$customView, 'causeway::shop.thankyou']);
     }
