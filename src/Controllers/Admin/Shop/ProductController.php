@@ -138,7 +138,7 @@ final class ProductController extends Controller
         }
 
         return redirect()
-            ->to(route('admin.shop.product.index'));
+            ->back(route('admin.shop.product.update', ['id' => $product->id]));
     }
 
     /**
