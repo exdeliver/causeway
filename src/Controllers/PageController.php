@@ -20,8 +20,11 @@ class PageController extends Controller
             $customView = 'site::page.' . $pageSlug->slug;
         }
 
+        $metaTitle = $pageSlug->name;
+
         return view()->first([$customView, 'site::page.default'], [
             'page' => $pageSlug,
+            'metaTitle' => $metaTitle
         ]);
     }
 }
