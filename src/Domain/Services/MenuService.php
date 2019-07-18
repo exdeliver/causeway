@@ -54,6 +54,7 @@ final class MenuService extends AbstractService
 
     /**
      * @param string $name
+     * @param null $template
      * @return mixed
      */
     public function render(string $name, $template = null)
@@ -63,7 +64,7 @@ final class MenuService extends AbstractService
 
             $menuCollection = new MenuComposite();
             if ($template !== null) {
-                if (!view()->exists('menu.custom.' . $template)) {
+                if (!view()->exists('site::menu.' . $template)) {
                     return "Missing blade file: menu.custom.{$template}";
                 }
                 $menuCollection->setTemplate($template);
