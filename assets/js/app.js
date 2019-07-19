@@ -7,8 +7,11 @@ require('../js/loadScripts.js');
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import VueCookies from 'vue-cookies';
 
 Vue.use(VueRouter);
+Vue.use(VueCookies);
+VueCookies.config('7d');
 
 window.EventBus = new Vue();
 
