@@ -2,11 +2,11 @@
 
 namespace Exdeliver\Causeway\Domain\Entities\Page;
 
+use VanOns\Laraberg\Events\ContentCreated;
+use VanOns\Laraberg\Events\ContentUpdated;
 use VanOns\Laraberg\Helpers\BlockHelper;
 use VanOns\Laraberg\Helpers\EmbedHelper;
 use VanOns\Laraberg\Models\Content;
-use VanOns\Laraberg\Events\ContentCreated;
-use VanOns\Laraberg\Events\ContentUpdated;
 use VanOns\Laraberg\Models\Content as LaContent;
 
 /**
@@ -15,12 +15,6 @@ use VanOns\Laraberg\Models\Content as LaContent;
  */
 trait CustomGutenbergTrait
 {
-    public function body()
-    {
-        return $this->morphOne(LaContent::class, 'contentable');
-    }
-
-
     /**
      * Returns the rendered HTML from the Content object
      * @return String
@@ -84,5 +78,10 @@ trait CustomGutenbergTrait
         $this->body()->save($content);
         $this->body = $content;
         event(new ContentCreated($content));
+    }
+
+    public function body()
+    {
+        return $this->morphOne(LaContent::class, 'contentable');
     }
 }

@@ -11,17 +11,18 @@ class CommentNotificationException extends Exception
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
+     * @param \Exception $exception
      * @return void
      */
     public function report(Exception $exception)
     {
         parent::report($exception);
     }
+
     /**
      * Render the exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request
+     * @param \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
     public function render($request)

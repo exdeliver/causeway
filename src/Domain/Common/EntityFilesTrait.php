@@ -15,7 +15,7 @@ trait EntityFilesTrait
      */
     public function getCoverAttribute()
     {
-        $file = Storage::url('uploads/photos/'.$this->file);
+        $file = Storage::url('uploads/photos/' . $this->file);
         return $file;
     }
 

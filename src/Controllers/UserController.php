@@ -39,6 +39,7 @@ class UserController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function reset(Request $request)
     {

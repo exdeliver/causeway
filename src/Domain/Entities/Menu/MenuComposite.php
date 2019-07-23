@@ -4,6 +4,7 @@ namespace Exdeliver\Causeway\Domain\Entities\Menu;
 
 use Exdeliver\Causeway\Domain\Common\Interfaces\RenderableInterface;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\View\View;
 
 /**
  * Class MenuComposite
@@ -22,7 +23,7 @@ class MenuComposite implements RenderableInterface
     protected $template;
 
     /**
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function render(): string
     {
@@ -37,13 +38,13 @@ class MenuComposite implements RenderableInterface
                 return $item;
             });
 
-        if (view()->exists('menu.custom.' . $this->template)) {
-            return view('menu.custom.' . $this->template, [
+        if (view()->exists('site::menu._' . $this->template)) {
+            return view('site::menu._' . $this->template, [
                 'items' => $items,
             ]);
         }
 
-        return view('causeway::menu._default', [
+        return view('site::menu._default', [
             'items' => $items,
         ]);
     }

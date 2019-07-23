@@ -1,22 +1,18 @@
-
 /**
  * This injects all of Tailwind's base classes, generated based on your
  * config file.
  */
 @import "~tailwindcss/base.css";
-
 /**
  * This injects all of Tailwind's components classes, generated based on your
  * config file.
  */
 @import "~tailwindcss/components.css";
-
 /**
  * This injects all of Tailwind's utility classes, generated based on your
  * config file.
  */
 @import "~tailwindcss/utilities.css";
-
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 // Variables
@@ -31,6 +27,8 @@
 @import '~frontwise-grid-editor/dist/grideditor.css';
 @import '~summernote/dist/summernote.css';
 @import 'soundmanager2.css';
+@import '~magicsuggest-alpine/magicsuggest-min.css';
+@import '~v-calendar/lib/v-calendar.min.css';
 
 .navbar-laravel {
     background-color: #fff;
@@ -157,4 +155,33 @@ blockquote > p > cite {
 
 .delete-inline {
     display: inline !important;
+}
+
+.error-border-top {
+    margin-top: -2px;
+    border-top: solid 3px red;
+}
+
+.section-nav {
+    padding-left: 0;
+    border-left: 1px solid #eee;
+}
+
+.toc-entry a {
+    display: block;
+    padding: .125rem 1.5rem;
+    color: #77757a;
+}
+
+.bd-toc {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 1rem;
+    height: calc(100vh - 4rem);
+    overflow-y: auto;
+}
+
+.multiple-task[size] {
+    height: auto !important;
+    max-height: 156px !important;
 }

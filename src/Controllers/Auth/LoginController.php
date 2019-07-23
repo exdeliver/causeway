@@ -7,7 +7,6 @@ use Exdeliver\Causeway\Domain\Services\UserService;
 use Exdeliver\Causeway\Requests\PostLoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * Class LoginController

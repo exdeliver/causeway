@@ -43,13 +43,13 @@ class MenuElementComposite implements MenuItemInterface, RenderableInterface
      */
     public function render(): string
     {
-        if ($this->template !== null && view()->exists('menu.custom.' . $this->template . '_item')) {
-            return view('menu.custom.' . $this->template . '_item', [
+        if ($this->template !== null && view()->exists('site::menu._' . $this->template . '_item')) {
+            return view('site::menu._' . $this->template . '_item', [
                 'item' => $this->item,
             ]);
         }
 
-        return view('causeway::menu._default_item', [
+        return view('site::menu._default_item', [
             'item' => $this->item,
         ]);
     }

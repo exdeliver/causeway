@@ -5,7 +5,17 @@
  */
 require('../js/loadScripts.js');
 
-window.Vue = require('vue');
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import VueCookies from 'vue-cookies';
+
+Vue.use(VueRouter);
+Vue.use(VueCookies);
+VueCookies.config('7d');
+
+window.EventBus = new Vue();
+
+const _ = require('lodash');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -13,24 +23,14 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.prototype.trans = string => _.get(window.i18n, string);
 
-Vue.component('login-component', require('./components/LoginComponent.vue').default);
+const router = new VueRouter({routes: require('./components/routes/web')});
 
-Vue.component('register-component', require('./components/RegisterComponent.vue').default);
-
-Vue.component('request-password-component', require('./components/RequestPasswordComponent.vue').default);
-
-Vue.component('modal-component', require('./components/DialogComponent.vue').default);
-
-Vue.component('message-component', require('./components/MessageComponent.vue').default);
-
-Vue.component('pulse-loader', require('vue-spinner/src/PulseLoader.vue').default);
-
-Vue.component('datepicker-component', require('./components/DatepickerComponent').default);
-
-Vue.component('forum-category-component', require('./components/ForumCategoryComponent').default);
+const files = require.context('./', true, /\.vue$/i);
+files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 const app = new Vue({
-    el: '#app',
-});
+    mode: 'history',
+    router
+}).$mount('#app');

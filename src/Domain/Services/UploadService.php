@@ -96,7 +96,7 @@ final class UploadService extends AbstractService
         $image = storage_path('app/' . $image);
 
         if (!File::exists($image)) {
-            throw new \Exception('File not found: '. $image);
+            throw new \Exception('File not found: ' . $image);
         }
 
         $img = Image::make($image);

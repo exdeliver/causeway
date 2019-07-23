@@ -2,7 +2,6 @@
 
 namespace Exdeliver\Causeway\ViewComposers;
 
-use Exdeliver\Causeway\Domain\Entities\Menu\Menu;
 use Illuminate\Support\Facades\Log;
 
 /**

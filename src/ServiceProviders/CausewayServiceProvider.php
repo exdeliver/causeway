@@ -7,6 +7,9 @@ use Exdeliver\Causeway\Domain\Entities\Forum\Category;
 use Exdeliver\Causeway\Domain\Entities\Forum\Thread;
 use Exdeliver\Causeway\Domain\Entities\Page\Page;
 use Exdeliver\Causeway\Domain\Entities\PhotoAlbum\PhotoAlbum;
+use Exdeliver\Causeway\Domain\Entities\Shop\CouponCode;
+use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
+use Exdeliver\Causeway\Domain\Entities\Shop\Product;
 use Exdeliver\Causeway\Domain\Entities\Sound\Sound;
 use Exdeliver\Causeway\Domain\Services\CausewayService;
 use Exdeliver\Causeway\Events\CausewayRegistered;
@@ -15,11 +18,14 @@ use Exdeliver\Causeway\Middleware\CausewayAdmin;
 use Exdeliver\Causeway\Middleware\CausewayAuth;
 use Exdeliver\Causeway\Middleware\CausewayGuest;
 use Exdeliver\Causeway\Middleware\CausewayVerified;
+use Exdeliver\Causeway\Validators\CausewayValidators;
+use Exdeliver\Causeway\ViewComposers\MetaComposer;
 use Exdeliver\Causeway\ViewComposers\NavigationComposer;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -68,6 +74,10 @@ class CausewayServiceProvider extends ServiceProvider
         $this->getRoutes();
         $this->getEventListeners();
         $this->registerPolicies();
+
+        Validator::resolver(function ($translator, $data, $rules, $messages) {
+            return new CausewayValidators($translator, $data, $rules, $messages);
+        });
     }
 
     /**
@@ -79,15 +89,25 @@ class CausewayServiceProvider extends ServiceProvider
         $packageRootDir = __DIR__ . '/../..';
         $packageWorkingDir = __DIR__ . '/..';
 
-        $this->publishes([
-            $packageRootDir . '/config/causeway.php' => config_path('causeway.php'),
-        ]);
+        $this->mergeConfigFrom($packageRootDir . '/config/causeway.php', 'causeway');
 
         $this->publishes([
             $packageRootDir . '/assets/compiled' => public_path('vendor/exdeliver/causeway'),
+            $packageWorkingDir . '/Views/site' => $this->app->resourcePath('views/vendor/exdeliver/causeway'),
+            $packageRootDir . '/config/laraberg.php' => config_path('laraberg.php'),
         ], 'public');
 
+        $this->publishes([
+            $packageWorkingDir . '/Views/site' => $this->app->resourcePath('views/vendor/exdeliver/causeway'),
+        ], 'templates');
+
         $this->loadViewsFrom($packageWorkingDir . '/Views', 'causeway');
+
+        view()->addNamespace('site', [
+            $this->app->resourcePath('views/vendor/exdeliver/causeway'),
+            $packageWorkingDir . '/Views/site',
+        ]);
+
         $this->loadTranslationsFrom($packageWorkingDir . '/Lang', 'causeway');
         $this->loadMigrationsFrom($packageRootDir . '/database/migrations');
         $this->registerEloquentFactoriesFrom($packageRootDir . '/database/factories');
@@ -103,6 +123,9 @@ class CausewayServiceProvider extends ServiceProvider
         if (file_exists($packageWorkingDir . '/Helpers/helpers.php')) {
             include_once($packageWorkingDir . '/Helpers/helpers.php');
         }
+        if (file_exists($packageWorkingDir . '/Helpers/countries.php')) {
+            include_once($packageWorkingDir . '/Helpers/countries.php');
+        }
     }
 
     /**
@@ -114,6 +137,16 @@ class CausewayServiceProvider extends ServiceProvider
     protected function registerEloquentFactoriesFrom($path)
     {
         $this->app->make(EloquentFactory::class)->load($path);
+    }
+
+    /**
+     * Class bindings for facades services.
+     */
+    public function getClassBindings()
+    {
+        $this->app->bind('causewayservice', function () {
+            return app(CausewayService::class);
+        });
     }
 
     /**
@@ -176,25 +209,30 @@ class CausewayServiceProvider extends ServiceProvider
         Route::bind('user', function ($value) {
             return config('auth.providers.users.model')::findOrFail($value);
         });
-    }
 
-    /**
-     * Register method
-     */
-    public function register()
-    {
-        $this->registerMiddleware();
-    }
+        Route::bind('shopCategorySlug', function ($value) {
+            return \Exdeliver\Causeway\Domain\Entities\Shop\Category::where('slug', $value)->first();
+        });
 
-    /**
-     * Registered middleware
-     */
-    protected function registerMiddleware()
-    {
-        $this->app['router']->aliasMiddleware('causewayAdmin', CausewayAdmin::class);
-        $this->app['router']->aliasMiddleware('causewayAuth', CausewayAuth::class);
-        $this->app['router']->aliasMiddleware('causewayGuest', CausewayGuest::class);
-        $this->app['router']->aliasMiddleware('causewayVerified', CausewayVerified::class);
+        Route::bind('shopProductSlug', function ($value) {
+            return Product::where('slug', $value)->first();
+        });
+
+        Route::bind('orderUuid', function ($value) {
+            return Order::where('uuid', $value)->first();
+        });
+
+        Route::bind('orderId', function ($value) {
+            return Order::where('id', $value)->first();
+        });
+
+        Route::bind('couponcode', function ($value) {
+            return CouponCode::where('id', $value)->first();
+        });
+
+        Route::bind('couponCode', function ($value) {
+            return CouponCode::where('coupon_code', $value)->first();
+        });
     }
 
     /**
@@ -210,16 +248,6 @@ class CausewayServiceProvider extends ServiceProvider
     }
 
     /**
-     * Class bindings for facades services.
-     */
-    public function getClassBindings()
-    {
-        $this->app->bind('causewayservice', function () {
-            return app(CausewayService::class);
-        });
-    }
-
-    /**
      * Register the application's policies.
      *
      * @return void
@@ -229,5 +257,41 @@ class CausewayServiceProvider extends ServiceProvider
         foreach ($this->policies as $key => $value) {
             Gate::policy($key, $value);
         }
+    }
+
+    /**
+     * Register method
+     */
+    public function register()
+    {
+        $this->registerDependencies();
+        $this->registerMiddleware();
+    }
+
+    /**
+     * Register dependencies
+     */
+    public function registerDependencies()
+    {
+        /**
+         * Register ServiceProviders
+         */
+        $this->app->register(\OwenIt\Auditing\AuditingServiceProvider::class);
+        /*
+        * Create aliases for the dependency.
+        */
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('PDF', \Barryvdh\Snappy\Facades\SnappyPdf::class);
+    }
+
+    /**
+     * Registered middleware
+     */
+    protected function registerMiddleware()
+    {
+        $this->app['router']->aliasMiddleware('causewayAdmin', CausewayAdmin::class);
+        $this->app['router']->aliasMiddleware('causewayAuth', CausewayAuth::class);
+        $this->app['router']->aliasMiddleware('causewayGuest', CausewayGuest::class);
+        $this->app['router']->aliasMiddleware('causewayVerified', CausewayVerified::class);
     }
 }

@@ -3,7 +3,6 @@
 namespace Exdeliver\Causeway\Controllers\Admin\Authorisation;
 
 use Exdeliver\Causeway\Controllers\Controller;
-use Exdeliver\Causeway\Domain\Entities\User\User;
 use Exdeliver\Causeway\Domain\Services\RoleService;
 use Exdeliver\Causeway\Domain\Services\UserService;
 use Exdeliver\Causeway\Requests\PostAdminRoleRequest;

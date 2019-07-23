@@ -1,4 +1,4 @@
-@extends('causeway::layouts.site')
+@extends('causeway::auth.layouts.site')
 
 @section('content')
     <div class="container">

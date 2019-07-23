@@ -1,11 +1,11 @@
-@extends('causeway::layouts.backend')
+@extends('causeway::admin.layouts.backend')
 
 @section('content')
     <div class="card">
         <div class="card-header">Role</div>
 
         <div class="card-body">
-            @include('causeway::layouts.partials._status_messages')
+            @include('causeway::admin.layouts.partials._status_messages')
             <h4>Update role {{ $role->name }}</h4>
             <div class="clearfix"></div>
 
