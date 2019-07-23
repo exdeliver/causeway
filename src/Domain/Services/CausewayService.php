@@ -12,13 +12,14 @@ final class CausewayService
      * Get Menu.
      *
      * @param string $name
+     * @param string|null $template
      * @return Model
      */
-    public function getMenu(string $name)
+    public function getMenu(string $name, string $template = null)
     {
         /** @var MenuService $menuService */
         $menuService = app(MenuService::class);
-        return $menuService->render($name);
+        return $menuService->render($name, $template);
     }
 
     /**

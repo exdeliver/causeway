@@ -20,6 +20,7 @@ try {
     require('blueimp-file-upload');
     require('lightbox2');
     require('soundmanager2');
+    require('magicsuggest-alpine');
 
 } catch (e) {
     console.log(e);

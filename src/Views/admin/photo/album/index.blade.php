@@ -1,4 +1,4 @@
-@extends('causeway::layouts.backend')
+@extends('causeway::admin.layouts.backend')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="/admin/photo/album">Photos</a></li>
@@ -16,7 +16,7 @@
         <div class="card-header">Photo Albums</div>
 
         <div class="card-body">
-            @include('causeway::layouts.partials._status_messages')
+            @include('causeway::admin.layouts.partials._status_messages')
 
             <h4 class="float-left">Album</h4>
 
@@ -47,8 +47,8 @@
                                         class="fa fa-remove"></i></a>
                             <a href="{{ route('admin.photo.album.index', ['album' => $subAlbum->label]) }}">
 
-                                    <img data-src="{{ $subAlbum->cover }}" alt="100%x280" style="height: 280px; width: 100%; display: block;" src="{{ asset($subAlbum->cover) }}"
-                                         data-holder-rendered="true"/>
+                                <img data-src="{{ $subAlbum->cover }}" alt="100%x280" style="height: 280px; width: 100%; display: block;" src="{{ asset($subAlbum->cover) }}"
+                                     data-holder-rendered="true"/>
 
                                 <strong>{{ $subAlbum->label }}</strong>
                             </a>

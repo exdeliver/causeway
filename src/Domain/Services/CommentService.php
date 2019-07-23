@@ -3,18 +3,17 @@
 namespace Exdeliver\Causeway\Domain\Services;
 
 use Exdeliver\Causeway\Events\CommentNotificationCreated;
-use App\Exceptions\CommentNotificationException;
 use Exdeliver\Causeway\Infrastructure\Repositories\CommentRepository;
 use Illuminate\Broadcasting\BroadcastException;
 
 /**
- * Class PandaCommentService
+ * Class CommentService
  * @package Domain\Services
  */
 final class CommentService extends AbstractService
 {
     /**
-     * PandaCommentService constructor.
+     * CommentRepository constructor.
      * @param CommentRepository $commentRepository
      */
     public function __construct(CommentRepository $commentRepository)

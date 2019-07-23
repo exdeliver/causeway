@@ -13,8 +13,9 @@ use Rennokki\Befriended\Traits\CanLike;
  * Class User
  * @package Domain\Entities\User
  */
-class User extends Authenticatable implements Liker, MustVerifyEmail
+class User extends Authenticatable implements Liker, MustVerifyEmail, \OwenIt\Auditing\Contracts\Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use UserTrait, CanLike, Notifiable;
 
     /**

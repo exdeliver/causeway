@@ -2,24 +2,20 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
-use App\Events\PandaNewActivityCreated;
-use App\Notifications\PandaGroupUserJoined;
-use App\Notifications\PandaPointReset;
-use Exdeliver\Causeway\Domain\Entities\PandaGroup\PandaGroup;
-use Exdeliver\Causeway\Domain\Entities\PandaGroup\PandaGroupUser;
-use Exdeliver\Causeway\Domain\Entities\PandaUser\PandaUserPoint;
+use Exdeliver\Causeway\Domain\Entities\Group\Group;
+use Exdeliver\Causeway\Domain\Entities\Group\GroupUser;
 use Exdeliver\Causeway\Infrastructure\Repositories\GroupRepository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 /**
- * Class PandaGroupService
+ * Class GroupService
  * @package Domain\Services
  */
 final class GroupService extends AbstractService
 {
     /**
-     * PandaGroupService constructor.
+     * GroupService constructor.
      * @param GroupRepository $groupRepository
      */
     public function __construct(GroupRepository $groupRepository)
@@ -29,11 +25,11 @@ final class GroupService extends AbstractService
 
     /**
      * @param array $users
-     * @param PandaGroup $group
+     * @param Group $group
      * @return bool
      * @throws \Exception
      */
-    public function addUsersToGroup(array $users, PandaGroup $group): bool
+    public function addUsersToGroup(array $users, Group $group): bool
     {
         try {
             // Filter already existing users before adding to group.
@@ -43,7 +39,7 @@ final class GroupService extends AbstractService
                 }
                 return false;
             })->each(function ($user) use ($group) {
-                PandaGroupUser::create([
+                GroupUser::create([
                     'user_id' => $user['user_id'],
                     'panda_group_id' => $group->id,
                     'panda_group_role_id' => $user['role_id'],
@@ -57,14 +53,14 @@ final class GroupService extends AbstractService
             return true;
         } catch (\Exception $e) {
             dd($e->getTraceAsString());
-            throw new \Exception('Could not add user to Panda group');
+            throw new \Exception('Could not add user to group');
         }
     }
 
     /**
      * @param array $params
      * @param int|null $id
-     * @return PandaGroup
+     * @return Group
      */
     public function saveGroup(array $params, int $id = null): PandaGroup
     {

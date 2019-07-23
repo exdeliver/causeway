@@ -4,6 +4,10 @@ namespace Exdeliver\Causeway\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class PostAdminUserRequest
+ * @package Exdeliver\Causeway\Requests
+ */
 class PostAdminUserRequest extends FormRequest
 {
     /**

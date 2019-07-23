@@ -1,7 +1,7 @@
 <template>
     <div class="alert spacing" role="alert" v-bind:class="flashMessage.type" v-show="flashMessage.show">
         <strong>{{ flashMessage.title }}</strong><br/>
-        {{ flashMessage.message }}
+        <span v-html="flashMessage.message">{{ flashMessage.message }}</span>
     </div>
 </template>
 
@@ -9,6 +9,12 @@
     export default {
         mounted() {
             console.log('Message mounted.');
+        },
+        created() {
+            let vm = this;
+            EventBus.$on('status-message', obj => {
+                this.flash(obj.type, obj.title, obj.message);
+            });
         },
         data: function () {
             return {

@@ -186,7 +186,6 @@ class MenuController extends Controller
         return redirect()->back();
     }
 
-
     /**
      * Get Datatables.
      *

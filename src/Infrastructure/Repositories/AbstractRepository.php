@@ -75,7 +75,7 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
         }
 
         // Save translation attributes
-        foreach ($params->only([$language])->get($language)as $key => $value) {
+        foreach ($params->only([$language])->get($language) as $key => $value) {
             $model->translateOrNew($language)->{$key} = $value;
         }
 

@@ -12,10 +12,10 @@
         </div>
 
         <div class="form-group row">
-            <label class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow" for="password">Password</label>
+            <label class="col-md-4 col-form-label text-md-right" for="password">Password</label>
 
             <div class="col-md-6">
-                <input class="form-control" id="password" name="password" type="password" v-model="loginDetails.password">
+                <input class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow" id="password" name="password" type="password" v-model="loginDetails.password">
                 <span class="help-block text-danger" v-if="formErrors.password">{{ formErrors.password[0] }}</span>
             </div>
         </div>

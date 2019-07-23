@@ -75,12 +75,17 @@ class PageController extends Controller
      */
     public function store(PostPageRequest $request, Page $page = null)
     {
-        $page = $this->pageService->savePage($request, $page->id ?? null);
+        $savedPage = $this->pageService->savePage($request, $page->id ?? null);
 
-        $request->session()->flash('status', 'Page ' . $page->name . ' created');
+        if($page !== null) {
+            $message = 'Page ' . $savedPage->name . ' updated';
+        }else{
+            $message = 'Page ' . $savedPage->name . ' created';
+        }
+        $request->session()->flash('status', $message);
 
         return redirect()
-            ->to(route('admin.pages.index'));
+            ->to(route('admin.pages.update', ['id' => $savedPage->id]));
     }
 
     /**
