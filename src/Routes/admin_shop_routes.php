@@ -2,49 +2,49 @@
 
 /**
  * Admin shop routes
- * Prefix: causeway/shop
+ * Prefix: causeway/shop.
  */
 Route::group(['prefix' => 'shop', 'namespace' => 'Shop'], function () {
-    /**
+    /*
      * Prefix: causeway/shop/ajax
      */
     Route::group(['prefix' => 'ajax'], function () {
-        /**
+        /*
          * Prefix: causeway/shop/ajax/category
          */
         Route::group(['prefix' => 'category'], function () {
             Route::get('index', 'CategoryController@getAjaxCategories')->name('ajax.shop.category.index');
         });
 
-        /**
+        /*
          * Prefix: causeway/shop/ajax/product
          */
         Route::group(['prefix' => 'product'], function () {
             Route::get('index', 'ProductController@getAjaxProducts')->name('ajax.shop.product.index');
         });
 
-        /**
+        /*
          * Prefix: causeway/shop/ajax/customer
          */
         Route::group(['prefix' => 'customer'], function () {
             Route::get('index', 'CustomerController@getAjaxCustomers')->name('ajax.shop.customer.index');
         });
 
-        /**
+        /*
          * Prefix: causeway/shop/ajax/order
          */
         Route::group(['prefix' => 'order'], function () {
             Route::get('index', 'OrderController@getAjaxOrders')->name('ajax.shop.orders.index');
         });
 
-        /**
+        /*
          * Prefix: causeway/shop/ajax/shipping-method
          */
         Route::group(['prefix' => 'shipping-method'], function () {
             Route::get('index', 'ShippingMethodController@getAjaxShippingMethods')->name('ajax.shop.shipping-method.index');
         });
 
-        /**
+        /*
          * Prefix: causeway/shop/ajax/couponcode
          */
         Route::group(['prefix' => 'couponcode'], function () {

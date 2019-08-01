@@ -5,19 +5,21 @@ namespace Exdeliver\Causeway\Domain\Entities\Shop\Orders;
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
 use Exdeliver\Causeway\Domain\Entities\Shop\Customers\Customer;
 use Exdeliver\Causeway\Domain\Entities\Shop\Invoices\Invoice;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class Order
- * @package Domain\Entities\Orders
+ * Class Order.
  */
 class Order extends AggregateRoot implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
     /**
-     * Order statuses
+     * Order statuses.
      */
     public const STATUS_PENDING = 'pending';
     public const STATUS_AWAITING_PAYMENT = 'awaiting_payment';
@@ -61,7 +63,7 @@ class Order extends AggregateRoot implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function downloadableProducts()
     {
@@ -69,7 +71,7 @@ class Order extends AggregateRoot implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne
      */
     public function invoice()
     {
@@ -91,6 +93,7 @@ class Order extends AggregateRoot implements Auditable
     {
         $products = $this->items->map(function ($product) {
             $type['gross_fee'] = $product->ticketType->fee * $product->quantity;
+
             return $type;
         });
 
@@ -115,7 +118,7 @@ class Order extends AggregateRoot implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function items()
     {
@@ -129,6 +132,7 @@ class Order extends AggregateRoot implements Auditable
     {
         $products = $this->items->map(function ($product) {
             $type['fee'] = ($product->ticketType->fee * ($product->ticketType->fee_vat / 100) + 1) * $product->quantity;
+
             return $type;
         });
 
@@ -152,11 +156,11 @@ class Order extends AggregateRoot implements Auditable
      */
     public function getPaymentServiceAttribute()
     {
-        return ucfirst(camel_case($this->payment_method . '_service'));
+        return ucfirst(camel_case($this->payment_method.'_service'));
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function customer()
     {
@@ -166,6 +170,7 @@ class Order extends AggregateRoot implements Auditable
     /**
      * @param $query
      * @param $request
+     *
      * @return mixed
      */
     public function scopeSearchBy($query, $request)
@@ -186,9 +191,9 @@ class Order extends AggregateRoot implements Auditable
             $search = $request->search;
 
             $query->whereHas('customer.contacts', function ($query) use ($search) {
-                $query->where('contacts.first_name', 'LIKE', '%' . $search . '%')
-                    ->orWhere('contacts.last_name', 'LIKE', '%' . $search . '%')
-                    ->orWhere('contacts.email', 'LIKE', '%' . $search . '%');
+                $query->where('contacts.first_name', 'LIKE', '%'.$search.'%')
+                    ->orWhere('contacts.last_name', 'LIKE', '%'.$search.'%')
+                    ->orWhere('contacts.email', 'LIKE', '%'.$search.'%');
             })
                 ->orWhere('payment_id', $search);
         }
@@ -199,13 +204,14 @@ class Order extends AggregateRoot implements Auditable
             $sortByColumn = 'orders.created_at';
         }
 
-        $query->orderBy($sortByColumn, $request->direction === 'asc' ? 'asc' : 'desc');
+        $query->orderBy($sortByColumn, 'asc' === $request->direction ? 'asc' : 'desc');
 
         return $query;
     }
 
     /**
      * @param $query
+     *
      * @return mixed
      */
     public function scopeCalculatedOrders($query)
@@ -228,20 +234,22 @@ class Order extends AggregateRoot implements Auditable
             ->withCount([
                 'items AS gross_price_sum' => function ($query) {
                     $query->where('type', 'item')->select(
-                        DB::raw("SUM(gross_price*quantity) as grosspricesum")
+                        DB::raw('SUM(gross_price*quantity) as grosspricesum')
                     );
                 },
                 'items AS vat_price_sum' => function ($query) {
                     $query->where('type', 'item')->select(
-                        DB::raw("SUM((gross_price * ((vat/100)+1))*quantity) as vatpricesum")
+                        DB::raw('SUM((gross_price * ((vat/100)+1))*quantity) as vatpricesum')
                     );
                 },
             ]);
+
         return $query;
     }
 
     /**
      * @param $query
+     *
      * @return mixed
      */
     public function scopeWithPaymentMethod($query)

@@ -6,8 +6,7 @@ use Exdeliver\Cart\Domain\Services\CartService;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class PostOrderRequest
- * @package Exdeliver\Causeway\Requests
+ * Class PostOrderRequest.
  */
 class PostOrderRequest extends FormRequest
 {

@@ -3,11 +3,13 @@
 namespace Exdeliver\Causeway\Controllers\Admin;
 
 use Exdeliver\Causeway\Controllers\Controller;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {

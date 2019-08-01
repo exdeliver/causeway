@@ -1,8 +1,9 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-
+/** @var Factory $factory */
+use Exdeliver\Causeway\Domain\Entities\Shop\Category;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factory;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +16,7 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(\Exdeliver\Causeway\Domain\Entities\Shop\Category::class, function (Faker $faker) {
+$factory->define(Category::class, function (Faker $faker) {
     return [
         'title' => $faker->name,
         'parent_id' => null,

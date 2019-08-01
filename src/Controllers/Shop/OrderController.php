@@ -15,10 +15,10 @@ use Exdeliver\Causeway\Requests\PostCheckoutRequest;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Throwable;
 
 /**
- * Class OrderController
- * @package App\Http\Controllers
+ * Class OrderController.
  */
 class OrderController extends Controller
 {
@@ -44,9 +44,10 @@ class OrderController extends Controller
 
     /**
      * OrderController constructor.
-     * @param OrderService $orderService
-     * @param CustomerService $customerService
-     * @param PaymentService $paymentService
+     *
+     * @param OrderService      $orderService
+     * @param CustomerService   $customerService
+     * @param PaymentService    $paymentService
      * @param CouponCodeService $couponCodeService
      */
     public function __construct(OrderService $orderService, CustomerService $customerService, PaymentService $paymentService, CouponCodeService $couponCodeService)
@@ -61,14 +62,16 @@ class OrderController extends Controller
      * Show order status.
      *
      * @param Order $orderUuid
+     *
      * @return Factory|View
+     *
      * @throws Exception
      */
     public function status(Order $orderUuid)
     {
         $result = $this->paymentService->validate($orderUuid);
 
-        if ($result === true) {
+        if (true === $result) {
             $this->orderService->sendPaymentConfirmationToCustomer($orderUuid);
         }
 
@@ -78,10 +81,12 @@ class OrderController extends Controller
     }
 
     /**
-     * @param CartService $cartService
+     * @param CartService         $cartService
      * @param PostCheckoutRequest $request
+     *
      * @return RedirectResponse
-     * @throws \Throwable
+     *
+     * @throws Throwable
      */
     public function process(CartService $cartService, PostCheckoutRequest $request)
     {
@@ -90,12 +95,13 @@ class OrderController extends Controller
 
         // Validate and apply coupon code if given
         $couponCode = $cart->discounts()->where('coupon_code', '!=', null)->first();
-        if ($couponCode !== null) {
+        if (null !== $couponCode) {
             $coupon = $this->couponCodeService->validateCouponCode($couponCode->coupon_code);
-            if ($coupon === null) {
+            if (null === $coupon) {
                 if ($request->wantsJson()) {
                     return response()->json(['status' => 'error', 'message' => __('Coupon code invalid.')]);
                 }
+
                 return redirect()
                     ->back()
                     ->withErrors(['coupon_code' => __('Coupon code invalid.')]);
@@ -114,7 +120,7 @@ class OrderController extends Controller
         $this->customerService->saveContact($customer, $request->all(), 'billing');
 
         // Save shipping
-        if (isset($request->ship_different_address) && (int)$request->ship_different_address === 1) {
+        if (isset($request->ship_different_address) && 1 === (int) $request->ship_different_address) {
             $this->customerService->saveContact($customer, $request->all(), 'shipping', false);
         }
 
@@ -138,7 +144,8 @@ class OrderController extends Controller
 
     /**
      * @param ShopCalculationService $shopCalculationService
-     * @param Order $orderUuid
+     * @param Order                  $orderUuid
+     *
      * @return Factory|View
      */
     public function paymentRedirect(ShopCalculationService $shopCalculationService, Order $orderUuid)
@@ -158,6 +165,7 @@ class OrderController extends Controller
 
     /**
      * @param Order $orderUuid
+     *
      * @return string
      */
     public function invoice(Order $orderUuid)

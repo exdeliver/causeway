@@ -8,7 +8,8 @@ final class SanitzeService
      * Strip inline javascript tags.
      *
      * @param string $string
-     * @return null|string|string[]
+     *
+     * @return string|string[]|null
      */
     public function stripInlineJavascript(string $string)
     {

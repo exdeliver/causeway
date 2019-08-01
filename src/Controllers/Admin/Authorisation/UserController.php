@@ -2,19 +2,20 @@
 
 namespace Exdeliver\Causeway\Controllers\Admin\Authorisation;
 
+use Exception;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\User\User;
 use Exdeliver\Causeway\Domain\Services\UserService;
 use Exdeliver\Causeway\Requests\PostAdminUserRequest;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 
 /**
- * Class UserController
- * @package Exdeliver\Causeway\Controllers\Admin\Authorisation
+ * Class UserController.
  */
 class UserController extends Controller
 {
@@ -23,6 +24,7 @@ class UserController extends Controller
 
     /**
      * UserController constructor.
+     *
      * @param UserService $userService
      */
     public function __construct(UserService $userService)
@@ -44,6 +46,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::get();
+
         return view('causeway::admin.authorisation.users.new', [
             'roles' => $roles,
         ]);
@@ -51,12 +54,14 @@ class UserController extends Controller
 
     /**
      * @param Request $request
-     * @param User $user
+     * @param User    $user
+     *
      * @return Factory|View
      */
     public function edit(Request $request, User $user)
     {
         $roles = Role::get();
+
         return view('causeway::admin.authorisation.users.update', [
             'user' => $user,
             'roles' => $roles,
@@ -65,8 +70,9 @@ class UserController extends Controller
 
     /**
      * @param PostAdminUserRequest $request
-     * @param User $user
-     * @return \Illuminate\Http\RedirectResponse
+     * @param User                 $user
+     *
+     * @return RedirectResponse
      */
     public function update(PostAdminUserRequest $request, User $user)
     {
@@ -75,8 +81,9 @@ class UserController extends Controller
 
     /**
      * @param PostAdminUserRequest $request
-     * @param User|null $user
-     * @return \Illuminate\Http\RedirectResponse
+     * @param User|null            $user
+     *
+     * @return RedirectResponse
      */
     public function store(PostAdminUserRequest $request, User $user = null)
     {
@@ -84,7 +91,7 @@ class UserController extends Controller
             'id' => $user->id ?? null,
         ], $request);
 
-        $request->session()->flash('status', isset($user->id) && $user->id !== null ? 'User has successfully been updated!' : 'User has successfully been created!');
+        $request->session()->flash('status', isset($user->id) && null !== $user->id ? 'User has successfully been updated!' : 'User has successfully been created!');
 
         return redirect()
             ->route('admin.authorisation.user.index');
@@ -94,7 +101,8 @@ class UserController extends Controller
      * Get Datatables.
      *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function getAjaxUsers()
     {
@@ -103,7 +111,8 @@ class UserController extends Controller
         return Datatables::of($users)
             ->addColumn('name', function (User $row) {
                 $state = $row->hasVerifiedEmail() ? '<span class="badge badge-success">verified</span>' : '<span class="badge badge-warning">in-active</span>';
-                return $row->name . ' ' . $state;
+
+                return $row->name.' '.$state;
             })
             ->addColumn('email', function ($row) {
                 return $row->email;
@@ -112,12 +121,12 @@ class UserController extends Controller
                 return implode(', ', array_column($row->roles->toArray(), 'name'));
             })
             ->addColumn('manage', function ($row) {
-                $userRemoval = !$row->hasRole('admin') ? '<form action="' . route('admin.authorisation.user.remove', ['id' => $row->id]) . '" method="post" class="delete-inline">
-                            ' . method_field('DELETE') . csrf_field() . '
+                $userRemoval = !$row->hasRole('admin') ? '<form action="'.route('admin.authorisation.user.remove', ['id' => $row->id]).'" method="post" class="delete-inline">
+                            '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>' : '';
 
-                return '<a href="' . route('admin.authorisation.user.update', ['id' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>' .
+                return '<a href="'.route('admin.authorisation.user.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
                     $userRemoval;
             })
             ->rawColumns(['name', 'email', 'role', 'manage'])
@@ -126,9 +135,11 @@ class UserController extends Controller
 
     /**
      * @param Request $request
-     * @param User $user
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @param User    $user
+     *
+     * @return RedirectResponse
+     *
+     * @throws Exception
      */
     public function destroy(Request $request, User $user)
     {

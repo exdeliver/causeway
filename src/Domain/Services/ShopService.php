@@ -3,9 +3,8 @@
 namespace Exdeliver\Causeway\Domain\Services;
 
 /**
- * Class ShopProductService
+ * Class ShopProductService.
  */
 final class ShopService
 {
-
 }

@@ -5,8 +5,7 @@ namespace Exdeliver\Causeway\Domain\Services;
 use Exdeliver\Causeway\Infrastructure\Repositories\AbstractRepository;
 
 /**
- * Class AbstractService
- * @package Domain\Services
+ * Class AbstractService.
  */
 abstract class AbstractService
 {
@@ -41,13 +40,14 @@ abstract class AbstractService
     }
 
     /**
-     * @param array $params
+     * @param array    $params
      * @param int|null $id
+     *
      * @return mixed
      */
     public function save(array $params, int $id = null)
     {
-        if ($id !== null) {
+        if (null !== $id) {
             return $this->update($id, $params);
         }
 
@@ -55,8 +55,9 @@ abstract class AbstractService
     }
 
     /**
-     * @param int $id
+     * @param int   $id
      * @param array $params
+     *
      * @return mixed
      */
     public function update(int $id, array $params)
@@ -70,6 +71,7 @@ abstract class AbstractService
 
     /**
      * @param array $params
+     *
      * @return mixed
      */
     public function create(array $params)

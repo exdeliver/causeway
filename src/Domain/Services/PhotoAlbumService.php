@@ -6,13 +6,13 @@ use Exdeliver\Causeway\Infrastructure\Repositories\PhotoAlbumRepository;
 use Illuminate\Support\Str;
 
 /**
- * Class PhotoAlbumService
- * @package Domain\Services
+ * Class PhotoAlbumService.
  */
 final class PhotoAlbumService extends AbstractService
 {
     /**
      * PhotoAlbumService constructor.
+     *
      * @param PhotoAlbumRepository $repository
      */
     public function __construct(PhotoAlbumRepository $repository)
@@ -29,16 +29,18 @@ final class PhotoAlbumService extends AbstractService
     }
 
     /**
-     * @param array $params
+     * @param array    $params
      * @param int|null $id
+     *
      * @return mixed
      */
     public function saveAlbum(array $params, int $id = null)
     {
-        if ($id !== null) {
+        if (null !== $id) {
             return $this->update($id, $params);
         } else {
             $params['uuid'] = Str::uuid();
+
             return $this->create($params);
         }
     }

@@ -2,6 +2,7 @@
 
 namespace Exdeliver\Causeway\Controllers\Admin\Shop;
 
+use Exception;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Shop\Category;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
@@ -9,13 +10,16 @@ use Exdeliver\Causeway\Domain\Services\ProductBookingsService;
 use Exdeliver\Causeway\Domain\Services\ProductVariantsService;
 use Exdeliver\Causeway\Domain\Services\ShopProductService;
 use Exdeliver\Causeway\Requests\PostShopProductRequest;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
+use Throwable;
 use Yajra\DataTables\Facades\DataTables;
 
 /**
- * Class ProductController
- * @package Exdeliver\Causeway\Controllers\Admin\Shop
+ * Class ProductController.
  */
 final class ProductController extends Controller
 {
@@ -38,7 +42,8 @@ final class ProductController extends Controller
 
     /**
      * ProductController constructor.
-     * @param ShopProductService $productService
+     *
+     * @param ShopProductService     $productService
      * @param ProductVariantsService $productVariantsService
      * @param ProductBookingsService $productBookingsService
      */
@@ -50,7 +55,7 @@ final class ProductController extends Controller
     }
 
     /**
-     * Products index
+     * Products index.
      */
     public function index()
     {
@@ -59,15 +64,17 @@ final class ProductController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Exception
+     *
+     * @return Factory|View
+     *
+     * @throws Exception
      */
     public function create(Request $request)
     {
         $productType = collect(Product::getProductTypes())->where('type', $request->product_type ?? 'regular')->first();
 
-        if ($productType === null) {
-            throw new \Exception('Unsupported product type');
+        if (null === $productType) {
+            throw new Exception('Unsupported product type');
         }
 
         return view('causeway::admin.shop.product.new', [
@@ -79,7 +86,8 @@ final class ProductController extends Controller
     /**
      * @param Request $request
      * @param Product $product
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @return Factory|View
      */
     public function edit(Request $request, Product $product)
     {
@@ -92,9 +100,11 @@ final class ProductController extends Controller
 
     /**
      * @param PostShopProductRequest $request
-     * @param Product $product
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Throwable
+     * @param Product                $product
+     *
+     * @return RedirectResponse
+     *
+     * @throws Throwable
      */
     public function update(PostShopProductRequest $request, Product $product)
     {
@@ -103,9 +113,11 @@ final class ProductController extends Controller
 
     /**
      * @param PostShopProductRequest $request
-     * @param Product|null $product
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Throwable
+     * @param Product|null           $product
+     *
+     * @return RedirectResponse
+     *
+     * @throws Throwable
      */
     public function store(PostShopProductRequest $request, Product $product = null)
     {
@@ -126,15 +138,14 @@ final class ProductController extends Controller
 
                 return $product;
             });
-
-        } catch (\Exception $e) {
-            throw new \Exception($e);
+        } catch (Exception $e) {
+            throw new Exception($e);
         }
 
-        if ($product !== null) {
-            $request->session()->flash('status', 'Product ' . $product->title . ' updated');
+        if (null !== $product) {
+            $request->session()->flash('status', 'Product '.$product->title.' updated');
         } else {
-            $request->session()->flash('status', 'Product ' . $product->title . ' created');
+            $request->session()->flash('status', 'Product '.$product->title.' created');
         }
 
         return redirect()
@@ -145,7 +156,8 @@ final class ProductController extends Controller
      * Get Datatables.
      *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function getAjaxProducts()
     {
@@ -168,20 +180,18 @@ final class ProductController extends Controller
                 return money($row->vat_price, 'EUR')->format();
             })
             ->addColumn('vat', function ($row) {
-                return $row->vat + 0 . '%';
+                return $row->vat + 0 .'%';
             })
             ->addColumn('manage', function ($row) {
-                $menuRemoval = '<form action="' . route('admin.shop.product.destroy', ['id' => $row->id]) . '" method="post" class="delete-inline">
-                            ' . method_field('DELETE') . csrf_field() . '
+                $menuRemoval = '<form action="'.route('admin.shop.product.destroy', ['id' => $row->id]).'" method="post" class="delete-inline">
+                            '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>';
 
-                return '<a href="' . route('admin.shop.product.update', ['id' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>' .
+                return '<a href="'.route('admin.shop.product.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
                     $menuRemoval;
-
             })
             ->rawColumns(['pid', 'name', 'gross_price', 'vat_price', 'vat', 'manage'])
             ->make(true);
     }
-
 }

@@ -3,6 +3,8 @@
 namespace Exdeliver\Causeway\Exceptions;
 
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CommentNotificationException extends Exception
 {
@@ -11,8 +13,7 @@ class CommentNotificationException extends Exception
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param \Exception $exception
-     * @return void
+     * @param Exception $exception
      */
     public function report(Exception $exception)
     {
@@ -22,8 +23,9 @@ class CommentNotificationException extends Exception
     /**
      * Render the exception into an HTTP response.
      *
-     * @param \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @param Request
+     *
+     * @return Response
      */
     public function render($request)
     {

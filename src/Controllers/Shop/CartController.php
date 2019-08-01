@@ -2,6 +2,7 @@
 
 namespace Exdeliver\Causeway\Controllers\Shop;
 
+use Exception;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Cart\Domain\Services\CartService;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
@@ -9,11 +10,11 @@ use Exdeliver\Causeway\Domain\Entities\Shop\ShippingMethods\ShippingMethods;
 use Exdeliver\Causeway\Domain\Services\CouponCodeService;
 use Exdeliver\Causeway\Requests\PostOrderRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 /**
- * Class CartController
- * @package App\Http\Controllers
+ * Class CartController.
  */
 class CartController extends Controller
 {
@@ -29,7 +30,8 @@ class CartController extends Controller
 
     /**
      * CartController constructor.
-     * @param CartService $cartService
+     *
+     * @param CartService       $cartService
      * @param CouponCodeService $couponCodeService
      */
     public function __construct(CartService $cartService, CouponCodeService $couponCodeService)
@@ -40,8 +42,10 @@ class CartController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
+     *
+     * @return JsonResponse
+     *
+     * @throws Exception
      */
     public function addProduct(Request $request)
     {
@@ -52,7 +56,7 @@ class CartController extends Controller
                 'name' => $product->title,
                 '_link' => route('shop.product', ['slug' => $product->slug]),
                 'type' => 'item',
-                'gross_price' => ($product->special_price !== null && $product->gross_price > $product->special_price) ? $product->special_price : $product->gross_price,
+                'gross_price' => (null !== $product->special_price && $product->gross_price > $product->special_price) ? $product->special_price : $product->gross_price,
                 'vat' => $product->vat,
             ], $quantity);
         }
@@ -62,8 +66,10 @@ class CartController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function addShippingMethod(Request $request)
     {
@@ -74,9 +80,11 @@ class CartController extends Controller
 
     /**
      * @param string $shippingMethodId
-     * @param int $quantity
+     * @param int    $quantity
+     *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function validateShippingMethodAndAddToCart(string $shippingMethodId, int $quantity = 1)
     {
@@ -88,12 +96,12 @@ class CartController extends Controller
 
         if (count($findExistingProduct) > 0) {
             foreach ($findExistingProduct as $product) {
-                $this->cartService->remove((string)$product->id);
+                $this->cartService->remove((string) $product->id);
             }
         }
 
         // Apply free shipping when threshold reached.
-        if (($shippingMethod->total_free_shipping_threshold !== null && $shippingMethod->total_free_shipping_threshold > 0) && $this->cartService->subtotal() > $shippingMethod->total_free_shipping_threshold) {
+        if ((null !== $shippingMethod->total_free_shipping_threshold && $shippingMethod->total_free_shipping_threshold > 0) && $this->cartService->subtotal() > $shippingMethod->total_free_shipping_threshold) {
             $shippingMethod->gross_price = 0;
         }
 
@@ -113,7 +121,7 @@ class CartController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function index()
     {
@@ -122,7 +130,8 @@ class CartController extends Controller
 
     /**
      * @param PostOrderRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @return RedirectResponse
      */
     public function cart(PostOrderRequest $request)
     {
@@ -133,15 +142,16 @@ class CartController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return JsonResponse
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function couponcode(Request $request)
     {
         $coupon = $this->couponCodeService->validateCouponCode($request->coupon_code);
 
-        if ($coupon === null) {
-
+        if (null === $coupon) {
             if ($request->wantsJson()) {
                 return response()->json(['status' => 'error', 'message' => __('Coupon code invalid.')]);
             }
@@ -164,7 +174,8 @@ class CartController extends Controller
 
     /**
      * @param Request $request
-     * @return JsonResponse|\Illuminate\Http\RedirectResponse
+     *
+     * @return JsonResponse|RedirectResponse
      */
     public function clear(Request $request)
     {

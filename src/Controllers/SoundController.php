@@ -3,16 +3,18 @@
 namespace Exdeliver\Causeway\Controllers;
 
 use Exdeliver\Causeway\Domain\Entities\Sound\Sound;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 
 /**
- * Class SoundController
- * @package Exdeliver\Causeway\Controllers
+ * Class SoundController.
  */
 class SoundController extends Controller
 {
     /**
      * @param Sound $soundName
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @return Factory|View
      */
     public function getSound(Sound $soundName)
     {

@@ -5,8 +5,7 @@ namespace Exdeliver\Causeway\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class PostCheckoutRequest
- * @package Exdeliver\Causeway\Requests
+ * Class PostCheckoutRequest.
  */
 class PostCheckoutRequest extends FormRequest
 {
@@ -30,8 +29,8 @@ class PostCheckoutRequest extends FormRequest
         $nameExpression = '/^([_\p{Lu}\p{Lt}][_\p{Nd}\p{Ll}\p{Lm}\p{Lo} \',-."]+)+$/u';
 
         $rules = [
-            'first_name' => 'required|regex:' . $nameExpression,
-            'last_name' => 'required|regex:' . $nameExpression,
+            'first_name' => 'required|regex:'.$nameExpression,
+            'last_name' => 'required|regex:'.$nameExpression,
             'email' => 'required|email|confirmed',
             'address' => 'required',
             'address_number' => 'required',
@@ -45,8 +44,8 @@ class PostCheckoutRequest extends FormRequest
         ];
 
         $shippableProductRules = [
-            'shipping_first_name' => 'required_if:ship_different_address,1|nullable|regex:' . $nameExpression,
-            'shipping_last_name' => 'required_if:ship_different_address,1|nullable|regex:' . $nameExpression,
+            'shipping_first_name' => 'required_if:ship_different_address,1|nullable|regex:'.$nameExpression,
+            'shipping_last_name' => 'required_if:ship_different_address,1|nullable|regex:'.$nameExpression,
             'shipping_address' => 'required_if:ship_different_address,1',
             'shipping_address_number' => 'required_if:ship_different_address,1',
             'shipping_address_suffix' => 'nullable',

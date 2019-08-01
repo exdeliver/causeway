@@ -3,8 +3,7 @@
 namespace Exdeliver\Causeway\Domain\Common\Interfaces;
 
 /**
- * Interface RenderableInterface
- * @package Exdeliver\Causeway\Domain\Common\Interfaces
+ * Interface RenderableInterface.
  */
 interface RenderableInterface
 {

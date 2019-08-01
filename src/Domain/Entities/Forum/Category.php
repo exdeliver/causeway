@@ -2,13 +2,14 @@
 
 namespace Exdeliver\Causeway\Domain\Entities\Forum;
 
+use Exception;
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
 use Exdeliver\Causeway\Domain\Common\ChildrenTrait;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class Thread
- * @package Domain\Entities\Forum
+ * Class Thread.
  */
 class Category extends AggregateRoot
 {
@@ -31,6 +32,7 @@ class Category extends AggregateRoot
 
     /**
      * @param $id
+     *
      * @return Model
      */
     public static function findNext($id)
@@ -40,6 +42,7 @@ class Category extends AggregateRoot
 
     /**
      * @param $id
+     *
      * @return Model
      */
     public static function findPrevious($id)
@@ -90,15 +93,15 @@ class Category extends AggregateRoot
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function threads(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function threads(): HasMany
     {
         return $this->hasMany(Thread::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model|HasMany|object|null
+     * @return Model|HasMany|object|null
      */
     public function getLatestRepliedThreadAttribute()
     {
@@ -121,6 +124,7 @@ class Category extends AggregateRoot
         if (isset($this->latest_replied_thread->slug)) {
             return route('site.forum.thread', ['forumCategory' => $this->slug, 'forumThread' => $this->latest_replied_thread->slug]);
         }
+
         return null;
     }
 
@@ -139,7 +143,7 @@ class Category extends AggregateRoot
     {
         try {
             return $this->latest_replied_thread->created_at->format('d-m-Y H:i') ?? null;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return null;
         }
     }

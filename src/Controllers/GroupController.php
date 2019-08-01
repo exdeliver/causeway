@@ -3,28 +3,32 @@
 namespace Exdeliver\Causeway\Controllers;
 
 use DataTables;
+use Exception;
 use Exdeliver\Causeway\Domain\Entities\Group\Group;
 use Exdeliver\Causeway\Domain\Entities\Group\GroupRole;
 use Exdeliver\Causeway\Domain\Services\GroupService;
 use Exdeliver\Causeway\Requests\PostGroupRequest;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 use Vinkla\Hashids\Facades\Hashids;
 
 /**
- * Class GroupController
- * @package Exdeliver\Causeway\Controllers
+ * Class GroupController.
  */
 class GroupController extends Controller
 {
     /**
-     * @var GroupService $groupService
+     * @var GroupService
      */
     private $groupService;
 
     /**
      * GroupController constructor.
+     *
      * @param GroupService $groupService
      */
     public function __construct(GroupService $groupService)
@@ -33,7 +37,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {
@@ -48,7 +52,8 @@ class GroupController extends Controller
      * Get group by label.
      *
      * @param string $label
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @return Factory|View
      */
     public function show(string $label)
     {
@@ -60,7 +65,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create()
     {
@@ -69,8 +74,10 @@ class GroupController extends Controller
 
     /**
      * @param Group $Group
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return Factory|View
+     *
+     * @throws AuthorizationException
      */
     public function edit(Group $Group)
     {
@@ -81,9 +88,11 @@ class GroupController extends Controller
 
     /**
      * @param PostGroupRequest $request
-     * @param Group|null $Group
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @param Group|null       $Group
+     *
+     * @return RedirectResponse
+     *
+     * @throws Exception
      */
     public function store(PostGroupRequest $request, Group $Group = null): RedirectResponse
     {
@@ -96,7 +105,7 @@ class GroupController extends Controller
 
         $this->groupService->addUsersToGroup($users, $group);
 
-        $request->session()->flash('status', isset($Group->id) && $Group->id !== null ? 'Group has successfully been updated!' : 'Group has successfully been created!');
+        $request->session()->flash('status', isset($Group->id) && null !== $Group->id ? 'Group has successfully been updated!' : 'Group has successfully been created!');
 
         return redirect()
             ->route('group.show', ['label' => $group->label]);
@@ -106,19 +115,21 @@ class GroupController extends Controller
      * Group invitation.
      *
      * @param Request $request
-     * @param string $label
-     * @param string $code
+     * @param string  $label
+     * @param string  $code
+     *
      * @return RedirectResponse|Response
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function invite(Request $request, string $label, string $code)
     {
         try {
             $group = $this->groupService->getGroupByLabelAndUuid($label, $code);
-            if (empty($request->referral_user_id) && $group->findUserInGroup((int)Hashids::decode($request->referral_user_id)) === false) {
+            if (empty($request->referral_user_id) && false === $group->findUserInGroup((int) Hashids::decode($request->referral_user_id))) {
                 return abort('404');
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return abort('404');
         }
 
@@ -137,7 +148,7 @@ class GroupController extends Controller
         // Add user as member.
         $this->groupService->addUsersToGroup([['user_id' => auth()->user()->id, 'role_id' => GroupRole::where('label', 'member')->first()->id]], $group);
 
-        $request->session()->flash('info', 'You have successfully joined group: ' . $group->name);
+        $request->session()->flash('info', 'You have successfully joined group: '.$group->name);
 
         return redirect()
             ->route('group.show', ['label' => $group->label]);
@@ -145,9 +156,11 @@ class GroupController extends Controller
 
     /**
      * @param Request $request
-     * @param Group $Group
+     * @param Group   $Group
+     *
      * @return RedirectResponse
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function remove(Request $request, Group $Group)
     {
@@ -161,8 +174,9 @@ class GroupController extends Controller
 
     /**
      * @param Request $request
-     * @param Group $Group
-     * @param int $userId
+     * @param Group   $Group
+     * @param int     $userId
+     *
      * @return RedirectResponse
      */
     public function removeUserFromGroup(Request $request, Group $Group, int $userId)
@@ -180,8 +194,10 @@ class GroupController extends Controller
      * Get users by group.
      *
      * @param string $label
+     *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function getUsersOverviewGroup(string $label)
     {
@@ -199,7 +215,7 @@ class GroupController extends Controller
             })
             ->addColumn('manage', function ($row) {
                 if (auth()->user()->can('manage', $row->group) && auth()->user()->can('group.manage')) {
-                    return '<a href="' . route('group.remove.user', ['Group' => $row->group, 'id' => $row->user->id]) . '" class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</a>';
+                    return '<a href="'.route('group.remove.user', ['Group' => $row->group, 'id' => $row->user->id]).'" class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</a>';
                 }
             })
             ->rawColumns(['manage'])
@@ -211,7 +227,8 @@ class GroupController extends Controller
      * Get groups by user.
      *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function getGroupsByUser()
     {
@@ -219,15 +236,15 @@ class GroupController extends Controller
 
         return Datatables::of($groups)
             ->addColumn('name', function ($row) {
-                return '<a href="' . route('group.show', ['label' => $row->label]) . '">' . $row->name . '</a>';
+                return '<a href="'.route('group.show', ['label' => $row->label]).'">'.$row->name.'</a>';
             })
             ->addColumn('members', function ($row) {
                 return $row->users->count();
             })
             ->addColumn('manage', function ($row) {
                 if (auth()->user()->can('manage', $row) && auth()->user()->can('group.manage')) {
-                    return '<a href="' . route('group.edit', ['id' => $row->_group_id]) . '" class="btn btn-sm btn-primary">Edit</a>
-                        <a href="' . route('group.remove', ['id' => $row->_group_id]) . '" class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</a>';
+                    return '<a href="'.route('group.edit', ['id' => $row->_group_id]).'" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="'.route('group.remove', ['id' => $row->_group_id]).'" class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</a>';
                 }
             })
             ->rawColumns(['name', 'manage'])

@@ -2,13 +2,17 @@
 
 namespace Exdeliver\Causeway\Controllers\Admin;
 
+use Exception;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Sound\Sound;
 use Exdeliver\Causeway\Domain\Services\SoundService;
 use Exdeliver\Causeway\Domain\Services\WaveformService;
 use Exdeliver\Causeway\Jobs\GenerateWaveform;
 use Exdeliver\Causeway\Requests\PostSoundRequest;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Yajra\DataTables\Facades\DataTables;
 
 class SoundController extends Controller
@@ -25,7 +29,8 @@ class SoundController extends Controller
 
     /**
      * SoundController constructor.
-     * @param SoundService $soundService
+     *
+     * @param SoundService    $soundService
      * @param WaveformService $waveformService
      */
     public function __construct(SoundService $soundService, WaveformService $waveformService)
@@ -48,7 +53,7 @@ class SoundController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {
@@ -56,7 +61,7 @@ class SoundController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create()
     {
@@ -65,8 +70,9 @@ class SoundController extends Controller
 
     /**
      * @param Request $request
-     * @param Sound $sound
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Sound   $sound
+     *
+     * @return Factory|View
      */
     public function edit(Request $request, Sound $sound)
     {
@@ -77,8 +83,9 @@ class SoundController extends Controller
 
     /**
      * @param PostSoundRequest $request
-     * @param Sound $sound
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Sound            $sound
+     *
+     * @return RedirectResponse
      */
     public function update(PostSoundRequest $request, Sound $sound)
     {
@@ -87,8 +94,9 @@ class SoundController extends Controller
 
     /**
      * @param PostSoundRequest $request
-     * @param Sound|null $sound
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Sound|null       $sound
+     *
+     * @return RedirectResponse
      */
     public function store(PostSoundRequest $request, Sound $sound = null)
     {
@@ -98,7 +106,7 @@ class SoundController extends Controller
             'artist', 'name', 'description', $fileName,
         ]), $sound->id ?? null);
 
-        $request->session()->flash('status', 'Sound ' . $soundRecord->title . ' uploaded.');
+        $request->session()->flash('status', 'Sound '.$soundRecord->title.' uploaded.');
 
         return redirect()
             ->to(route('admin.sound.index'));
@@ -106,11 +114,12 @@ class SoundController extends Controller
 
     /**
      * @return bool
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function foobar()
     {
-        $this->waveformService->loadFile(public_path() . "/test.mp3");
+        $this->waveformService->loadFile(public_path().'/test.mp3');
 
         $this->waveformService->process();
 
@@ -122,7 +131,7 @@ class SoundController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function play()
     {
@@ -131,7 +140,8 @@ class SoundController extends Controller
 
     /**
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function getAjaxSounds()
     {
@@ -139,15 +149,15 @@ class SoundController extends Controller
 
         return Datatables::of($pages)
             ->addColumn('name', function ($row) {
-                return $row->name . ' <a href="' . route('causeway.sound.play', ['name' => $row->name]) . '" target="_blank"><i class="fa fa-play-circle"></i></a>';
+                return $row->name.' <a href="'.route('causeway.sound.play', ['name' => $row->name]).'" target="_blank"><i class="fa fa-play-circle"></i></a>';
             })
             ->addColumn('artist', function ($row) {
                 return $row->artist;
             })
             ->addColumn('manage', function ($row) {
-                return '<a href="' . route('admin.sound.update', ['id' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="' . route('admin.sound.destroy', ['id' => $row->id]) . '" class="delete-inline" method="post">
-                            ' . method_field('DELETE') . csrf_field() . '
+                return '<a href="'.route('admin.sound.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="'.route('admin.sound.destroy', ['id' => $row->id]).'" class="delete-inline" method="post">
+                            '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>
                         ';
@@ -158,9 +168,11 @@ class SoundController extends Controller
 
     /**
      * @param Request $request
-     * @param Sound $sound
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @param Sound   $sound
+     *
+     * @return RedirectResponse
+     *
+     * @throws Exception
      */
     public function destroy(Request $request, Sound $sound)
     {

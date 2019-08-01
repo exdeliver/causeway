@@ -4,10 +4,10 @@ namespace Exdeliver\Causeway\Domain\Entities\Shop\ProductVariants;
 
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
 use Exdeliver\Causeway\Domain\Common\ChildrenTrait;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class Variant
- * @package Exdeliver\Causeway\Domain\Entities\Shop
+ * Class Variant.
  */
 class Variant extends AggregateRoot
 {
@@ -29,7 +29,7 @@ class Variant extends AggregateRoot
     protected $guarded = [];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function values()
     {

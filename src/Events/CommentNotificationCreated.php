@@ -5,6 +5,7 @@ namespace Exdeliver\Causeway\Events;
 use App\Models\Notification;
 use Exdeliver\Causeway\Domain\Entities\Comment\Comment;
 use Exdeliver\Causeway\Domain\Entities\Forum\Thread;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -12,13 +13,13 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Class CommentNotificationCreated
- *
- * @package App\Events
+ * Class CommentNotificationCreated.
  */
 final class CommentNotificationCreated implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     /**
      * @var Comment
@@ -50,14 +51,14 @@ final class CommentNotificationCreated implements ShouldBroadcast
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return Channel|array
      */
     public function broadcastOn()
     {
         $channel = null;
         switch ($this->comment->commentable_type) {
             case Thread::class:
-                $channel = 'users.notification.thread.' . $this->comment->commentable_id;
+                $channel = 'users.notification.thread.'.$this->comment->commentable_id;
                 break;
             case Notification::class:
 

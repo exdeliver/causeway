@@ -2,18 +2,21 @@
 
 namespace Exdeliver\Causeway\Controllers\Admin\Shop;
 
+use Exception;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Shop\Category;
 use Exdeliver\Causeway\Domain\Entities\Shop\CouponCode;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
 use Exdeliver\Causeway\Domain\Services\CouponCodeService;
 use Exdeliver\Causeway\Requests\PostCouponCodeRequest;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Yajra\DataTables\Facades\DataTables;
 
 /**
- * Class CouponCodeController
- * @package Exdeliver\Causeway\Controllers\Admin\Shop
+ * Class CouponCodeController.
  */
 final class CouponCodeController extends Controller
 {
@@ -26,6 +29,7 @@ final class CouponCodeController extends Controller
 
     /**
      * CategoryController constructor.
+     *
      * @param CouponCodeService $couponCodeService
      */
     public function __construct(CouponCodeService $couponCodeService)
@@ -34,7 +38,7 @@ final class CouponCodeController extends Controller
     }
 
     /**
-     * Category index
+     * Category index.
      */
     public function index()
     {
@@ -44,7 +48,7 @@ final class CouponCodeController extends Controller
     /**
      * Create category.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create()
     {
@@ -55,9 +59,10 @@ final class CouponCodeController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request    $request
      * @param CouponCode $couponcode
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @return Factory|View
      */
     public function edit(Request $request, CouponCode $couponcode)
     {
@@ -70,8 +75,9 @@ final class CouponCodeController extends Controller
 
     /**
      * @param PostCouponCodeRequest $request
-     * @param CouponCode $couponcode
-     * @return \Illuminate\Http\RedirectResponse
+     * @param CouponCode            $couponcode
+     *
+     * @return RedirectResponse
      */
     public function update(PostCouponCodeRequest $request, CouponCode $couponcode)
     {
@@ -80,8 +86,9 @@ final class CouponCodeController extends Controller
 
     /**
      * @param PostCouponCodeRequest $request
-     * @param CouponCode|null $couponcode
-     * @return \Illuminate\Http\RedirectResponse
+     * @param CouponCode|null       $couponcode
+     *
+     * @return RedirectResponse
      */
     public function store(PostCouponCodeRequest $request, CouponCode $couponcode = null)
     {
@@ -91,10 +98,10 @@ final class CouponCodeController extends Controller
         $couponcode->categories()->sync($request->categories ?? []);
         $couponcode->products()->sync($request->products ?? []);
 
-        if ($couponcode !== null) {
-            $request->session()->flash('status', 'Coupon code ' . $couponcode->coupon_code . ' updated');
+        if (null !== $couponcode) {
+            $request->session()->flash('status', 'Coupon code '.$couponcode->coupon_code.' updated');
         } else {
-            $request->session()->flash('status', 'Coupon code ' . $couponcode->coupon_code . ' created');
+            $request->session()->flash('status', 'Coupon code '.$couponcode->coupon_code.' created');
         }
 
         return redirect()
@@ -102,23 +109,26 @@ final class CouponCodeController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request    $request
      * @param CouponCode $couponcode
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     *
+     * @return RedirectResponse
+     *
+     * @throws Exception
      */
     public function destroy(Request $request, CouponCode $couponcode)
     {
         $couponcode->delete();
+
         return redirect()->back();
     }
-
 
     /**
      * Get Datatables.
      *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function getAjaxCouponCodes()
     {
@@ -135,14 +145,13 @@ final class CouponCodeController extends Controller
                 return null;
             })
             ->addColumn('manage', function ($row) {
-                $menuRemoval = '<form action="' . route('admin.shop.couponcode.destroy', ['id' => $row->id]) . '" method="post" class="delete-inline">
-                            ' . method_field('DELETE') . csrf_field() . '
+                $menuRemoval = '<form action="'.route('admin.shop.couponcode.destroy', ['id' => $row->id]).'" method="post" class="delete-inline">
+                            '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>';
 
-                return '<a href="' . route('admin.shop.couponcode.update', ['id' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>' .
+                return '<a href="'.route('admin.shop.couponcode.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
                     $menuRemoval;
-
             })
             ->rawColumns(['name', 'coupon_code', 'status', 'manage'])
             ->make(true);

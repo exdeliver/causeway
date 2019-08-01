@@ -3,18 +3,18 @@
 namespace Exdeliver\Causeway\Domain\Services;
 
 use Exdeliver\Causeway\Infrastructure\Repositories\RoleRepository;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
 /**
- * Class PandaUserService
- *
- * @package Domain\Services
+ * Class PandaUserService.
  */
 final class RoleService extends AbstractService
 {
     /**
      * PandaUserService constructor.
+     *
      * @param RoleRepository $roleRepository
      */
     public function __construct(RoleRepository $roleRepository)
@@ -23,9 +23,10 @@ final class RoleService extends AbstractService
     }
 
     /**
-     * @param array $match
+     * @param array   $match
      * @param Request $request
-     * @return \Illuminate\Database\Eloquent\Model|void
+     *
+     * @return Model|void
      */
     public function updateOrCreateWithPermissions(array $match, Request $request)
     {

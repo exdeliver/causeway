@@ -21,7 +21,7 @@
     <link href="{{ causewayAsset('css/datatables.css') }}" rel="stylesheet">
     <link href="{{asset('vendor/laraberg/css/laraberg.css')}}" rel="stylesheet">
     <script>
-        window.Laravel = <?php echo json_encode([
+        window.Laravel =; <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>

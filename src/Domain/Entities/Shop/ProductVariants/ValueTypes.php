@@ -3,8 +3,7 @@
 namespace Exdeliver\Causeway\Domain\Entities\Shop\ProductVariants;
 
 /**
- * Class Variant
- * @package Exdeliver\Causeway\Domain\Entities\Shop
+ * Class Variant.
  */
 class ValueTypes
 {

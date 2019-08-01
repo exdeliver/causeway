@@ -8,11 +8,13 @@ use Exdeliver\Causeway\Domain\Entities\Shop\ProductAttributes\AttributeValue;
 use Exdeliver\Causeway\Domain\Entities\Shop\ProductBookingDates\BookingDate;
 use Exdeliver\Causeway\Domain\Entities\Shop\ProductVariants\Variant;
 use Exdeliver\Causeway\Domain\Entities\Shop\ProductVariants\VariantValue;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class Product
- * @package Exdeliver\Causeway\Domain\Entities\Shop
+ * Class Product.
  */
 class Product extends Entity implements Auditable
 {
@@ -20,22 +22,22 @@ class Product extends Entity implements Auditable
     use PricingTrait;
 
     /**
-     * Product types that Causeway Supports
+     * Product types that Causeway Supports.
      */
     public const REGULAR_PRODUCT = ['type' => 'regular',
-        'description' => 'Regular shippable product.'];
+        'description' => 'Regular shippable product.', ];
     public const COMPLEX_PRODUCT = ['type' => 'complex',
-        'description' => 'Configurable complex product.'];
+        'description' => 'Configurable complex product.', ];
     public const VARIANT_PRODUCT = ['type' => 'variant',
-        'description' => 'Variant product belongs to a complex product.'];
+        'description' => 'Variant product belongs to a complex product.', ];
     public const BOOKING_PRODUCT = ['type' => 'booking',
-        'description' => 'Product that is bookable for a period of time.'];
+        'description' => 'Product that is bookable for a period of time.', ];
     public const SERVICE_PRODUCT = ['type' => 'service',
-        'description' => 'Product that is a service.'];
+        'description' => 'Product that is a service.', ];
     public const DOWNLOAD_PRODUCT = ['type' => 'download',
-        'description' => 'Product that needs to be downloaded.'];
+        'description' => 'Product that needs to be downloaded.', ];
     public const RENTAL_PRODUCT = ['type' => 'rental',
-        'description' => 'Product that is being rented for a period of time.'];
+        'description' => 'Product that is being rented for a period of time.', ];
 
     /**
      * @var string
@@ -53,7 +55,7 @@ class Product extends Entity implements Auditable
     protected $guarded = [];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function categories()
     {
@@ -78,20 +80,20 @@ class Product extends Entity implements Auditable
         }
     }
 
-
     /**
      * Get fully qualified name slug.
+     *
      * @return string
      */
     public function getFqnSlugAttribute()
     {
-        return '/shop/product/' . $this->slug;
+        return '/shop/product/'.$this->slug;
     }
 
     /**
      * Get stock.
      *
-     * @return integer
+     * @return int
      */
     public function getStockAttribute()
     {
@@ -99,7 +101,7 @@ class Product extends Entity implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function variants()
     {
@@ -107,7 +109,7 @@ class Product extends Entity implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function attributes()
     {
@@ -115,7 +117,7 @@ class Product extends Entity implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function attribute()
     {
@@ -123,7 +125,7 @@ class Product extends Entity implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function variant()
     {
@@ -131,7 +133,7 @@ class Product extends Entity implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function bookingDates()
     {
@@ -146,7 +148,6 @@ class Product extends Entity implements Auditable
     public function getVariantsCollection()
     {
         $variants = $this->variants->map(function ($variant) {
-
             $variantType = ['id' => $variant['id'],
                 'name' => $variant->name,
                 'sequence' => $variant->sequence,
@@ -173,7 +174,6 @@ class Product extends Entity implements Auditable
     public function getBookingsCollection()
     {
         $bookings = $this->bookingDates()->orderBy('date_from')->get()->map(function ($booking) {
-
             $bookingType = [
                 'id' => $booking['id'],
                 'type' => $booking['type'],
@@ -190,9 +190,8 @@ class Product extends Entity implements Auditable
         return $bookings;
     }
 
-
     /**
-     * Get product variants
+     * Get product variants.
      */
     public function getVariants()
     {

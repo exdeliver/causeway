@@ -6,16 +6,18 @@ use App\Models\Notification;
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
 use Exdeliver\Causeway\Domain\Entities\Comment\CommentTrait;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * Class Group
- * @package Domain\Entities\Group
+ * Class Group.
  */
 class Group extends AggregateRoot
 {
-    use Notifiable, CommentTrait, SoftDeletes;
+    use Notifiable;
+    use CommentTrait;
+    use SoftDeletes;
 
     /**
      * Mass assign variables.
@@ -33,6 +35,7 @@ class Group extends AggregateRoot
 
     /**
      * @param int $id
+     *
      * @return bool
      */
     public function findUserById(int $id): bool
@@ -70,6 +73,7 @@ class Group extends AggregateRoot
      * Find user in current group.
      *
      * @param int $userId
+     *
      * @return bool
      */
     public function findUserInGroup(int $userId)
@@ -80,7 +84,7 @@ class Group extends AggregateRoot
     /**
      * Notifications.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return MorphMany
      */
     public function notifications()
     {

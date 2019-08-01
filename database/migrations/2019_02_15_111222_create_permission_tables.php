@@ -8,8 +8,6 @@ class CreatePermissionTables extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -40,7 +38,7 @@ class CreatePermissionTables extends Migration
 
                 $table->string('model_type');
                 $table->unsignedBigInteger($columnNames['model_morph_key']);
-                $table->index([$columnNames['model_morph_key'], 'model_type',]);
+                $table->index([$columnNames['model_morph_key'], 'model_type']);
 
                 $table->foreign('permission_id')
                     ->references('id')
@@ -60,7 +58,7 @@ class CreatePermissionTables extends Migration
 
                 $table->string('model_type');
                 $table->unsignedBigInteger($columnNames['model_morph_key']);
-                $table->index([$columnNames['model_morph_key'], 'model_type',]);
+                $table->index([$columnNames['model_morph_key'], 'model_type']);
 
                 $table->foreign('role_id')
                     ->references('id')
@@ -92,7 +90,7 @@ class CreatePermissionTables extends Migration
                 $table->primary(['permission_id', 'role_id']);
 
                 app('cache')
-                    ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
+                    ->store('default' != config('permission.cache.store') ? config('permission.cache.store') : null)
                     ->forget(config('permission.cache.key'));
             });
         }
@@ -100,8 +98,6 @@ class CreatePermissionTables extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

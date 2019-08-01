@@ -5,8 +5,7 @@ namespace Exdeliver\Causeway\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class PostCouponCodeRequest
- * @package Exdeliver\Causeway\Requests
+ * Class PostCouponCodeRequest.
  */
 class PostCouponCodeRequest extends FormRequest
 {
@@ -29,7 +28,7 @@ class PostCouponCodeRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'coupon_code' => 'required|unique:shop_coupon_codes,coupon_code,' . $this->couponcode->id,
+            'coupon_code' => 'required|unique:shop_coupon_codes,coupon_code,'.$this->couponcode->id,
             'discount_type' => 'required',
             'discount_amount' => 'required',
         ];

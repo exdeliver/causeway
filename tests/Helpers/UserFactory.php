@@ -2,35 +2,39 @@
 
 namespace Exdeliver\Causeway\Tests\Helpers;
 
+use Exception;
 use Exdeliver\Causeway\Domain\Entities\User\User;
 use Spatie\Permission\Models\Role;
 
 /**
- * Class UserFactory
- * @package Tests\ModelFactories
+ * Class UserFactory.
  */
 class UserFactory
 {
     /**
-     * @var Role $role
+     * @var Role
      */
     protected $role;
 
     /**
      * @param array $params
+     *
      * @return mixed
      */
     public function create(array $params)
     {
         $user = factory(User::class)->create($params);
         $user->assignRole($this->role);
+
         return $user;
     }
 
     /**
      * @param $role
+     *
      * @return UserFactory
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function withRole($role): self
     {
@@ -40,9 +44,10 @@ class UserFactory
 
         if ($role instanceof Role) {
             $this->role = $role;
+
             return $this;
         }
 
-        throw new \Exception('Well this is not a role sir...');
+        throw new Exception('Well this is not a role sir...');
     }
 }

@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
- * Class CategoryProduct
- * @package Domain\Entities\Shop
+ * Class CategoryProduct.
  */
 class CategoryProduct extends Pivot
 {

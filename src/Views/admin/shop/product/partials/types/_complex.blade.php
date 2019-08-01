@@ -59,7 +59,7 @@
                     </td>
                     <td>
                         <a href="{{ route('admin.shop.product.update', ['id' => $variant->id]) }}" class="btn btn-sm btn-warning pull-left mr-2">Edit</a>
-                        <a href="{{ route('admin.shop.product.getDelete', ['id' => $variant->id]) }}" class="btn btn-sm btn-danger pull-left" onclick="return confirm(\'Are you sure?\')">Remove</a>
+                        <a href="{{ route('admin.shop.product.getDelete', ['id' => $variant->id]) }}" class="btn btn-sm btn-danger pull-left" onclick="return confirm(;\'Are you sure?\')">Remove</a>
                     </td>
                 </tr>
             @endforeach

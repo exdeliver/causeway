@@ -3,10 +3,10 @@
 namespace Exdeliver\Causeway\Domain\Entities\Shop\ProductAttributes;
 
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class Attribute
- * @package Exdeliver\Causeway\Domain\Entities\Shop
+ * Class Attribute.
  */
 class Attribute extends AggregateRoot
 {
@@ -21,7 +21,7 @@ class Attribute extends AggregateRoot
     protected $table = 'shop_product_attributes';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function values()
     {

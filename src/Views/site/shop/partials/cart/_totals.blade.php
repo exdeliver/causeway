@@ -3,7 +3,7 @@
         {{ __('Overview') }}
     </div>
     <div class="p-3 bg-white">
-        <cart-totals-component :cart="{{ \CWCart::summary() }}" cart_details_route="{{ route('shop.cart.details') }}"></cart-totals-component>
+        <cart-totals-component :cart="{{ CWCart::summary() }}" cart_details_route="{{ route('shop.cart.details') }}"></cart-totals-component>
         {{ Form::open(['url' => route('shop.cart.order'), 'method' => 'POST', 'id' => 'shopCartForm']) }}
         <button type="submit" class="btn btn-success btn-like btn-block" for="shopCartForm">{{ __('Checkout order') }} <span class="bold">&#62;</span></button>
         @if($errors->has('product'))

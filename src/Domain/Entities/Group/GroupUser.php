@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
- * Class GroupUser
- * @package Domain\Entities\Group
+ * Class GroupUser.
  */
 class GroupUser extends Pivot
 {
@@ -22,7 +21,7 @@ class GroupUser extends Pivot
     protected $table = '_groups_users';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function user(): BelongsTo
     {

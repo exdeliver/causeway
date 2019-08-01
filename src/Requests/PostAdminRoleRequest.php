@@ -24,7 +24,7 @@ class PostAdminRoleRequest extends FormRequest
     public function rules()
     {
         $rules = [];
-        $rules['name'] = 'required|unique:roles,name,' . $this->role->id ?? null;
+        $rules['name'] = 'required|unique:roles,name,'.$this->role->id ?? null;
         $rules['guard_name'] = 'required';
 
         return $rules;

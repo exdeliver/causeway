@@ -2,11 +2,12 @@
 
 namespace Exdeliver\Causeway\ViewComposers;
 
+use CW;
+use Exception;
 use Illuminate\Support\Facades\Log;
 
 /**
- * Class NavigationComposer
- * @package App\Http\ViewComposers
+ * Class NavigationComposer.
  */
 class NavigationComposer
 {
@@ -16,8 +17,8 @@ class NavigationComposer
     public function compose($view)
     {
         try {
-            $siteMenu = \CW::getMenu('site-menu');
-        } catch (\Exception $e) {
+            $siteMenu = CW::getMenu('site-menu');
+        } catch (Exception $e) {
             Log::error('No site-menu found.');
             $siteMenu = null;
         }

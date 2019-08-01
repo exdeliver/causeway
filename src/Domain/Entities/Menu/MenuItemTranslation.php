@@ -5,8 +5,7 @@ namespace Exdeliver\Causeway\Domain\Entities\Menu;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class MenuItemTranslation
- * @package Domain\Entities\Menu
+ * Class MenuItemTranslation.
  */
 class MenuItemTranslation extends Model
 {

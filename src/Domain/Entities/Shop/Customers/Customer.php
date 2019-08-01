@@ -3,11 +3,13 @@
 namespace Exdeliver\Causeway\Domain\Entities\Shop\Customers;
 
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 
 /**
- * Class Customer
- * @package Domain\Entities\Invoices
+ * Class Customer.
  */
 class Customer extends AggregateRoot
 {
@@ -24,7 +26,7 @@ class Customer extends AggregateRoot
     protected $guard = [];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany|object|null
+     * @return Model|HasMany|object|null
      */
     public function shippingContact()
     {
@@ -32,7 +34,7 @@ class Customer extends AggregateRoot
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function contacts()
     {
@@ -42,7 +44,8 @@ class Customer extends AggregateRoot
     /**
      * Route notifications for the mail channel.
      *
-     * @param \Illuminate\Notifications\Notification $notification
+     * @param Notification $notification
+     *
      * @return string
      */
     public function routeNotificationForMail($notification)
@@ -51,7 +54,7 @@ class Customer extends AggregateRoot
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany|object|null
+     * @return Model|HasMany|object|null
      */
     public function primaryContact()
     {

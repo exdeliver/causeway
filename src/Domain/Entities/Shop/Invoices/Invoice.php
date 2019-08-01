@@ -4,15 +4,15 @@ namespace Exdeliver\Causeway\Domain\Entities\Shop\Invoices;
 
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
 use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class Invoice
- * @package Domain\Entities\Invoices
+ * Class Invoice.
  */
 class Invoice extends AggregateRoot
 {
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function order()
     {

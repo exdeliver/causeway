@@ -5,8 +5,7 @@ namespace Exdeliver\Causeway\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class PostAdminUserRequest
- * @package Exdeliver\Causeway\Requests
+ * Class PostAdminUserRequest.
  */
 class PostAdminUserRequest extends FormRequest
 {
@@ -28,7 +27,7 @@ class PostAdminUserRequest extends FormRequest
     public function rules()
     {
         $rules = [];
-        $rules['email'] = 'required|unique:users,email,' . $this->user->id ?? null;
+        $rules['email'] = 'required|unique:users,email,'.$this->user->id ?? null;
         $rules['first_name'] = 'required';
         $rules['last_name'] = 'required';
 
@@ -43,7 +42,7 @@ class PostAdminUserRequest extends FormRequest
         $input = array_map('trim', $this->except(['roles']));
 
         $input['roles'] = $this->roles;
-        $input['name'] = $this->first_name . ' ' . $this->last_name;
+        $input['name'] = $this->first_name.' '.$this->last_name;
 
         $this->replace($input);
     }

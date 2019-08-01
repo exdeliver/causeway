@@ -2,13 +2,14 @@
 
 namespace Exdeliver\Causeway\Controllers;
 
+use Exception;
 use Exdeliver\Causeway\Domain\Services\GroupService;
 use Exdeliver\Causeway\Domain\Services\UserService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 /**
- * Class UserController
- * @package Exdeliver\Causeway\Controllers\
+ * Class UserController.
  */
 class UserController extends Controller
 {
@@ -26,7 +27,7 @@ class UserController extends Controller
      * UserController constructor.
      *
      * @param GroupService $groupService
-     * @param UserService $userService
+     * @param UserService  $userService
      */
     public function __construct(GroupService $groupService, UserService $userService)
     {
@@ -38,8 +39,10 @@ class UserController extends Controller
      * Reset points.
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     *
+     * @return RedirectResponse
+     *
+     * @throws Exception
      */
     public function reset(Request $request)
     {

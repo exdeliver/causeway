@@ -10,6 +10,7 @@ class PagePolicy
      * Determine if the given post can be updated by the user.
      *
      * @param User $user
+     *
      * @return bool
      */
     public function update(User $user)

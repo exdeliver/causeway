@@ -5,14 +5,12 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class CreatePhotoAndPhotoAlbumTables
+ * Class CreatePhotoAndPhotoAlbumTables.
  */
 class CreatePhotoAndPhotoAlbumTables extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -41,8 +39,6 @@ class CreatePhotoAndPhotoAlbumTables extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

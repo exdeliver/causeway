@@ -2,6 +2,7 @@
 
 namespace Exdeliver\Causeway\Controllers\Shop;
 
+use Exception;
 use Exdeliver\Cart\Domain\Services\CartService;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Shop\Category;
@@ -10,11 +11,13 @@ use Exdeliver\Causeway\Domain\Services\MolliePaymentService;
 use Exdeliver\Causeway\Domain\Services\PaymentService;
 use Exdeliver\Causeway\Domain\Services\ShippingMethodService;
 use Exdeliver\Causeway\Domain\Services\ShopProductService;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Mollie\Api\Exceptions\ApiException;
 
 /**
- * Class ShopController
- * @package App\Http\Controllers\Shop
+ * Class ShopController.
  */
 class ShopController extends Controller
 {
@@ -42,9 +45,10 @@ class ShopController extends Controller
 
     /**
      * ShopController constructor.
-     * @param CartService $cartService
-     * @param ShopProductService $productService
-     * @param MolliePaymentService $paymentService
+     *
+     * @param CartService           $cartService
+     * @param ShopProductService    $productService
+     * @param MolliePaymentService  $paymentService
      * @param ShippingMethodService $shippingMethodService
      */
     public function __construct(CartService $cartService, ShopProductService $productService, MolliePaymentService $paymentService, ShippingMethodService $shippingMethodService)
@@ -56,7 +60,7 @@ class ShopController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {
@@ -64,17 +68,19 @@ class ShopController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Category $shopCategorySlug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Exception
+     *
+     * @return Factory|View
+     *
+     * @throws Exception
      */
     public function getCategory(Request $request, Category $shopCategorySlug)
     {
         $numberOfColumns = $request->numberOfColumns ?? 4;
 
         if (!in_array($numberOfColumns, [2, 4, 6, 8, 10])) {
-            throw new \Exception('Un-allowed column number.');
+            throw new Exception('Un-allowed column number.');
         }
 
         $bootstrapColWidth = 12 / $numberOfColumns;
@@ -95,7 +101,8 @@ class ShopController extends Controller
 
     /**
      * @param Product $shopProductSlug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @return Factory|View
      */
     public function getProduct(Product $shopProductSlug)
     {
@@ -107,7 +114,7 @@ class ShopController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function getCart()
     {
@@ -119,8 +126,9 @@ class ShopController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Mollie\Api\Exceptions\ApiException
+     * @return Factory|View
+     *
+     * @throws ApiException
      */
     public function getCheckout()
     {
@@ -140,7 +148,7 @@ class ShopController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function getThankYou()
     {

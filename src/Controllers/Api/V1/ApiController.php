@@ -2,6 +2,7 @@
 
 namespace Exdeliver\Causeway\Controllers\Api\V1;
 
+use Exception;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
 use Exdeliver\Cart\Domain\Services\CartService;
@@ -13,8 +14,7 @@ use Laravel\Passport\ClientRepository;
 use Lcobucci\JWT\Parser;
 
 /**
- * Class ApiController
- * @package App\Http\Controllers\Api\V1
+ * Class ApiController.
  */
 class ApiController extends Controller
 {
@@ -62,11 +62,11 @@ class ApiController extends Controller
      * ApiController constructor.
      *
      * @param ClientRepository $clientRepository
-     * @param UserService $userService
-     * @param CustomerService $customerService
-     * @param OrderService $orderService
-     * @param CartService $cartService
-     * @param PaymentService $paymentService
+     * @param UserService      $userService
+     * @param CustomerService  $customerService
+     * @param OrderService     $orderService
+     * @param CartService      $cartService
+     * @param PaymentService   $paymentService
      */
     public function __construct(ClientRepository $clientRepository, UserService $userService, CustomerService $customerService, OrderService $orderService, CartService $cartService, PaymentService $paymentService)
     {
@@ -86,17 +86,18 @@ class ApiController extends Controller
      */
     private function getUser()
     {
-        if (request()->bearerToken() !== null) {
+        if (null !== request()->bearerToken()) {
             $clientId = (new Parser())->parse(request()->bearerToken())->getClaim('aud');
             $client = $this->clientRepository->find($clientId);
 
-            return $this->userService->repository->find((int)$client->user_id);
+            return $this->userService->repository->find((int) $client->user_id);
         }
+
         return null;
     }
 
     /**
-     * Process API payment
+     * Process API payment.
      */
     public function payment()
     {
@@ -106,14 +107,13 @@ class ApiController extends Controller
             $this->paymentService->validate($order);
 
             $status = $order->is_paid;
-            if ($status === true) {
+            if (true === $status) {
                 $this->orderService->sendPaymentConfirmationToCustomer($order);
             }
 
             return response()->json(['status' => $status]);
-
-        } catch (\Exception $e) {
-            throw new \Exception('API could\'nt validate payment. Error: ' . $e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception('API could\'nt validate payment. Error: '.$e->getMessage());
         }
     }
 }

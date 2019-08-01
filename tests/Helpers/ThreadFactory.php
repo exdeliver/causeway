@@ -13,6 +13,7 @@ class ThreadFactory
 
     /**
      * @param array $params
+     *
      * @return mixed
      */
     public function create(array $params)
@@ -22,7 +23,7 @@ class ThreadFactory
         $thread = factory(Thread::class)->create($params);
 
         if (isset($this->replies) && count($this->replies)) {
-            for ($i = 0; $i < $this->replies; $i++) {
+            for ($i = 0; $i < $this->replies; ++$i) {
                 factory(Comment::class)->create([
                     'commentable_id' => $thread->id,
                     'commentable_type' => Thread::class,
@@ -39,12 +40,14 @@ class ThreadFactory
     }
 
     /**
-     * @param integer $replies
+     * @param int $replies
+     *
      * @return ThreadFactory
      */
     public function withReplies(int $replies): ThreadFactory
     {
         $this->replies = $replies;
+
         return $this;
     }
 }

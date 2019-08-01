@@ -2,15 +2,16 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
+use Exception;
 use Exdeliver\Causeway\Domain\Entities\Menu\MenuComposite;
 use Exdeliver\Causeway\Infrastructure\Repositories\MenuItemRepository;
 use Exdeliver\Causeway\Infrastructure\Repositories\MenuRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Log;
 
 /**
- * Class MenuService
- * @package Domain\Services
+ * Class MenuService.
  */
 final class MenuService extends AbstractService
 {
@@ -21,7 +22,8 @@ final class MenuService extends AbstractService
 
     /**
      * SoundService constructor.
-     * @param MenuRepository $menuRepository
+     *
+     * @param MenuRepository     $menuRepository
      * @param MenuItemRepository $menuItemRepository
      */
     public function __construct(MenuRepository $menuRepository, MenuItemRepository $menuItemRepository)
@@ -32,7 +34,8 @@ final class MenuService extends AbstractService
 
     /**
      * @param int|null $id
-     * @param Request $request
+     * @param Request  $request
+     *
      * @return Model
      */
     public function updateOrCreateItem(Request $request, int $id = null)
@@ -54,7 +57,8 @@ final class MenuService extends AbstractService
 
     /**
      * @param string $name
-     * @param null $template
+     * @param null   $template
+     *
      * @return mixed
      */
     public function render(string $name, $template = null)
@@ -63,8 +67,8 @@ final class MenuService extends AbstractService
             $menu = $this->repository->where('name', '=', $name)->firstOrFail();
 
             $menuCollection = new MenuComposite();
-            if ($template !== null) {
-                if (!view()->exists('site::menu.' . $template)) {
+            if (null !== $template) {
+                if (!view()->exists('site::menu.'.$template)) {
                     return "Missing blade file: menu.custom.{$template}";
                 }
                 $menuCollection->setTemplate($template);
@@ -75,9 +79,9 @@ final class MenuService extends AbstractService
             }
 
             return $menuCollection->render();
+        } catch (Exception $e) {
+            Log::warning('Missing menu called: '.$name);
 
-        } catch (\Exception $e) {
-            \Log::warning('Missing menu called: ' . $name);
             return null;
         }
     }

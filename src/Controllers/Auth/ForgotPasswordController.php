@@ -5,6 +5,9 @@ namespace Exdeliver\Causeway\Controllers\Auth;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Requests\PostRequestPasswordRequest;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
@@ -24,8 +27,6 @@ class ForgotPasswordController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -35,7 +36,7 @@ class ForgotPasswordController extends Controller
     /**
      * Display the form to request a password reset link.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function showLinkRequestForm()
     {
@@ -46,7 +47,8 @@ class ForgotPasswordController extends Controller
      * Send a reset link to the given user.
      *
      * @param PostRequestPasswordRequest $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     *
+     * @return RedirectResponse|JsonResponse
      */
     public function sendResetLinkEmail(PostRequestPasswordRequest $request)
     {
@@ -57,7 +59,7 @@ class ForgotPasswordController extends Controller
             $request->only('email')
         );
 
-        return $response === Password::RESET_LINK_SENT
+        return Password::RESET_LINK_SENT === $response
             ? response()->json(['status' => true, 'message' => trans($response)])
             : response()->json(['status' => false, ['errors' => ['email' => trans($response)]]]);
     }

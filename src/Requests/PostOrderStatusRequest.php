@@ -5,8 +5,7 @@ namespace Exdeliver\Causeway\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class PostOrderStatusRequest
- * @package Exdeliver\Causeway\Requests
+ * Class PostOrderStatusRequest.
  */
 class PostOrderStatusRequest extends FormRequest
 {

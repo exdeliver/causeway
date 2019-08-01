@@ -1,8 +1,9 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-
+/** @var Factory $factory */
+use Exdeliver\Causeway\Domain\Entities\Shop\ProductVariants\ValueTypes;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factory;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,7 @@ use Faker\Generator as Faker;
 $factory->define(\Exdeliver\Causeway\Domain\Entities\Shop\ProductVariants\Variant::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
-        'value_type' => key(\Exdeliver\Causeway\Domain\Entities\Shop\ProductVariants\ValueTypes::TEXT),
+        'value_type' => key(ValueTypes::TEXT),
         'sequence' => 0,
     ];
 });

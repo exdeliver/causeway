@@ -2,14 +2,15 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
+use Exception;
 use Exdeliver\Causeway\Domain\Contracts\Services\Shipping;
 use Exdeliver\Causeway\Domain\Entities\Shop\Customers\Contact;
 use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
+use MyParcelNL\Sdk\src\Exception\MissingFieldException;
 use MyParcelNL\Sdk\src\Model\MyParcelConsignment;
 
 /**
- * Class MyParcelService
- * @package Domain\Services
+ * Class MyParcelService.
  */
 class MyParcelService extends AbstractApiService implements Shipping
 {
@@ -37,11 +38,12 @@ class MyParcelService extends AbstractApiService implements Shipping
 
     /**
      * MollieService constructor.
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function __construct()
     {
-        if (env('APP_ENV') === 'production') {
+        if ('production' === env('APP_ENV')) {
             $this->myParcelKey = env('MYPARCEL_LIVE_API_KEY', null);
         } else {
             $this->myParcelKey = env('MYPARCEL_LIVE_API_KEY', null);
@@ -56,15 +58,17 @@ class MyParcelService extends AbstractApiService implements Shipping
     }
 
     /**
-     * @param Order $order
+     * @param Order   $order
      * @param Contact $sendTo
+     *
      * @return MyParcelConsignment
-     * @throws \MyParcelNL\Sdk\src\Exception\MissingFieldException
+     *
+     * @throws MissingFieldException
      */
     public function createConsignment(Order $order, Contact $sendTo)
     {
         return $this->myParcelConsignment
-            ->setReferenceId('Order ' . $order->id)
+            ->setReferenceId('Order '.$order->id)
             // Recipient/address: https://myparcelnl.github.io/api/#7_B
             ->setPerson($sendTo->full_name)// Name
             ->setEmail($sendTo->email ?? null)// E-mail address
@@ -72,7 +76,7 @@ class MyParcelService extends AbstractApiService implements Shipping
             ->setCompany($sendTo->company ?? null)// Company
             // OR send the street data separately:
             ->setStreet($sendTo->address)// Street
-            ->setNumber((string)$sendTo->address_number)// Number
+            ->setNumber((string) $sendTo->address_number)// Number
             ->setNumberSuffix($sendTo->address_number_suffix ?? null)// Suffix
             ->setCity($sendTo->city)// City
             ->setPostalCode($sendTo->zipcode)// Postal code
@@ -84,7 +88,7 @@ class MyParcelService extends AbstractApiService implements Shipping
             ->setReturn(true)// Return the package to the sender when the recipient is not home.
             ->setLargeFormat(false)// Must be specified if the dimensions of the package are between 100x70x50 and 175x78x58 cm.
             ->setInsurance(250)// Allows a shipment to be insured up to certain amount. Only packages (package type 1) can be insured.
-            ->setLabelDescription('Order ' . $order->id)// This description will appear on the shipment label for non-return shipments.
+            ->setLabelDescription('Order '.$order->id)// This description will appear on the shipment label for non-return shipments.
             // Delivery: https://myparcelnl.github.io/api/#8
 //            ->setDeliveryType()
 //            ->setDeliveryDate()

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 /**
- * Class ShopProductService
+ * Class ShopProductService.
  */
 final class ShopProductService extends AbstractService
 {
@@ -26,6 +26,7 @@ final class ShopProductService extends AbstractService
 
     /**
      * ShopProductService constructor.
+     *
      * @param ShopProductRepository $shopProductRepository
      */
     public function __construct(ShopProductRepository $shopProductRepository)
@@ -34,13 +35,14 @@ final class ShopProductService extends AbstractService
     }
 
     /**
-     * @param array $params
+     * @param array    $params
      * @param int|null $id
+     *
      * @return Model
      */
     public function saveProduct(array $params, int $id = null)
     {
-        if ($id !== null) {
+        if (null !== $id) {
             return $this->update($id, $params);
         }
 
@@ -49,7 +51,8 @@ final class ShopProductService extends AbstractService
 
     /**
      * @param Category $shopCategory
-     * @param Request $request
+     * @param Request  $request
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     public function queryProducts(Category $shopCategory, Request $request)
@@ -64,9 +67,10 @@ final class ShopProductService extends AbstractService
     /**
      * Filtering.
      *
-     * @param Request $request
-     * @param Builder $products
+     * @param Request  $request
+     * @param Builder  $products
      * @param Category $category
+     *
      * @return Builder
      */
     public function filter(Request $request, Builder $products, Category $category)
@@ -74,19 +78,19 @@ final class ShopProductService extends AbstractService
         $categoryFilters = $category;
 
         $this->filters = [];
-        if ($request->filter !== null) {
+        if (null !== $request->filter) {
             foreach ($request->filter as $filterName => $value) {
                 $this->filters['filter'][$filterName] = $value;
 
                 if (in_array($filterName, $this->availableFilters)) {
                     $value = explode(',', $value);
                     if (!is_array($value)) {
-                        $products->where($filterName, 'LIKE', '%' . $value . '%');
+                        $products->where($filterName, 'LIKE', '%'.$value.'%');
                     } else {
-                        $products->where($filterName, 'LIKE', '%' . $value[0] . '%');
+                        $products->where($filterName, 'LIKE', '%'.$value[0].'%');
                         unset($value[0]);
                         foreach ($value as $val) {
-                            $products->orWhere($filterName, 'LIKE', '%' . $val . '%');
+                            $products->orWhere($filterName, 'LIKE', '%'.$val.'%');
                         }
                     }
                 }
@@ -103,6 +107,6 @@ final class ShopProductService extends AbstractService
      */
     public function getActiveFilters()
     {
-        return $this->filters !== null ? $this->filters : [];
+        return null !== $this->filters ? $this->filters : [];
     }
 }

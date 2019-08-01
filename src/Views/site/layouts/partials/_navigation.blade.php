@@ -52,9 +52,9 @@
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <cart-items-count-component :cart="{{ \CWCart::summary() }}" cart_details_route="{{ route('shop.cart.details') }}"></cart-items-count-component>
+                    <cart-items-count-component :cart="{{ CWCart::summary() }}" cart_details_route="{{ route('shop.cart.details') }}"></cart-items-count-component>
                     <div class="dropdown-menu dropdown-menu-right mb-2 border-solid border-grey-light rounded border shadow-sm p-2">
-                        <cart-totals-component :cart="{{ \CWCart::summary() }}" cart_details_route="{{ route('shop.cart.details') }}"></cart-totals-component>
+                        <cart-totals-component :cart="{{ CWCart::summary() }}" cart_details_route="{{ route('shop.cart.details') }}"></cart-totals-component>
                         <a href="{{ route('shop.cart') }}" class="btn btn-info btn-block">{{ __('Show cart details') }}</a>
                     </div>
                 </li>

@@ -28,6 +28,8 @@ Update your config/auth.php
             'model' => Exdeliver\Causeway\Domain\Entities\User\User::class,
         ],
         
+        Or create your own user model and extend with above.
+        
 Update your .env
 
     MOLLIE_LIVE_API_KEY=

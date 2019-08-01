@@ -2,11 +2,14 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
+use Exception;
 use Illuminate\Support\Facades\File;
 
 /**
- * Class Waveform2Png
- * @link https://github.com/slruslan/php-waveform2png/
+ * Class Waveform2Png.
+ *
+ * @see https://github.com/slruslan/php-waveform2png/
+ *
  * @author Ruslan Slinkov (slruslan) <slinkov@podari-track.ru>
  * @author Andrew Freiday (afreiday) <andrewfreiday@gmail.com>
  * @copyright 2015 Ruslan Slinkov
@@ -18,14 +21,16 @@ use Illuminate\Support\Facades\File;
 final class WaveformService
 {
     /**
-     * Width and height of output image
+     * Width and height of output image.
+     *
      * @var int
      */
     private $width;
     private $height;
 
     /**
-     * HTML code for foreground and background colors
+     * HTML code for foreground and background colors.
+     *
      * @var string
      */
     private $foreground;
@@ -35,6 +40,7 @@ final class WaveformService
      * Defines the level of waveform detail.
      * The larger number means less detail.
      * The lower number means longer processing time.
+     *
      * @var int
      */
     private $detail;
@@ -42,31 +48,36 @@ final class WaveformService
     /**
      * Defines if stereo waveform mode is enabled
      * If true draws waveforms for each channel
-     * If false draws single waveform
+     * If false draws single waveform.
+     *
      * @var bool
      */
     private $stereo;
 
     /**
-     * Contains loaded file path
+     * Contains loaded file path.
+     *
      * @var string
      */
     private $file;
 
     /**
-     * Output image resource
+     * Output image resource.
+     *
      * @var resource
      */
     private $img;
 
     /**
-     * List of colors for pars of graph
+     * List of colors for pars of graph.
+     *
      * @var array
      */
     private $colors;
 
     /**
      * Defines type of graph.
+     *
      * @var string
      */
     private $type;
@@ -76,8 +87,8 @@ final class WaveformService
         // Default settings
         $this->width = 500;
         $this->height = 100;
-        $this->foreground = "#d1d1d1";
-        $this->background = "";
+        $this->foreground = '#d1d1d1';
+        $this->background = '';
         $this->detail = 100;
         $this->stereo = false;
         $this->file = null;
@@ -86,11 +97,12 @@ final class WaveformService
         $this->type = 'waveform';
 
         // Change max script execution time
-        ini_set("max_execution_time", "30000");
+        ini_set('max_execution_time', '30000');
     }
 
     /**
-     * Sets width param
+     * Sets width param.
+     *
      * @param int|width $width width of output image
      */
     public function setWidth($width = 500)
@@ -99,7 +111,8 @@ final class WaveformService
     }
 
     /**
-     * Sets height param
+     * Sets height param.
+     *
      * @param height|int $height height of output image
      */
     public function setHeight($height = 100)
@@ -108,7 +121,8 @@ final class WaveformService
     }
 
     /**
-     * Sets foreground color
+     * Sets foreground color.
+     *
      * @param foreground|string $foreground foreground HEX color code
      */
     public function setForeground($foreground = '#d1d1d1')
@@ -118,7 +132,8 @@ final class WaveformService
 
     /**
      * Sets background color
-     * Leave empty to make it transparent
+     * Leave empty to make it transparent.
+     *
      * @param background|string $background background HEX color code
      */
     public function setBackground($background = '')
@@ -127,7 +142,8 @@ final class WaveformService
     }
 
     /**
-     * Sets details level
+     * Sets details level.
+     *
      * @param detail|int $detail detail level
      */
     public function setDetail($detail = 100)
@@ -136,18 +152,19 @@ final class WaveformService
     }
 
     /**
-     * Sets stereo mode
+     * Sets stereo mode.
+     *
      * @param bool|false $stereo
      */
     public function setStereo($stereo = false)
     {
-        $stereo = (bool)$stereo;
+        $stereo = (bool) $stereo;
 
         $this->stereo = $stereo;
     }
 
     /**
-     * Clears colors array
+     * Clears colors array.
      */
     public function clearColors()
     {
@@ -155,8 +172,10 @@ final class WaveformService
     }
 
     /**
-     * Changes graph type
+     * Changes graph type.
+     *
      * @param string $type Type of graph
+     *
      * @throws Exception Type not found exception
      */
     public function setType($type = 'waveform')
@@ -164,14 +183,15 @@ final class WaveformService
         $availableTypes = ['waveform', 'bars'];
 
         if (!in_array($type, $availableTypes)) {
-            throw new Exception(sprintf("Type %s not found.", $type));
+            throw new Exception(sprintf('Type %s not found.', $type));
         }
 
         $this->type = $type;
     }
 
     /**
-     * Adds new color interval
+     * Adds new color interval.
+     *
      * @param $timeMin Minimal time
      * @param $timeMax Maximal time
      * @param $color Foreground color
@@ -186,16 +206,18 @@ final class WaveformService
     }
 
     /**
-     * Loads file
+     * Loads file.
+     *
      * @param string $file file path
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function loadFile($sound)
     {
-        $file = storage_path('app/' . $sound->filename);
+        $file = storage_path('app/'.$sound->filename);
 
         if (!file_exists($file)) {
-            throw new \Exception(sprintf('The file "%s" does not exist', $file));
+            throw new Exception(sprintf('The file "%s" does not exist', $file));
         }
 
         $availableTypes = ['audio/mpeg', 'application/octet-stream'];
@@ -204,7 +226,7 @@ final class WaveformService
             throw new Exception(sprintf('Invalid file type %s, expected to be audio/mpeg', mime_content_type($file)));
         }
 
-        $fileWithoutMP3 = str_replace(".mp3", "", $file);
+        $fileWithoutMP3 = str_replace('.mp3', '', $file);
 
         copy($file, $fileWithoutMP3);
 
@@ -212,13 +234,14 @@ final class WaveformService
     }
 
     /**
-     * Processes generated wavs and draws graph
+     * Processes generated wavs and draws graph.
+     *
      * @throws Exception File not loaded exception
      */
     public function process()
     {
-        if ($this->file === null) {
-            throw new Exception("File not loaded");
+        if (null === $this->file) {
+            throw new Exception('File not loaded');
         }
 
         $wavList = $this->generateWavFiles();
@@ -226,12 +249,12 @@ final class WaveformService
         $this->img = false;
         list($r, $g, $b) = $this->htmlToRGB($this->foreground);
 
-        for ($wav = 1; $wav <= sizeof($wavList); $wav++) {
+        for ($wav = 1; $wav <= sizeof($wavList); ++$wav) {
             $filename = $wavList[$wav - 1];
 
-            $handle = fopen($filename, "r");
+            $handle = fopen($filename, 'r');
 
-            /**
+            /*
              * Read WAV header byte by byte
              * @link http://www.topherlee.com/software/pcm-tut-wavformat.html
              */
@@ -248,7 +271,7 @@ final class WaveformService
 
             // Check whether a mono or stereo wav
             $channel = hexdec(substr($header['channels'], 0, 2));
-            $ratio = ($channel == 2 ? 40 : 80);
+            $ratio = (2 == $channel ? 40 : 80);
 
             // start putting together the initial canvas
             // $data_size = (size_of_file - header_bytes_read) / skipped_bytes + 1
@@ -264,14 +287,14 @@ final class WaveformService
                 $this->img = imagecreatetruecolor($data_size / $this->detail, $this->height * sizeof($wavList));
 
                 // fill background of image
-                if ($this->background == "") {
+                if ('' == $this->background) {
                     // transparent background specified
                     imagesavealpha($this->img, true);
                     $transparentColor = imagecolorallocatealpha($this->img, 0, 0, 0, 127);
                     imagefill($this->img, 0, 0, $transparentColor);
                 } else {
                     list($br, $bg, $bb) = $this->htmlToRGB($this->background);
-                    imagefilledrectangle($this->img, 0, 0, (int)($data_size / $this->detail), $this->height * sizeof($wavList), imagecolorallocate($this->img, $br, $bg, $bb));
+                    imagefilledrectangle($this->img, 0, 0, (int) ($data_size / $this->detail), $this->height * sizeof($wavList), imagecolorallocate($this->img, $br, $bg, $bb));
                 }
             }
 
@@ -280,16 +303,16 @@ final class WaveformService
             $bytestotal = 0;
 
             while (!feof($handle) && $data_point < $data_size) {
-                $pointstotal++;
+                ++$pointstotal;
 
                 // Do we have enough details?
-                if ($data_point++ % $this->detail != 0) {
+                if (0 != $data_point++ % $this->detail) {
                     fseek($handle, $ratio + $byte, SEEK_CUR);
                 } else {
                     $bytes = [];
 
                     // Get number of bytes depending on bitrate
-                    for ($i = 0; $i < $byte; $i++) {
+                    for ($i = 0; $i < $byte; ++$i) {
                         $bytes[$i] = fgetc($handle);
                     }
 
@@ -310,7 +333,7 @@ final class WaveformService
                             break;
                     }
 
-                    $drawn++;
+                    ++$drawn;
 
                     // Skip bytes for memory optimization
                     fseek($handle, $ratio, SEEK_CUR);
@@ -318,7 +341,7 @@ final class WaveformService
                     // Draw this data point
                     // Relative value based on height of image being generated
                     // Data values can range between 0 and 255
-                    $v = (int)($data / 255 * $this->height);
+                    $v = (int) ($data / 255 * $this->height);
 
                     $time = $this->getCurrentTime(
                         ftell($handle),
@@ -343,11 +366,11 @@ final class WaveformService
                             imageline(
                                 $this->img,
                                 // x1
-                                (int)($data_point / $this->detail) + $drawn,
+                                (int) ($data_point / $this->detail) + $drawn,
                                 // y1: height of the image minus $v as a percentage of the height for the wave amplitude
                                 $this->height,
                                 // x2
-                                (int)($data_point / $this->detail) + $drawn,
+                                (int) ($data_point / $this->detail) + $drawn,
                                 // y2: same as y1, but from the bottom of the image
                                 (($this->height * $wav - ($this->height - $v)) > 5) ? $this->height * $wav - ($this->height - $v) : 5,
                                 imagecolorallocate($this->img, $r, $g, $b)
@@ -359,11 +382,11 @@ final class WaveformService
                             imageline(
                                 $this->img,
                                 // x1
-                                (int)($data_point / $this->detail),
+                                (int) ($data_point / $this->detail),
                                 // y1: height of the image minus $v as a percentage of the height for the wave amplitude
                                 $this->height * $wav - $v,
                                 // x2
-                                (int)($data_point / $this->detail),
+                                (int) ($data_point / $this->detail),
                                 // y2: same as y1, but from the bottom of the image
                                 $this->height * $wav - ($this->height - $v),
                                 imagecolorallocate($this->img, $r, $g, $b)
@@ -382,6 +405,7 @@ final class WaveformService
 
     /**
      * Generates WAV files from source file with LAME encoder.
+     *
      * @return array List of WAV files to process
      */
     private function generateWavFiles()
@@ -409,13 +433,15 @@ final class WaveformService
     }
 
     /**
-     * Converts HTML HEX color to RGB
+     * Converts HTML HEX color to RGB.
+     *
      * @param $input HEX color code
+     *
      * @return array array with R, G, B values
      */
     private function htmlToRGB($input)
     {
-        $input = str_replace("#", "", $input);
+        $input = str_replace('#', '', $input);
 
         return [
             hexdec(substr($input, 0, 2)),
@@ -426,9 +452,11 @@ final class WaveformService
 
     /**
      * Finds values of 2 bytes
-     * ! Original purpose of this method is unknown for me
+     * ! Original purpose of this method is unknown for me.
+     *
      * @param $byte1 First byte
      * @param $byte2 Second byte
+     *
      * @return number Final value
      */
     private function findValues($byte1, $byte2)
@@ -436,30 +464,33 @@ final class WaveformService
         $byte1 = hexdec(bin2hex($byte1));
         $byte2 = hexdec(bin2hex($byte2));
 
-        return ($byte1 + ($byte2 * 256));
+        return $byte1 + ($byte2 * 256);
     }
 
     /**
-     * Returns current audio time
+     * Returns current audio time.
+     *
      * @param $bytesRead Count of read bytes
      * @param $bits Bits per sample
      * @param $channels Number of channels
      * @param $sampleRate Sample rate
+     *
      * @return float|int
      */
     private function getCurrentTime($bytesRead, $bits, $channels, $sampleRate)
     {
-        if ($bits == 0 || $channels == 0 || $sampleRate == 0) {
+        if (0 == $bits || 0 == $channels || 0 == $sampleRate) {
             return 0;
         }
 
         $bytesRead = floor($bytesRead - 44);
 
-        return ($bytesRead / ($bits / 8) / $channels / $sampleRate);
+        return $bytesRead / ($bits / 8) / $channels / $sampleRate;
     }
 
     /**
-     * Resamples image usings previously set width and height
+     * Resamples image usings previously set width and height.
+     *
      * @return bool
      */
     private function resampleImage()
@@ -492,43 +523,46 @@ final class WaveformService
     }
 
     /**
-     * Removes all temporary files
+     * Removes all temporary files.
      */
     private function unlinkFiles()
     {
-        unlink(sprintf("%s_o.mp3", $this->file));
-        unlink(sprintf("%s_2.mp3", $this->file));
+        unlink(sprintf('%s_o.mp3', $this->file));
+        unlink(sprintf('%s_2.mp3', $this->file));
         unlink($this->file);
 
         if (!$this->stereo) {
-            unlink(sprintf("%s.wav", $this->file));
+            unlink(sprintf('%s.wav', $this->file));
         } else {
-            unlink(sprintf("%s_l.wav", $this->file));
-            unlink(sprintf("%s_r.wav", $this->file));
+            unlink(sprintf('%s_l.wav', $this->file));
+            unlink(sprintf('%s_r.wav', $this->file));
         }
     }
 
     /**
-     * Outputs image
+     * Outputs image.
+     *
      * @return bool
      */
     public function outputImage()
     {
-        header("Content-Type: image/png");
+        header('Content-Type: image/png');
 
         return imagepng($this->img);
     }
 
     /**
-     * Saves image on disk
+     * Saves image on disk.
+     *
      * @param File|string $filename File path
+     *
      * @return string File path
      */
     public function saveImage($filename = '')
     {
         $uniqueRand = basename(str_replace('.mp3', '.png', $filename));
 
-        imagepng($this->img, storage_path('app/public/uploads/sounds/' . $uniqueRand));
+        imagepng($this->img, storage_path('app/public/uploads/sounds/'.$uniqueRand));
 
         return $uniqueRand;
     }

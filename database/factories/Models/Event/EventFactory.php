@@ -1,6 +1,8 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+use Illuminate\Database\Eloquent\Factory;
+
+/* @var Factory $factory */
 
 /*
 |--------------------------------------------------------------------------

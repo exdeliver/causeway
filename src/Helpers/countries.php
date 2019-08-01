@@ -2,11 +2,10 @@
 
 /**
  * Array of country codes (ISO 3166-1 alpha-2) and corresponding names
- * Author: https://gist.github.com/vxnick/380904
+ * Author: https://gist.github.com/vxnick/380904.
  *
  * @return array
  */
-
 if (!function_exists('countriesListArray')) {
     function countriesListArray()
     {
@@ -265,6 +264,7 @@ if (!function_exists('countriesListArray')) {
         function getCountryByIso($countryCode)
         {
             $countries = countriesListArray();
+
             return $countries[$countryCode];
         }
     }

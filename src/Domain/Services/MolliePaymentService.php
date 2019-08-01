@@ -2,13 +2,14 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
+use Exception;
 use Exdeliver\Causeway\Domain\Contracts\Services\Payment;
 use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
+use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\MollieApiClient;
 
 /**
- * Class MollieService
- * @package Domain\Services
+ * Class MollieService.
  */
 class MolliePaymentService extends AbstractService implements Payment
 {
@@ -29,12 +30,14 @@ class MolliePaymentService extends AbstractService implements Payment
 
     /**
      * MollieService constructor.
+     *
      * @param MollieApiClient $mollieApiClient
-     * @throws \Mollie\Api\Exceptions\ApiException
+     *
+     * @throws ApiException
      */
     public function __construct(MollieApiClient $mollieApiClient)
     {
-        if (env('APP_ENV') === 'production') {
+        if ('production' === env('APP_ENV')) {
             $this->mollie_key = env('MOLLIE_LIVE_API_KEY', null);
         } else {
             $this->mollie_key = env('MOLLIE_TEST_API_KEY', null);
@@ -67,8 +70,10 @@ class MolliePaymentService extends AbstractService implements Payment
 
     /**
      * @param Order $order
+     *
      * @return \Mollie\Api\Resources\Payment
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function generate(Order $order)
     {
@@ -76,20 +81,19 @@ class MolliePaymentService extends AbstractService implements Payment
             $mollie = $this->mollie;
 
             $payment = $mollie->payments->create([
-                "method" => $order->selected_method,
-                "amount" => ['value' => $order->formatted_mollie_payment_total,
-                    'currency' => 'EUR'],
-                "description" => __('Order payment for order: ' . $order->uuid . ' to ' . env('APP_NAME')),
-                "redirectUrl" => route('shop.order.status', ['uuid' => $order->uuid]),
-                "webhookUrl" => route('api.mollie-payment'),
-                "metadata" => [
-                    "order_id" => $order->id,
+                'method' => $order->selected_method,
+                'amount' => ['value' => $order->formatted_mollie_payment_total,
+                    'currency' => 'EUR', ],
+                'description' => __('Order payment for order: '.$order->uuid.' to '.env('APP_NAME')),
+                'redirectUrl' => route('shop.order.status', ['uuid' => $order->uuid]),
+                'webhookUrl' => route('api.mollie-payment'),
+                'metadata' => [
+                    'order_id' => $order->id,
                 ],
             ]);
-
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             logger()->error('Mollie attempt create payment error.', ['exception' => $e]);
-            throw new \Exception($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
         return $payment;
@@ -97,8 +101,10 @@ class MolliePaymentService extends AbstractService implements Payment
 
     /**
      * @param Order $order
+     *
      * @return bool
-     * @throws \Mollie\Api\Exceptions\ApiException
+     *
+     * @throws ApiException
      */
     public function validate(Order $order): bool
     {
@@ -112,7 +118,7 @@ class MolliePaymentService extends AbstractService implements Payment
     }
 
     /**
-     * Get Mollie Client
+     * Get Mollie Client.
      */
     public function getClient()
     {

@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 
 /**
- * Class PageService
- * @package Domain\Services
+ * Class PageService.
  */
 final class PageService extends AbstractService
 {
     /**
      * PageService constructor.
+     *
      * @param PageRepository $pageRepository
      */
     public function __construct(PageRepository $pageRepository)
@@ -23,8 +23,9 @@ final class PageService extends AbstractService
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param int|null $id
+     *
      * @return Model
      */
     public function savePage(Request $request, int $id = null)
@@ -44,6 +45,7 @@ final class PageService extends AbstractService
 
     /**
      * @param string $slug
+     *
      * @return mixed
      */
     public function getPage(string $slug)

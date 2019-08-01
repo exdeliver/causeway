@@ -5,15 +5,14 @@ namespace Exdeliver\Causeway\Controllers\Admin\Shop;
 use Exdeliver\Causeway\Controllers\Controller;
 
 /**
- * Class DashboardController
- * @package Exdeliver\Causeway\Controllers\Admin\Shop
+ * Class DashboardController.
  */
 final class DashboardController extends Controller
 {
     public const DEFAULT_PAGINATOR_SIZE = 50;
 
     /**
-     * Get Dashboard index
+     * Get Dashboard index.
      */
     public function index()
     {

@@ -2,12 +2,12 @@
 
 namespace Exdeliver\Causeway\Infrastructure\Repositories;
 
+use Exception;
 use Exdeliver\Causeway\Domain\Contracts\Repository\AbstractRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class AbstractRepository
- * @package Exdeliver\Causeway\Infrastructure\Repositories
+ * Class AbstractRepository.
  */
 abstract class AbstractRepository implements AbstractRepositoryInterface
 {
@@ -18,6 +18,7 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
 
     /**
      * AbstractRepository constructor.
+     *
      * @param Model $model
      */
     public function __construct(Model $model)
@@ -27,6 +28,7 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
 
     /**
      * @param array $attributes
+     *
      * @return mixed
      */
     public function create(array $attributes)
@@ -37,6 +39,7 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
     /**
      * @param array $match
      * @param array $params
+     *
      * @return Model
      */
     public function createOrUpdate(array $match, array $params)
@@ -47,6 +50,7 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
     /**
      * @param array $match
      * @param array $params
+     *
      * @return Model
      */
     public function updateOrCreate(array $match, array $params)
@@ -55,9 +59,10 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
     }
 
     /**
-     * @param int $id
-     * @param array $params
+     * @param int    $id
+     * @param array  $params
      * @param string $language
+     *
      * @return
      */
     public function updateOrCreateTranslation(int $id = null, array $params, string $language)
@@ -68,7 +73,7 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
 
         // Create model
         if (!$model instanceof Model) {
-            $model = new $this->model;
+            $model = new $this->model();
             foreach ($params->except([$language])->toArray() as $key => $value) {
                 $model->{$key} = $value;
             }
@@ -87,6 +92,7 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
     /**
      * @param array $attributes
      * @param $id
+     *
      * @return mixed
      */
     public function update(array $attributes, $id)
@@ -100,6 +106,7 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     public function findOrFail($id)
@@ -111,17 +118,20 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     public function delete($id)
     {
         $model = $this->model->findOrFail($id);
         $model->delete();
+
         return $model;
     }
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     public function find($id)
@@ -168,6 +178,7 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
 
     /**
      * @param $amount
+     *
      * @return mixed
      */
     public function paginate($amount)
@@ -177,13 +188,14 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
 
     /**
      * @param $query
+     *
      * @return mixed
      */
     public function search($query)
     {
         try {
             return $this->model->search($query);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             dd('ERROR No searchable threat has been added to this modal!');
         }
     }
@@ -205,7 +217,7 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
     }
 
     /**
-     * Check if entity has relation
+     * Check if entity has relation.
      *
      * @param string $relation
      *
@@ -214,11 +226,12 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
     public function has($relation)
     {
         $this->model = $this->model->has($relation);
+
         return $this;
     }
 
     /**
-     * Load relations
+     * Load relations.
      *
      * @param array|string $relations
      *
@@ -227,13 +240,14 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
     public function with($relations)
     {
         $this->model = $this->model->with($relations);
+
         return $this;
     }
 
     /**
-     * Load relation with closure
+     * Load relation with closure.
      *
-     * @param string $relation
+     * @param string  $relation
      * @param closure $closure
      *
      * @return $this
@@ -247,32 +261,38 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
 
     /**
      * @param $column
+     *
      * @return $this
      */
     public function whereNull($column)
     {
         $this->model = $this->model->whereNull($column);
+
         return $this;
     }
 
     /**
      * @param $column
+     *
      * @return $this
      */
     public function whereNotNull($column)
     {
         $this->model = $this->model->whereNotNull($column);
+
         return $this;
     }
 
     /**
      * @param $column
      * @param string $direction
+     *
      * @return $this
      */
     public function orderBy($column, $direction = 'asc')
     {
         $this->model = $this->model->orderBy($column, $direction);
+
         return $this;
     }
 
@@ -280,11 +300,13 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
      * @param $column
      * @param $condition
      * @param $value
+     *
      * @return $this
      */
     public function where($column, $condition, $value)
     {
         $this->model = $this->model->where($column, $condition, $value);
+
         return $this;
     }
 
@@ -292,64 +314,75 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
      * @param $column
      * @param $condition
      * @param $value
+     *
      * @return $this
      */
     public function orWhere($column, $condition, $value)
     {
         $this->model = $this->model->orWhere($column, $condition, $value);
+
         return $this;
     }
 
     /**
      * @param $column
      * @param $value
+     *
      * @return $this
      */
     public function whereBetween($column, $value)
     {
         $this->model = $this->model->whereBetween($column, $value);
+
         return $this;
     }
 
     public function whereTranslation($column, $value)
     {
         $this->model = $this->model->whereTranslation($column, $value);
+
         return $this;
     }
 
     /**
      * @param $column
      * @param $value
+     *
      * @return $this
      */
     public function whereIn($column, $value)
     {
         $this->model = $this->model->whereIn($column, $value);
+
         return $this;
     }
 
     /**
      * @param $column
+     *
      * @return $this
      */
     public function groupBy($column)
     {
         $this->model = $this->model->groupBy($column);
+
         return $this;
     }
 
     /**
      * @param null $column
+     *
      * @return $this
      */
     public function distinct($column = null)
     {
         $this->model = $this->model->distinct($column);
+
         return $this;
     }
 
     /**
-     * Set visible fields
+     * Set visible fields.
      *
      * @param array $fields
      *
@@ -358,11 +391,13 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
     public function visible(array $fields)
     {
         $this->model->setVisible($fields);
+
         return $this;
     }
 
     /**
      * @param $key
+     *
      * @return mixed
      */
     public function getAttribute($key)
@@ -373,6 +408,7 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
     /**
      * @param $key
      * @param $value
+     *
      * @return mixed
      */
     public function setAttribute($key, $value)
@@ -382,6 +418,7 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
 
     /**
      * @param int $state
+     *
      * @return mixed
      */
     public function active($state = 1)
@@ -391,6 +428,7 @@ abstract class AbstractRepository implements AbstractRepositoryInterface
 
     /**
      * @param int $id
+     *
      * @return int
      */
     public function findBy(int $id)

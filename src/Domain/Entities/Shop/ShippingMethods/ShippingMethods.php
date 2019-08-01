@@ -8,8 +8,7 @@ use Exdeliver\Causeway\Domain\Common\SlugTrait;
 use Exdeliver\Causeway\Domain\Entities\Shop\PricingTrait;
 
 /**
- * Class ShippingMethods
- * @package Exdeliver\Causeway\Domain\Entities\ShippingMethods
+ * Class ShippingMethods.
  */
 class ShippingMethods extends AggregateRoot
 {
@@ -56,13 +55,15 @@ class ShippingMethods extends AggregateRoot
 
     /**
      * @param int $subtotal
+     *
      * @return bool
      */
     public function getIsFreeShippingAttribute(): bool
     {
-        if (($this->total_free_shipping_threshold !== null && $this->total_free_shipping_threshold > 0) && CWCart::subtotal() > $this->total_free_shipping_threshold) {
+        if ((null !== $this->total_free_shipping_threshold && $this->total_free_shipping_threshold > 0) && CWCart::subtotal() > $this->total_free_shipping_threshold) {
             return true;
         }
+
         return false;
     }
 
@@ -71,6 +72,6 @@ class ShippingMethods extends AggregateRoot
      */
     public function getTotalFreeShippingThresholdFormattedAttribute()
     {
-        return $this->total_free_shipping_threshold !== null ? money($this->total_free_shipping_threshold, 'eur')->format() : null;
+        return null !== $this->total_free_shipping_threshold ? money($this->total_free_shipping_threshold, 'eur')->format() : null;
     }
 }

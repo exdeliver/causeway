@@ -3,10 +3,10 @@
 namespace Exdeliver\Causeway\Domain\Entities\User;
 
 use Exdeliver\Causeway\Domain\Common\Entity;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class UserPoint
- * @package Domain\Entities\User
+ * Class UserPoint.
  */
 class UserPoint extends Entity
 {
@@ -18,7 +18,7 @@ class UserPoint extends Entity
     protected $fillable = ['amount', 'user_id'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function user()
     {

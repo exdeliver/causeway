@@ -25,7 +25,7 @@ class PageTest extends TestCase
         $this->assertEquals($thread->slug, str_slug($title));
 
         // start iterating by 1 because slugs wont be ever - 0
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 5; ++$i) {
             $thread = factory(Page::class)->create([
                 'name' => $title,
                 'slug' => str_slug($title),
@@ -39,7 +39,7 @@ class PageTest extends TestCase
 
             $this->assertCount(2, $threads);
 
-            $this->assertEquals($thread->slug, str_slug($title) . '-' . ($i + 1));
+            $this->assertEquals($thread->slug, str_slug($title).'-'.($i + 1));
         }
     }
 }

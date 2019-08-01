@@ -5,10 +5,11 @@ namespace Exdeliver\Causeway\Domain\Entities\Menu;
 use Dimsav\Translatable\Translatable;
 use Exdeliver\Causeway\Domain\Common\Entity;
 use Exdeliver\Causeway\Domain\Common\Interfaces\MenuItemInterface;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class MenuItem
- * @package Domain\Entities\Menu
+ * Class MenuItem.
  */
 class MenuItem extends Entity implements MenuItemInterface
 {
@@ -25,7 +26,7 @@ class MenuItem extends Entity implements MenuItemInterface
     protected $guarded = [];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function items()
     {
@@ -34,7 +35,7 @@ class MenuItem extends Entity implements MenuItemInterface
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function menu()
     {
@@ -46,6 +47,6 @@ class MenuItem extends Entity implements MenuItemInterface
      */
     public function isSubmenu()
     {
-        return $this->parent_id !== null;
+        return null !== $this->parent_id;
     }
 }

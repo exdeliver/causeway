@@ -2,6 +2,7 @@
 
 namespace Exdeliver\Causeway\Controllers\Admin\Shop;
 
+use Exception;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Shop\ShippingMethods\ShippingMethods;
 use Exdeliver\Causeway\Domain\Services\ShippingMethodService;
@@ -9,8 +10,7 @@ use Exdeliver\Causeway\Domain\Services\ShopProductService;
 use Yajra\DataTables\Facades\DataTables;
 
 /**
- * Class ShippingMethodController
- * @package Exdeliver\Causeway\Controllers\Admin\Shop
+ * Class ShippingMethodController.
  */
 final class ShippingMethodController extends Controller
 {
@@ -23,6 +23,7 @@ final class ShippingMethodController extends Controller
 
     /**
      * ProductController constructor.
+     *
      * @param ShippingMethodService $shippingMethodService
      */
     public function __construct(ShippingMethodService $shippingMethodService)
@@ -31,7 +32,7 @@ final class ShippingMethodController extends Controller
     }
 
     /**
-     * Products index
+     * Products index.
      */
     public function index()
     {
@@ -42,7 +43,8 @@ final class ShippingMethodController extends Controller
      * Get Datatables.
      *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function getAjaxShippingMethods()
     {
@@ -65,17 +67,15 @@ final class ShippingMethodController extends Controller
                 return $row->service;
             })
             ->addColumn('manage', function ($row) {
-                $menuRemoval = '<form action="' . route('admin.shop.shipping-method.destroy', ['id' => $row->id]) . '" method="post" class="delete-inline">
-                            ' . method_field('DELETE') . csrf_field() . '
+                $menuRemoval = '<form action="'.route('admin.shop.shipping-method.destroy', ['id' => $row->id]).'" method="post" class="delete-inline">
+                            '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>';
 
-                return '<a href="' . route('admin.shop.shipping-method.update', ['id' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>' .
+                return '<a href="'.route('admin.shop.shipping-method.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
                     $menuRemoval;
-
             })
             ->rawColumns(['pid', 'name', 'gross_price', 'vat_price', 'service', 'manage'])
             ->make(true);
     }
-
 }

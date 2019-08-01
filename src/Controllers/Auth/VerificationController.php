@@ -6,11 +6,13 @@ use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Notifications\RegisterVerification;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\View\View;
 
 class VerificationController extends Controller
 {
@@ -36,8 +38,6 @@ class VerificationController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -48,7 +48,8 @@ class VerificationController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|RedirectResponse|Redirector|\Illuminate\View\View
+     *
+     * @return Factory|RedirectResponse|Redirector|View
      */
     public function show(Request $request)
     {
@@ -61,13 +62,15 @@ class VerificationController extends Controller
      * Mark the authenticated user's email address as verified.
      *
      * @param Request $request
+     *
      * @return RedirectResponse|Redirector
+     *
      * @throws AuthorizationException
      */
     public function verify(Request $request)
     {
-        if ((int)$request->id !== (int)$request->user()->getKey()) {
-            throw new AuthorizationException;
+        if ((int) $request->id !== (int) $request->user()->getKey()) {
+            throw new AuthorizationException();
         }
 
         if ($request->user()->hasVerifiedEmail()) {
@@ -85,6 +88,7 @@ class VerificationController extends Controller
      * Resend the email verification notification.
      *
      * @param Request $request
+     *
      * @return Response
      */
     public function resend(Request $request)

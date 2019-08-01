@@ -9,9 +9,7 @@ use Illuminate\Foundation\Testing\TestCase as IlluminateFoundationTestCase;
 use Tests\CreatesApplication;
 
 /**
- * Class TestCase
- *
- * @package Tests
+ * Class TestCase.
  */
 abstract class TestCase extends IlluminateFoundationTestCase
 {
@@ -30,8 +28,6 @@ abstract class TestCase extends IlluminateFoundationTestCase
 
     /**
      * Refresh a conventional test database.
-     *
-     * @return void
      */
     protected function refreshTestDatabase()
     {

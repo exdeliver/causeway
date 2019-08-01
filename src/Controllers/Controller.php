@@ -12,12 +12,15 @@ use Illuminate\Support\Facades\Lang;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
 
     /**
      * @param Request $request
-     * @param Model $model
-     * @param bool $fallback
+     * @param Model   $model
+     * @param bool    $fallback
+     *
      * @return mixed
      */
     public function getTranslatedResult(Request $request, Model $model, bool $fallback = false)

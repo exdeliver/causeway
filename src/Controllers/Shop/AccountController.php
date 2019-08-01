@@ -5,10 +5,11 @@ namespace Exdeliver\Causeway\Controllers\Shop;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Cart\Domain\Services\CartService;
 use Exdeliver\Causeway\Domain\Services\ShopProductService;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 
 /**
- * Class AccountController
- * @package App\Http\Controllers\Shop
+ * Class AccountController.
  */
 class AccountController extends Controller
 {
@@ -25,7 +26,7 @@ class AccountController extends Controller
     protected $productService;
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function getOrders()
     {

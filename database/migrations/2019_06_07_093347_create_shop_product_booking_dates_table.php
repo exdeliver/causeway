@@ -5,14 +5,12 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class CreateShopProductBookingDatesTable
+ * Class CreateShopProductBookingDatesTable.
  */
 class CreateShopProductBookingDatesTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -45,8 +43,6 @@ class CreateShopProductBookingDatesTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

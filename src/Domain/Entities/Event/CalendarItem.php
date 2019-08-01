@@ -5,14 +5,14 @@ namespace Exdeliver\Causeway\Domain\Entities\Event;
 use Carbon\Carbon;
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use MaddHatter\LaravelFullcalendar\Event;
 use Rennokki\Befriended\Contracts\Likeable;
 use Rennokki\Befriended\Traits\CanBeLiked;
 
 /**
- * Class Comment
- * @package Domain\Entities\Comments
+ * Class Comment.
  */
-class CalendarItem extends AggregateRoot implements Likeable, \MaddHatter\LaravelFullcalendar\Event
+class CalendarItem extends AggregateRoot implements Likeable, Event
 {
     use CanBeLiked;
 
@@ -50,7 +50,7 @@ class CalendarItem extends AggregateRoot implements Likeable, \MaddHatter\Larave
     }
 
     /**
-     * Get the event's id number
+     * Get the event's id number.
      *
      * @return int
      */
@@ -60,7 +60,7 @@ class CalendarItem extends AggregateRoot implements Likeable, \MaddHatter\Larave
     }
 
     /**
-     * Get the event's title
+     * Get the event's title.
      *
      * @return string
      */
@@ -76,11 +76,11 @@ class CalendarItem extends AggregateRoot implements Likeable, \MaddHatter\Larave
      */
     public function isAllDay()
     {
-        return (bool)$this->all_day;
+        return (bool) $this->all_day;
     }
 
     /**
-     * Get the start time
+     * Get the start time.
      *
      * @return Carbon
      */
@@ -90,7 +90,7 @@ class CalendarItem extends AggregateRoot implements Likeable, \MaddHatter\Larave
     }
 
     /**
-     * Get the end time
+     * Get the end time.
      *
      * @return Carbon
      */

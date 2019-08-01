@@ -3,12 +3,11 @@
 namespace Exdeliver\Causeway\Domain\Services;
 
 use App\Models\Notification;
+use Exception;
 use Exdeliver\Causeway\Domain\Entities\Comment\Comment;
 
 /**
- * Class LikeService
- *
- * @package Domain\Services
+ * Class LikeService.
  */
 final class LikeService extends AbstractService
 {
@@ -33,7 +32,8 @@ final class LikeService extends AbstractService
      *
      * @param string $type
      * @param string $id
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function likeSubjectByTypeAndId(string $type, string $id)
     {

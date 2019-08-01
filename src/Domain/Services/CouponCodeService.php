@@ -2,12 +2,13 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
+use CWCart;
+use Exception;
 use Exdeliver\Causeway\Domain\Entities\Shop\CouponCode;
 use Exdeliver\Causeway\Infrastructure\Repositories\CouponCodeRepository;
 
 /**
- * Class CouponCodeService
- * @package Exdeliver\Causeway\Domain\Services
+ * Class CouponCodeService.
  */
 class CouponCodeService extends AbstractService
 {
@@ -23,34 +24,38 @@ class CouponCodeService extends AbstractService
 
     /**
      * @param $couponCode
+     *
      * @return mixed
      */
     public function validateCouponCode($couponCode)
     {
         $couponCode = $this->repository->where('coupon_code', '=', $couponCode)->first();
+
         return $couponCode;
     }
 
     /**
      * @param CouponCode $couponCode
+     *
      * @return array
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function applyCouponCode(CouponCode $couponCode)
     {
-        $findExistingProduct = \CWCart::find([
+        $findExistingProduct = CWCart::find([
             'product_id' => 'discount-coupon',
         ]);
 
         if (count($findExistingProduct) > 0) {
             foreach ($findExistingProduct as $product) {
-                \CWCart::remove((string)$product->id);
+                CWCart::remove((string) $product->id);
             }
         }
 
-        \CWCart::add([
+        CWCart::add([
             'product_id' => 'discount-coupon',
-            'name' => __('Coupon code: ') . $couponCode->name,
+            'name' => __('Coupon code: ').$couponCode->name,
             'type' => 'discount',
             'discount_type' => $couponCode->discount_type,
             'gross_price' => null,

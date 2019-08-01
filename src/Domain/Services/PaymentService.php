@@ -3,22 +3,23 @@
 namespace Exdeliver\Causeway\Domain\Services;
 
 use Carbon\Carbon;
+use Exception;
 use Exdeliver\Causeway\Domain\Contracts\Services\Payment as PaymentInterface;
 use Exdeliver\Causeway\Domain\Entities\Shop\Invoices\Invoice;
 use Exdeliver\Causeway\Domain\Entities\Shop\Invoices\Payment;
 use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
 
 /**
- * Class PaymentService
- *
- * @package Domain\Services
+ * Class PaymentService.
  */
 final class PaymentService extends AbstractApiService implements PaymentInterface
 {
     /**
      * @param Order $order
+     *
      * @return Order
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function generate(Order $order)
     {
@@ -39,8 +40,10 @@ final class PaymentService extends AbstractApiService implements PaymentInterfac
 
     /**
      * @param Order $order
+     *
      * @return bool
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function validate(Order $order): bool
     {
