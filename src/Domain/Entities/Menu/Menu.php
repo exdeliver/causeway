@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class Menu
- * @package Domain\Entities\Menu
+ * Class Menu.
  */
 class Menu extends AggregateRoot
 {
@@ -18,7 +17,7 @@ class Menu extends AggregateRoot
     protected $guarded = [];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function items()
     {
@@ -27,6 +26,7 @@ class Menu extends AggregateRoot
 
     /**
      * @param Builder $query
+     *
      * @return Builder
      */
     public function scopeGetParents(Builder $query)

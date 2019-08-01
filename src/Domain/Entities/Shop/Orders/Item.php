@@ -4,10 +4,10 @@ namespace Exdeliver\Causeway\Domain\Entities\Shop\Orders;
 
 use Exdeliver\Causeway\Domain\Common\Entity;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * Class Item
- * @package Domain\Entities\Orders
+ * Class Item.
  */
 class Item extends Entity
 {
@@ -22,7 +22,7 @@ class Item extends Entity
     protected $table = 'order_lines';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne
      */
     public function ticketType()
     {

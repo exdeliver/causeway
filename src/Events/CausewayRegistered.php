@@ -3,11 +3,11 @@
 namespace Exdeliver\Causeway\Events;
 
 use Exdeliver\Causeway\Domain\Entities\User\User;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Class CausewayRegistered
- * @package Exdeliver\Causeway\Events
+ * Class CausewayRegistered.
  */
 final class CausewayRegistered
 {
@@ -16,12 +16,13 @@ final class CausewayRegistered
     /**
      * The authenticated user.
      *
-     * @var \Illuminate\Contracts\Auth\Authenticatable
+     * @var Authenticatable
      */
     public $user;
 
     /**
      * CausewayRegistered constructor.
+     *
      * @param User $user
      */
     public function __construct(User $user)

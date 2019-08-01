@@ -3,11 +3,11 @@
 namespace Exdeliver\Causeway\Domain\Entities\Shop\Customers;
 
 use Exdeliver\Causeway\Domain\Common\Entity;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class Contact
- * @package Domain\Entities\Invoices
+ * Class Contact.
  */
 class Contact extends Entity implements Auditable
 {
@@ -21,7 +21,7 @@ class Contact extends Entity implements Auditable
     protected $guarded = [];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function customer()
     {
@@ -39,7 +39,7 @@ class Contact extends Entity implements Auditable
 
         $space = $this->first_name ? ' ' : '';
 
-        $name .= $this->last_name ? $space . $this->last_name : '';
+        $name .= $this->last_name ? $space.$this->last_name : '';
 
         return $name;
     }

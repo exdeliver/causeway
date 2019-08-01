@@ -3,8 +3,7 @@
 namespace Exdeliver\Causeway\Domain\Entities\Shop;
 
 /**
- * Trait PricingTrait
- * @package Exdeliver\Causeway\Domain\Entities\Shop
+ * Trait PricingTrait.
  */
 trait PricingTrait
 {
@@ -22,6 +21,7 @@ trait PricingTrait
 
     /**
      * @param $value
+     *
      * @return float|int
      */
     public function setGrossPriceAttribute($value)
@@ -31,6 +31,7 @@ trait PricingTrait
 
     /**
      * @param $value
+     *
      * @return float|int
      */
     public function setSpecialPriceAttribute($value)
@@ -46,6 +47,7 @@ trait PricingTrait
     public function getOriginalVatPriceAttribute()
     {
         $vatToPay = ($this->gross_price / 100) * $this->vat;
+
         return $this->gross_price + $vatToPay;
     }
 
@@ -76,6 +78,6 @@ trait PricingTrait
         $vatToPay = ($grossPrice / 100) * $this->vat;
 
         // Room for other calculations.
-        return money($grossPrice + $vatToPay,'eur')->format();
+        return money($grossPrice + $vatToPay, 'eur')->format();
     }
 }

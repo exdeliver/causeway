@@ -7,8 +7,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\View\View;
 
 /**
- * Class MenuComposite
- * @package Exdeliver\Causeway\Domain\Entities\Menu
+ * Class MenuComposite.
  */
 class MenuComposite implements RenderableInterface
 {
@@ -29,17 +28,18 @@ class MenuComposite implements RenderableInterface
     {
         $items = collect($this->items)
             ->filter(function ($item) {
-                return $item->parent_id === null;
+                return null === $item->parent_id;
             })->map(function ($item) {
                 $item = new MenuElementComposite($item);
-                if ($this->template !== null) {
+                if (null !== $this->template) {
                     $item->setTemplate($this->template);
                 }
+
                 return $item;
             });
 
-        if (view()->exists('site::menu._' . $this->template)) {
-            return view('site::menu._' . $this->template, [
+        if (view()->exists('site::menu._'.$this->template)) {
+            return view('site::menu._'.$this->template, [
                 'items' => $items,
             ]);
         }
@@ -59,11 +59,13 @@ class MenuComposite implements RenderableInterface
 
     /**
      * @param string|null $template
+     *
      * @return $this
      */
     public function setTemplate(string $template = null)
     {
         $this->template = $template;
+
         return $this;
     }
 }

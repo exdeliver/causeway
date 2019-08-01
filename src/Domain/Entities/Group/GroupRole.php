@@ -5,9 +5,7 @@ namespace Exdeliver\Causeway\Domain\Entities\Group;
 use Exdeliver\Causeway\Domain\Common\Entity;
 
 /**
- * Class GroupRole
- *
- * @package Domain\Entities\Group
+ * Class GroupRole.
  */
 class GroupRole extends Entity
 {

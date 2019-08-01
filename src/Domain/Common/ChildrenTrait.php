@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Trait ChildrenTrait
- * @package Domain\Common
+ * Trait ChildrenTrait.
  */
 trait ChildrenTrait
 {
@@ -50,6 +49,7 @@ trait ChildrenTrait
 
     /**
      * @param Builder $query
+     *
      * @return Builder
      */
     public function scopeGetParents(Builder $query)

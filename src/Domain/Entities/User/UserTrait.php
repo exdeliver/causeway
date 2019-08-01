@@ -3,16 +3,17 @@
 namespace Exdeliver\Causeway\Domain\Entities\User;
 
 use Exdeliver\Causeway\Domain\Entities\Comment\CommentTrait;
+use Illuminate\Database\Eloquent\Relations\hasMany;
 use Spatie\Permission\Traits\HasRoles;
 use Vinkla\Hashids\Facades\Hashids;
 
 /**
- * Trait UserTrait
- * @package Domain\Entities\User
+ * Trait UserTrait.
  */
 trait UserTrait
 {
-    use HasRoles, CommentTrait;
+    use HasRoles;
+    use CommentTrait;
 
     /**
      * Get ecnrypted userID.
@@ -25,7 +26,7 @@ trait UserTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     * @return hasMany
      */
     public function points()
     {
@@ -49,7 +50,7 @@ trait UserTrait
      */
     public function receivesBroadcastNotificationsOn(): string
     {
-        return 'users.' . $this->id;
+        return 'users.'.$this->id;
     }
 
     /**

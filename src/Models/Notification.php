@@ -8,8 +8,7 @@ use Rennokki\Befriended\Contracts\Likeable;
 use Rennokki\Befriended\Traits\CanBeLiked;
 
 /**
- * Class Notification
- * @package App\Models
+ * Class Notification.
  */
 class Notification extends DatabaseNotification implements Likeable
 {

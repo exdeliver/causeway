@@ -2,16 +2,20 @@
 
 namespace Exdeliver\Causeway\Controllers\Admin;
 
+use Calendar;
+use Exception;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Event\CalendarItem;
 use Exdeliver\Causeway\Domain\Services\EventService;
 use Exdeliver\Causeway\Requests\PostEventRequest;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Yajra\DataTables\Facades\DataTables;
 
 /**
- * Class EventController
- * @package Exdeliver\Causeway\Controllers\Admin
+ * Class EventController.
  */
 class EventController extends Controller
 {
@@ -22,6 +26,7 @@ class EventController extends Controller
 
     /**
      * EventController constructor.
+     *
      * @param EventService $eventService
      */
     public function __construct(EventService $eventService)
@@ -30,11 +35,11 @@ class EventController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {
-        $calendar = \Calendar::addEvents(CalendarItem::get()); //add an array with addEvents
+        $calendar = Calendar::addEvents(CalendarItem::get()); //add an array with addEvents
 
         return view('causeway::admin.events.index', [
             'calendar' => $calendar,
@@ -42,7 +47,7 @@ class EventController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create()
     {
@@ -50,9 +55,10 @@ class EventController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request      $request
      * @param CalendarItem $event
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @return Factory|View
      */
     public function edit(Request $request, CalendarItem $event)
     {
@@ -63,8 +69,9 @@ class EventController extends Controller
 
     /**
      * @param PostEventRequest $request
-     * @param CalendarItem $event
-     * @return \Illuminate\Http\RedirectResponse
+     * @param CalendarItem     $event
+     *
+     * @return RedirectResponse
      */
     public function update(PostEventRequest $request, CalendarItem $event)
     {
@@ -72,9 +79,10 @@ class EventController extends Controller
     }
 
     /**
-     * @param PostEventRequest $request
+     * @param PostEventRequest  $request
      * @param CalendarItem|null $event
-     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @return RedirectResponse
      */
     public function store(PostEventRequest $request, CalendarItem $event = null)
     {
@@ -89,17 +97,19 @@ class EventController extends Controller
             'end_datetime',
         ]));
 
-        $request->session()->flash('status', isset($event->id) && $event->id !== null ? 'Event has successfully been updated!' : 'Event has successfully been created!');
+        $request->session()->flash('status', isset($event->id) && null !== $event->id ? 'Event has successfully been updated!' : 'Event has successfully been created!');
 
         return redirect()
             ->route('admin.events.index');
     }
 
     /**
-     * @param Request $request
+     * @param Request      $request
      * @param CalendarItem $event
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     *
+     * @return RedirectResponse
+     *
+     * @throws Exception
      */
     public function destroy(Request $request, CalendarItem $event)
     {
@@ -113,7 +123,8 @@ class EventController extends Controller
      * Get Datatables.
      *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function getAjaxEvents()
     {
@@ -130,9 +141,9 @@ class EventController extends Controller
                 return $row->end_datetime;
             })
             ->addColumn('manage', function ($row) {
-                return '<a href="' . route('admin.events.update', ['id' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>
-                                                <form action="' . route('admin.events.remove', ['id' => $row->id]) . '" method="post" class="delete-inline">
-                            ' . method_field('DELETE') . csrf_field() . '
+                return '<a href="'.route('admin.events.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>
+                                                <form action="'.route('admin.events.remove', ['id' => $row->id]).'" method="post" class="delete-inline">
+                            '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>
                         ';

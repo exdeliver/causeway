@@ -3,9 +3,7 @@
 namespace Exdeliver\Causeway\Domain\Common;
 
 /**
- * Class AggregateRoot
- *
- * @package Domain\Common
+ * Class AggregateRoot.
  */
 class AggregateRoot extends Entity
 {

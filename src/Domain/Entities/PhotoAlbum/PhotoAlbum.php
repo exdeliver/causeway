@@ -4,10 +4,10 @@ namespace Exdeliver\Causeway\Domain\Entities\PhotoAlbum;
 
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
 use Exdeliver\Causeway\Domain\Common\EntityFilesTrait;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class PhotoAlbum
- * @package Domain\Entities\PhotoAlbum
+ * Class PhotoAlbum.
  */
 class PhotoAlbum extends AggregateRoot
 {
@@ -24,7 +24,7 @@ class PhotoAlbum extends AggregateRoot
     protected $fillable = ['name', 'label', 'file', 'description', 'uuid', 'parent_id'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function albums()
     {
@@ -32,7 +32,7 @@ class PhotoAlbum extends AggregateRoot
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function photos()
     {

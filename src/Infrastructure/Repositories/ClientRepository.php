@@ -2,6 +2,7 @@
 
 namespace Laravel\Passport;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use RuntimeException;
 
@@ -11,7 +12,8 @@ class ClientRepository
      * Get an active client by the given ID.
      *
      * @param int $id
-     * @return \Laravel\Passport\Client|null
+     *
+     * @return Client|null
      */
     public function findActive($id)
     {
@@ -24,7 +26,8 @@ class ClientRepository
      * Get a client by the given ID.
      *
      * @param int $id
-     * @return \Laravel\Passport\Client|null
+     *
+     * @return Client|null
      */
     public function find($id)
     {
@@ -36,9 +39,10 @@ class ClientRepository
     /**
      * Get a client instance for the given ID and user ID.
      *
-     * @param int $clientId
+     * @param int   $clientId
      * @param mixed $userId
-     * @return \Laravel\Passport\Client|null
+     *
+     * @return Client|null
      */
     public function findForUser($clientId, $userId)
     {
@@ -54,7 +58,8 @@ class ClientRepository
      * Get the active client instances for the given user ID.
      *
      * @param mixed $userId
-     * @return \Illuminate\Database\Eloquent\Collection
+     *
+     * @return Collection
      */
     public function activeForUser($userId)
     {
@@ -67,7 +72,8 @@ class ClientRepository
      * Get the client instances for the given user ID.
      *
      * @param mixed $userId
-     * @return \Illuminate\Database\Eloquent\Collection
+     *
+     * @return Collection
      */
     public function forUser($userId)
     {
@@ -79,9 +85,9 @@ class ClientRepository
     /**
      * Get the personal access token client for the application.
      *
-     * @return \Laravel\Passport\Client
+     * @return Client
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function personalAccessClient()
     {
@@ -101,10 +107,11 @@ class ClientRepository
     /**
      * Store a new personal access token client.
      *
-     * @param int $userId
+     * @param int    $userId
      * @param string $name
      * @param string $redirect
-     * @return \Laravel\Passport\Client
+     *
+     * @return Client
      */
     public function createPersonalAccessClient($userId, $name, $redirect)
     {
@@ -118,12 +125,13 @@ class ClientRepository
     /**
      * Store a new client.
      *
-     * @param int $userId
+     * @param int    $userId
      * @param string $name
      * @param string $redirect
-     * @param bool $personalAccess
-     * @param bool $password
-     * @return \Laravel\Passport\Client
+     * @param bool   $personalAccess
+     * @param bool   $password
+     *
+     * @return Client
      */
     public function create($userId, $name, $redirect, $personalAccess = false, $password = false)
     {
@@ -145,10 +153,11 @@ class ClientRepository
     /**
      * Store a new password grant client.
      *
-     * @param int $userId
+     * @param int    $userId
      * @param string $name
      * @param string $redirect
-     * @return \Laravel\Passport\Client
+     *
+     * @return Client
      */
     public function createPasswordGrantClient($userId, $name, $redirect)
     {
@@ -161,7 +170,8 @@ class ClientRepository
      * @param Client $client
      * @param string $name
      * @param string $redirect
-     * @return \Laravel\Passport\Client
+     *
+     * @return Client
      */
     public function update(Client $client, $name, $redirect)
     {
@@ -175,8 +185,9 @@ class ClientRepository
     /**
      * Regenerate the client secret.
      *
-     * @param \Laravel\Passport\Client $client
-     * @return \Laravel\Passport\Client
+     * @param Client $client
+     *
+     * @return Client
      */
     public function regenerateSecret(Client $client)
     {
@@ -191,6 +202,7 @@ class ClientRepository
      * Determine if the given client is revoked.
      *
      * @param int $id
+     *
      * @return bool
      */
     public function revoked($id)
@@ -203,8 +215,7 @@ class ClientRepository
     /**
      * Delete the given client.
      *
-     * @param \Laravel\Passport\Client $client
-     * @return void
+     * @param Client $client
      */
     public function delete(Client $client)
     {

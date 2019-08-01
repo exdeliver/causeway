@@ -4,19 +4,22 @@ namespace Exdeliver\Causeway\Domain\Entities\User;
 
 use Exdeliver\Causeway\Domain\Entities\Group\GroupUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use OwenIt\Auditing\Auditable;
 use Rennokki\Befriended\Contracts\Liker;
 use Rennokki\Befriended\Traits\CanLike;
 
 /**
- * Class User
- * @package Domain\Entities\User
+ * Class User.
  */
 class User extends Authenticatable implements Liker, MustVerifyEmail, \OwenIt\Auditing\Contracts\Auditable
 {
-    use \OwenIt\Auditing\Auditable;
-    use UserTrait, CanLike, Notifiable;
+    use Auditable;
+    use UserTrait;
+    use CanLike;
+    use Notifiable;
 
     /**
      * @var string
@@ -45,7 +48,7 @@ class User extends Authenticatable implements Liker, MustVerifyEmail, \OwenIt\Au
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function groups()
     {
@@ -53,7 +56,7 @@ class User extends Authenticatable implements Liker, MustVerifyEmail, \OwenIt\Au
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function points()
     {

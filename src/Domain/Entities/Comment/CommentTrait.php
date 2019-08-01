@@ -6,8 +6,7 @@ use Exdeliver\Causeway\Domain\Services\CommentService;
 use Exdeliver\Causeway\Infrastructure\Repositories\CommentRepository;
 
 /**
- * Trait CommentTrait
- * @package Domain\Entities\Comment
+ * Trait CommentTrait.
  */
 trait CommentTrait
 {
@@ -24,6 +23,7 @@ trait CommentTrait
      * @param $object
      * @param $id
      * @param $data
+     *
      * @return array
      */
     public function commentOn($object, $id, $data)

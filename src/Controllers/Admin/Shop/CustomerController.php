@@ -2,6 +2,7 @@
 
 namespace Exdeliver\Causeway\Controllers\Admin\Shop;
 
+use Exception;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Shop\Customers\Customer;
 use Exdeliver\Causeway\Domain\Services\CustomerService;
@@ -18,6 +19,7 @@ final class CustomerController extends Controller
 
     /**
      * CustomerController constructor.
+     *
      * @param CustomerService $customerService
      */
     public function __construct(CustomerService $customerService)
@@ -26,7 +28,7 @@ final class CustomerController extends Controller
     }
 
     /**
-     * Customers index
+     * Customers index.
      */
     public function index()
     {
@@ -37,7 +39,8 @@ final class CustomerController extends Controller
      * Get Datatables.
      *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function getAjaxCustomers()
     {
@@ -54,15 +57,14 @@ final class CustomerController extends Controller
                 return count($row->orders);
             })
             ->addColumn('manage', function ($row) {
-                $menuRemoval = '<form action="' . route('admin.menu.remove', ['id' => $row->id]) . '" method="post" class="delete-inline">
-                            ' . method_field('DELETE') . csrf_field() . '
+                $menuRemoval = '<form action="'.route('admin.menu.remove', ['id' => $row->id]).'" method="post" class="delete-inline">
+                            '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>';
 
-                return '<a href="' . route('admin.menu.show', ['id' => $row->id]) . '" class="btn btn-sm btn-primary">Manage</a>
-                        <a href="' . route('admin.menu.update', ['id' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>' .
+                return '<a href="'.route('admin.menu.show', ['id' => $row->id]).'" class="btn btn-sm btn-primary">Manage</a>
+                        <a href="'.route('admin.menu.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
                     $menuRemoval;
-
             })
             ->rawColumns(['label', 'name', 'items', 'manage'])
             ->make(true);

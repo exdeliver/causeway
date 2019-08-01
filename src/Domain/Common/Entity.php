@@ -2,12 +2,12 @@
 
 namespace Exdeliver\Causeway\Domain\Common;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Lang;
 
 /**
- * Class Entity
- * @package Domain\Entities
+ * Class Entity.
  */
 abstract class Entity extends Model
 {
@@ -19,12 +19,12 @@ abstract class Entity extends Model
     protected $id;
 
     /**
-     * @var \DateTimeInterface
+     * @var DateTimeInterface
      */
     protected $createdAt;
 
     /**
-     * @var \DateTimeInterface
+     * @var DateTimeInterface
      */
     protected $updatedAt;
 
@@ -34,17 +34,17 @@ abstract class Entity extends Model
     protected $deletedAt;
 
     /**
-     * @return \DateTimeInterface
+     * @return DateTimeInterface
      */
-    public function getCreatedAt(): \DateTimeInterface
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
     /**
-     * @return \DateTimeInterface
+     * @return DateTimeInterface
      */
-    public function getUpdatedAt(): \DateTimeInterface
+    public function getUpdatedAt(): DateTimeInterface
     {
         return $this->updatedAt;
     }

@@ -11,13 +11,14 @@ use Exdeliver\Causeway\Domain\Services\UploadService;
 use Exdeliver\Causeway\Requests\PostAdminPhotoAlbumRequest;
 use Exdeliver\Causeway\Requests\PostAdminPhotoRequest;
 use Exdeliver\Causeway\Requests\PostPhotoUploadRequest;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Class PhotoAlbumController
- * @package Exdeliver\Causeway\Controllers\Admin
+ * Class PhotoAlbumController.
  */
 class PhotoAlbumController extends Controller
 {
@@ -39,8 +40,8 @@ class PhotoAlbumController extends Controller
     /**
      * PhotoAlbumController constructor.
      *
-     * @param UploadService $uploadService
-     * @param PhotoService $photoService
+     * @param UploadService     $uploadService
+     * @param PhotoService      $photoService
      * @param PhotoAlbumService $albumService
      */
     public function __construct(UploadService $uploadService, PhotoService $photoService, PhotoAlbumService $albumService)
@@ -53,7 +54,8 @@ class PhotoAlbumController extends Controller
     /**
      * @param Request $request
      * @param $photoAlbum
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @return Factory|View
      */
     public function index(Request $request, PhotoAlbum $photoAlbum = null): View
     {
@@ -69,9 +71,10 @@ class PhotoAlbumController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request         $request
      * @param PhotoAlbum|null $album
-     * @return \Illuminate\Contracts\View\Factory|View
+     *
+     * @return Factory|View
      */
     public function createAlbum(Request $request, PhotoAlbum $album = null)
     {
@@ -79,9 +82,10 @@ class PhotoAlbumController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request    $request
      * @param PhotoAlbum $album
-     * @return \Illuminate\Contracts\View\Factory|View
+     *
+     * @return Factory|View
      */
     public function editAlbum(Request $request, PhotoAlbum $album)
     {
@@ -94,9 +98,10 @@ class PhotoAlbumController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request    $request
      * @param PhotoAlbum $album
-     * @return \Illuminate\Contracts\View\Factory|View
+     *
+     * @return Factory|View
      */
     public function createPhoto(Request $request, PhotoAlbum $album)
     {
@@ -105,8 +110,9 @@ class PhotoAlbumController extends Controller
 
     /**
      * @param Request $request
-     * @param Photo $photo
-     * @return \Illuminate\Contracts\View\Factory|View
+     * @param Photo   $photo
+     *
+     * @return Factory|View
      */
     public function editPhoto(Request $request, Photo $photo)
     {
@@ -115,8 +121,9 @@ class PhotoAlbumController extends Controller
 
     /**
      * @param PostAdminPhotoAlbumRequest $request
-     * @param PhotoAlbum|null $album
-     * @return \Illuminate\Http\RedirectResponse
+     * @param PhotoAlbum|null            $album
+     *
+     * @return RedirectResponse
      */
     public function storeAlbum(PostAdminPhotoAlbumRequest $request, PhotoAlbum $album = null): RedirectResponse
     {
@@ -132,9 +139,9 @@ class PhotoAlbumController extends Controller
             'file' => $file->filename ?? null,
         ], $photoAlbum->id ?? null);
 
-        $this->statusMessage = isset($photoAlbum->id) && $photoAlbum->id !== null ? 'Album has successfully been updated!' : 'Album has successfully been created!';
+        $this->statusMessage = isset($photoAlbum->id) && null !== $photoAlbum->id ? 'Album has successfully been updated!' : 'Album has successfully been created!';
 
-        if ($request->wantsJson() === true) {
+        if (true === $request->wantsJson()) {
             return json_encode(['status' => 'success', 'message' => $this->statusMessage]);
         }
 
@@ -146,14 +153,15 @@ class PhotoAlbumController extends Controller
 
     /**
      * @param PostAdminPhotoRequest $request
-     * @param Photo|null $photo
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Photo|null            $photo
+     *
+     * @return RedirectResponse
      */
     public function storePhoto(PostAdminPhotoRequest $request, Photo $photo = null): RedirectResponse
     {
-        $this->statusMessage = isset($photo->id) && $photo->id !== null ? 'Photo has successfully been updated!' : 'Photo has successfully been created!';
+        $this->statusMessage = isset($photo->id) && null !== $photo->id ? 'Photo has successfully been updated!' : 'Photo has successfully been created!';
 
-        if ($request->wantsJson() === true) {
+        if (true === $request->wantsJson()) {
             return json_encode(['status' => 'success', 'message' => $this->statusMessage]);
         }
 
@@ -165,7 +173,8 @@ class PhotoAlbumController extends Controller
 
     /**
      * @param PostPhotoUploadRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
     public function upload(PostPhotoUploadRequest $request)
     {
@@ -189,7 +198,8 @@ class PhotoAlbumController extends Controller
 
     /**
      * @param Request $request
-     * @param Photo $photo
+     * @param Photo   $photo
+     *
      * @return RedirectResponse
      */
     public function removePhoto(Request $request, Photo $photo)

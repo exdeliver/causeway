@@ -7,19 +7,15 @@ use Exdeliver\Causeway\Notifications\RegisterVerification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 /**
- * Class AccountVerificationNotification
- * @package App\Listeners
+ * Class AccountVerificationNotification.
  */
 class AccountVerificationNotification implements ShouldQueue
 {
     /**
      * Create the event listener.
-     *
-     * @return void
      */
     public function __construct()
     {
-        //
     }
 
     /**

@@ -3,8 +3,7 @@
 namespace Exdeliver\Causeway\Domain\Common;
 
 /**
- * Class Language
- * @package Domain\Common
+ * Class Language.
  */
 class Language
 {

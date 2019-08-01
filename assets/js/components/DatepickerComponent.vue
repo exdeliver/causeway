@@ -92,10 +92,10 @@
                 default: 0,
                 validator: function (value) {
                     try {
-                        const val = parseInt(value, 10)
+                        const val = parseInt(value, 10);
                         return val >= 0 && val <= 1
                     } catch (e) {
-                        console.warn(e.message)
+                        console.warn(e.message);
                         return false
                     }
                 },
@@ -125,7 +125,7 @@
         },
         methods: {
             leftMonth() {
-                let index = this.months.indexOf(this.month)
+                let index = this.months.indexOf(this.month);
                 if (index === 0) {
                     this.monthIndex = 11
                 } else {
@@ -134,7 +134,7 @@
                 this.updateCalendar()
             },
             rightMonth() {
-                let index = this.months.indexOf(this.month)
+                let index = this.months.indexOf(this.month);
                 if (index === 11) {
                     this.monthIndex = 0
                 } else {
@@ -143,11 +143,11 @@
                 this.updateCalendar()
             },
             rightYear() {
-                this.year++
+                this.year++;
                 this.updateCalendar()
             },
             leftYear() {
-                this.year--
+                this.year--;
                 this.updateCalendar()
             },
             updateActivePortFromWeek(week, weekIndex) {
@@ -178,7 +178,7 @@
                     } else if (week === null) {
                         week = new Array(7);
                     }
-                    const idx = (weekday - this.normalizedFirstDayOfWeek + 7) % 7
+                    const idx = (weekday - this.normalizedFirstDayOfWeek + 7) % 7;
                     week[idx] = format(day, 'DD');
                     weekDays[idx] = day;
                 });
@@ -197,67 +197,67 @@
                 this.changeDate();
             },
             setMinute(index, closeAfterSet) {
-                this.minuteIndex = index
-                this.minute = this.minutes[index]
+                this.minuteIndex = index;
+                this.minute = this.minutes[index];
                 if (closeAfterSet) {
                     this.minuteSelectorVisible = false
                 }
                 this.changeDate();
             },
             setHour(index, closeAfterSet) {
-                this.hourIndex = index
-                this.hour = this.hours[index]
+                this.hourIndex = index;
+                this.hour = this.hours[index];
                 if (closeAfterSet) {
                     this.hourSelectorVisible = false
                 }
                 this.changeDate();
             },
             showHourSelector() {
-                this.hourSelectorVisible = true
+                this.hourSelectorVisible = true;
                 this.minuteSelectorVisible = false
             },
             showMinuteSelector() {
-                this.minuteSelectorVisible = true
+                this.minuteSelectorVisible = true;
                 this.hourSelectorVisible = false
             },
             keyIsDown(event) {
-                let key = event.which || event.keycode
+                let key = event.which || event.keycode;
                 if (key === 38) {
                     if (this.minuteSelectorVisible && this.minuteIndex > 0) {
-                        this.setMinute(this.minuteIndex - 1, false)
+                        this.setMinute(this.minuteIndex - 1, false);
                         this.scrollTopMinute()
                     } else if (this.hourSelectorVisible && this.hourIndex > 0) {
-                        this.setHour(this.hourIndex - 1, false)
+                        this.setHour(this.hourIndex - 1, false);
                         this.scrollTopHour()
                     }
                 } else if (key === 40) {
                     if (this.minuteSelectorVisible && this.minuteIndex < this.minutes.length - 1) {
-                        this.setMinute(this.minuteIndex + 1, false)
+                        this.setMinute(this.minuteIndex + 1, false);
                         this.scrollTopMinute()
                     } else if (this.hourSelectorVisible && this.hourIndex < this.hours.length - 1) {
-                        this.setHour(this.hourIndex + 1, false)
+                        this.setHour(this.hourIndex + 1, false);
                         this.scrollTopHour()
                     }
                 } else if (key === 13) {
-                    this.minuteSelectorVisible = false
+                    this.minuteSelectorVisible = false;
                     this.hourSelectorVisible = false
                 }
                 if (this.minuteSelectorVisible || this.hourSelectorVisible) {
-                    event.preventDefault()
-                    this.minuteSelectorVisible = false
+                    event.preventDefault();
+                    this.minuteSelectorVisible = false;
                     this.hourSelectorVisible = false
                 }
             },
             scrollTopMinute() {
-                let mHeight = this.$refs.minuteScroller.scrollHeight
-                let wHeight = this.$refs.minuteScrollerWrapper.clientHeight
-                let top = mHeight * (this.minuteIndex / (this.minutes.length - 1)) - (wHeight / 2)
+                let mHeight = this.$refs.minuteScroller.scrollHeight;
+                let wHeight = this.$refs.minuteScrollerWrapper.clientHeight;
+                let top = mHeight * (this.minuteIndex / (this.minutes.length - 1)) - (wHeight / 2);
                 this.$refs.minuteScroller.scrollTop = top
             },
             scrollTopHour() {
-                let mHeight = this.$refs.hourScroller.scrollHeight
-                let wHeight = this.$refs.hourScrollerWrapper.clientHeight
-                let top = mHeight * (this.hourIndex / (this.hours.length - 1)) - (wHeight / 2)
+                let mHeight = this.$refs.hourScroller.scrollHeight;
+                let wHeight = this.$refs.hourScrollerWrapper.clientHeight;
+                let top = mHeight * (this.hourIndex / (this.hours.length - 1)) - (wHeight / 2);
                 this.$refs.hourScroller.scrollTop = top
             },
             changePeriod() {
@@ -265,10 +265,10 @@
             },
             calendarClicked(event) {
                 if (event.target.id !== 'j-hour' && event.target.id !== 'j-minute') {
-                    this.minuteSelectorVisible = false
+                    this.minuteSelectorVisible = false;
                     this.hourSelectorVisible = false
                 }
-                event.cancelBubble = true
+                event.cancelBubble = true;
                 if (event.stopPropagation) {
                     event.stopPropagation()
                 }
@@ -282,14 +282,14 @@
                 this.hideCal = !this.hideCal
             },
             setDate() {
-                let d = null
+                let d = null;
                 if (this.dateFormat.indexOf('H') !== -1) {
                     this.periodStyle = 24;
                     this.period = null;
                 } else {
                     this.periodStyle = 12;
                 }
-                let h = this.hour + ''
+                let h = this.hour + '';
                 if (this.periodStyle === 12) {
                     if (h === '12') {
                         if (this.period === 'AM') {
@@ -298,32 +298,32 @@
                             h = '12'
                         }
                     } else if (this.period === 'PM' && parseInt(h) < 12) {
-                        h = parseInt(h) + 12
+                        h = parseInt(h) + 12;
                         h = '' + h
                     }
                 }
-                d = this.dateFormat
-                d = d.replace('YYYY', this.year)
-                d = d.replace('DD', this.day < 10 ? '0' + this.day : this.day)
-                let m = this.monthIndex + 1
-                d = d.replace('MM', m < 10 ? '0' + m : m)
-                this.minute += ''
-                d = d.replace(this.periodStyle === 24 ? 'H' : 'h', h.length < 2 ? '0' + h : '' + h)
-                d = d.replace('i', this.minute.length < 2 ? '0' + this.minute : '' + this.minute)
-                d = d.replace('s', '00')
-                this.$emit('input', d)
-                this.date = d
+                d = this.dateFormat;
+                d = d.replace('YYYY', this.year);
+                d = d.replace('DD', this.day < 10 ? '0' + this.day : this.day);
+                let m = this.monthIndex + 1;
+                d = d.replace('MM', m < 10 ? '0' + m : m);
+                this.minute += '';
+                d = d.replace(this.periodStyle === 24 ? 'H' : 'h', h.length < 2 ? '0' + h : '' + h);
+                d = d.replace('i', this.minute.length < 2 ? '0' + this.minute : '' + this.minute);
+                d = d.replace('s', '00');
+                this.$emit('input', d);
+                this.date = d;
                 this.hideCal = true
             },
             changeDate() {
-                let d = null
+                let d = null;
                 if (this.dateFormat.indexOf('H') !== -1) {
                     this.periodStyle = 24;
                     this.period = null;
                 } else {
                     this.periodStyle = 12;
                 }
-                let h = this.hour + ''
+                let h = this.hour + '';
                 if (this.periodStyle === 12) {
                     if (h === '12') {
                         if (this.period === 'AM') {
@@ -332,52 +332,52 @@
                             h = '12'
                         }
                     } else if (this.period === 'PM' && parseInt(h) < 12) {
-                        h = parseInt(h) + 12
+                        h = parseInt(h) + 12;
                         h = '' + h
                     }
                 }
-                d = this.dateFormat
-                d = d.replace('YYYY', this.year)
-                d = d.replace('DD', this.day < 10 ? '0' + this.day : this.day)
-                let m = this.monthIndex + 1
-                d = d.replace('MM', m < 10 ? '0' + m : m)
-                this.minute += ''
-                d = d.replace(this.periodStyle === 24 ? 'H' : 'h', h.length < 2 ? '0' + h : '' + h)
-                d = d.replace('i', this.minute.length < 2 ? '0' + this.minute : '' + this.minute)
-                d = d.replace('s', '00')
-                this.$emit('input', d)
-                this.date = d
+                d = this.dateFormat;
+                d = d.replace('YYYY', this.year);
+                d = d.replace('DD', this.day < 10 ? '0' + this.day : this.day);
+                let m = this.monthIndex + 1;
+                d = d.replace('MM', m < 10 ? '0' + m : m);
+                this.minute += '';
+                d = d.replace(this.periodStyle === 24 ? 'H' : 'h', h.length < 2 ? '0' + h : '' + h);
+                d = d.replace('i', this.minute.length < 2 ? '0' + this.minute : '' + this.minute);
+                d = d.replace('s', '00');
+                this.$emit('input', d);
+                this.date = d;
                 this.hideCal = false
             },
             makeDateObject(val) {
                 // handle support for eu date format
-                let dateAndTime = val.split(' ')
-                let arr = []
+                let dateAndTime = val.split(' ');
+                let arr = [];
                 if (this.format.indexOf('-') !== -1) {
                     arr = dateAndTime[0].split('-')
                 } else {
                     arr = dateAndTime[0].split('/')
                 }
-                let year = 0
-                let month = 0
-                let day = 0
+                let year = 0;
+                let month = 0;
+                let day = 0;
 
                 if (this.format.indexOf('DD/MM/YYYY') === 0 || this.format.indexOf('DD-MM-YYYY') === 0) {
-                    year = arr[0]
-                    month = arr[1]
+                    year = arr[0];
+                    month = arr[1];
                     day = arr[2]
                 } else if (this.format.indexOf('YYYY/MM/DD') === 0 || this.format.indexOf('YYYY-MM-DD') === 0) {
-                    year = arr[0]
-                    month = arr[1]
+                    year = arr[0];
+                    month = arr[1];
                     day = arr[2]
                 } else {
-                    year = arr[2]
-                    month = arr[0]
+                    year = arr[2];
+                    month = arr[0];
                     day = arr[1]
                 }
 
                 if (dateAndTime.length === 2 && dateAndTime[1]) {
-                    var splitTime = dateAndTime[1].split(':')
+                    var splitTime = dateAndTime[1].split(':');
                     return new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(splitTime[0]), parseInt(splitTime[1]), parseInt(splitTime[2]))
                 } else {
                     return new Date(parseInt(year), parseInt(month) - 1, parseInt(day))
@@ -390,24 +390,24 @@
                 try {
                     this.timeStamp = this.makeDateObject(this.value)
                 } catch (e) {
-                    this.timeStamp = new Date()
+                    this.timeStamp = new Date();
                     console.log(e);
                 }
             }
 
-            this.year = this.timeStamp.getFullYear()
-            this.monthIndex = this.timeStamp.getMonth()
-            this.day = this.timeStamp.getDate()
-            this.hour = this.timeStamp.getHours()
-            this.hour = this.hour < 10 ? '0' + this.hour : '' + this.hour
-            this.minute = this.timeStamp.getMinutes()
-            this.minute = this.minute < 10 ? '0' + this.minute : '' + this.minute
-            this.updateCalendar()
+            this.year = this.timeStamp.getFullYear();
+            this.monthIndex = this.timeStamp.getMonth();
+            this.day = this.timeStamp.getDate();
+            this.hour = this.timeStamp.getHours();
+            this.hour = this.hour < 10 ? '0' + this.hour : '' + this.hour;
+            this.minute = this.timeStamp.getMinutes();
+            this.minute = this.minute < 10 ? '0' + this.minute : '' + this.minute;
+            this.updateCalendar();
             days.forEach((day, idx) => {
                 this.days[(idx - this.normalizedFirstDayOfWeek + 7) % 7] = day;
             });
-            document.addEventListener('keydown', this.keyIsDown)
-            document.addEventListener('click', this.documentClicked)
+            document.addEventListener('keydown', this.keyIsDown);
+            document.addEventListener('click', this.documentClicked);
             this.setDate()
 
         },
@@ -416,29 +416,29 @@
                 if (newVal) {
                     this.value = newVal;
                     try {
-                        this.timeStamp = this.makeDateObject(this.value)
-                        let old = this.makeDateObject(oldVal)
+                        this.timeStamp = this.makeDateObject(this.value);
+                        let old = this.makeDateObject(oldVal);
                         if (oldVal === this.timeStamp) {
                             return
                         }
                     } catch (e) {
-                        console.warn(e.message + '. Current date is being used.')
+                        console.warn(e.message + '. Current date is being used.');
                         this.timeStamp = new Date()
                     }
                 }
-                this.year = this.timeStamp.getFullYear()
-                this.monthIndex = this.timeStamp.getMonth()
-                this.day = this.timeStamp.getDate()
-                this.hour = this.timeStamp.getHours()
-                this.hour = this.hour < 10 ? '0' + this.hour : '' + this.hour
-                this.minute = this.timeStamp.getMinutes()
-                this.minute = this.minute < 10 ? '0' + this.minute : '' + this.minute
-                this.updateCalendar()
+                this.year = this.timeStamp.getFullYear();
+                this.monthIndex = this.timeStamp.getMonth();
+                this.day = this.timeStamp.getDate();
+                this.hour = this.timeStamp.getHours();
+                this.hour = this.hour < 10 ? '0' + this.hour : '' + this.hour;
+                this.minute = this.timeStamp.getMinutes();
+                this.minute = this.minute < 10 ? '0' + this.minute : '' + this.minute;
+                this.updateCalendar();
                 this.setDate()
             }
         },
         destroyed: function () {
-            document.removeEventListener('keydown', this.keyIsDown)
+            document.removeEventListener('keydown', this.keyIsDown);
             document.removeEventListener('click', this.documentClicked)
         },
         computed: {
@@ -447,7 +447,7 @@
             },
             ports: {
                 get: function () {
-                    let p = []
+                    let p = [];
                     if (this.portsHolder.length === 0) {
                         for (let i = 0; i < 42; i++) {
                             p.push('')
@@ -468,14 +468,14 @@
                 return this.timeStamp.getFullYear() + '-' + (this.timeStamp.getMonth() + 1) + '-' + this.timeStamp.getUTCDay()
             },
             minutes() {
-                let arr = []
+                let arr = [];
                 for (let i = 0; i < 60; i++) {
                     i < 10 ? arr.push('0' + i) : arr.push('' + i)
                 }
                 return arr
             },
             hours() {
-                let arr = []
+                let arr = [];
                 if (this.periodStyle === 24) {
                     for (let i = 0; i < this.periodStyle; i++) {
                         i < 10 ? arr.push('0' + i) : arr.push('' + i)
@@ -488,7 +488,7 @@
                 return arr
             },
             dateFormat() {
-                let f = 'YYYY-MM-DD h:i:s'
+                let f = 'YYYY-MM-DD h:i:s';
                 let allowedFormats = [
                     'YYYY-MM-DD h:i:s', 'DD-MM-YYYY h:i:s', 'MM-DD-YYYY h:i:s',
                     'YYYY-MM-DD H:i:s', 'DD-MM-YYYY H:i:s', 'MM-DD-YYYY H:i:s',
@@ -497,12 +497,12 @@
                     'YYYY/MM/DD h:i:s', 'DD/MM/YYYY h:i:s', 'MM/DD/YYYY h:i:s',
                     'YYYY/MM/DD H:i:s', 'DD/MM/YYYY H:i:s', 'MM/DD/YYYY H:i:s',
                     'DD-MM-YYYY H:i'
-                ]
+                ];
                 if (this.format) {
                     f = this.format
                 }
                 if (allowedFormats.indexOf(f) < 0) {
-                    console.warn('Invalid date format supplied. Current default date format is being used.')
+                    console.warn('Invalid date format supplied. Current default date format is being used.');
                     // return default date format if date format is invalid
                     return 'YYYY-MM-DD h:i:s'
                 } else {

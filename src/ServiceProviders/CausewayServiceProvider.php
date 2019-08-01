@@ -2,6 +2,7 @@
 
 namespace Exdeliver\Causeway\ServiceProviders;
 
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exdeliver\Causeway\Commands\CreateAdminCommand;
 use Exdeliver\Causeway\Domain\Entities\Forum\Category;
 use Exdeliver\Causeway\Domain\Entities\Forum\Thread;
@@ -19,19 +20,19 @@ use Exdeliver\Causeway\Middleware\CausewayAuth;
 use Exdeliver\Causeway\Middleware\CausewayGuest;
 use Exdeliver\Causeway\Middleware\CausewayVerified;
 use Exdeliver\Causeway\Validators\CausewayValidators;
-use Exdeliver\Causeway\ViewComposers\MetaComposer;
 use Exdeliver\Causeway\ViewComposers\NavigationComposer;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use OwenIt\Auditing\AuditingServiceProvider;
 
 /**
- * Class CausewayServiceProvider
- * @package Exdeliver\Causeway\ServiceProviders
+ * Class CausewayServiceProvider.
  */
 class CausewayServiceProvider extends ServiceProvider
 {
@@ -47,7 +48,7 @@ class CausewayServiceProvider extends ServiceProvider
      */
     protected $listen = [
         CausewayRegistered::class => [
-            AccountVerificationNotification::class . '@handle',
+            AccountVerificationNotification::class.'@handle',
         ],
     ];
 
@@ -58,9 +59,6 @@ class CausewayServiceProvider extends ServiceProvider
      */
     protected $policies = [];
 
-    /**
-     *
-     */
     public function boot()
     {
         View::composer(
@@ -81,36 +79,36 @@ class CausewayServiceProvider extends ServiceProvider
     }
 
     /**
-     * Configuration
+     * Configuration.
      */
     public function getConfiguration()
     {
         $this->registerHelpers();
-        $packageRootDir = __DIR__ . '/../..';
-        $packageWorkingDir = __DIR__ . '/..';
+        $packageRootDir = __DIR__.'/../..';
+        $packageWorkingDir = __DIR__.'/..';
 
-        $this->mergeConfigFrom($packageRootDir . '/config/causeway.php', 'causeway');
+        $this->mergeConfigFrom($packageRootDir.'/config/causeway.php', 'causeway');
 
         $this->publishes([
-            $packageRootDir . '/assets/compiled' => public_path('vendor/exdeliver/causeway'),
-            $packageWorkingDir . '/Views/site' => $this->app->resourcePath('views/vendor/exdeliver/causeway'),
-            $packageRootDir . '/config/laraberg.php' => config_path('laraberg.php'),
+            $packageRootDir.'/assets/compiled' => public_path('vendor/exdeliver/causeway'),
+            $packageWorkingDir.'/Views/site' => $this->app->resourcePath('views/vendor/exdeliver/causeway'),
+            $packageRootDir.'/config/laraberg.php' => config_path('laraberg.php'),
         ], 'public');
 
         $this->publishes([
-            $packageWorkingDir . '/Views/site' => $this->app->resourcePath('views/vendor/exdeliver/causeway'),
+            $packageWorkingDir.'/Views/site' => $this->app->resourcePath('views/vendor/exdeliver/causeway'),
         ], 'templates');
 
-        $this->loadViewsFrom($packageWorkingDir . '/Views', 'causeway');
+        $this->loadViewsFrom($packageWorkingDir.'/Views', 'causeway');
 
         view()->addNamespace('site', [
             $this->app->resourcePath('views/vendor/exdeliver/causeway'),
-            $packageWorkingDir . '/Views/site',
+            $packageWorkingDir.'/Views/site',
         ]);
 
-        $this->loadTranslationsFrom($packageWorkingDir . '/Lang', 'causeway');
-        $this->loadMigrationsFrom($packageRootDir . '/database/migrations');
-        $this->registerEloquentFactoriesFrom($packageRootDir . '/database/factories');
+        $this->loadTranslationsFrom($packageWorkingDir.'/Lang', 'causeway');
+        $this->loadMigrationsFrom($packageRootDir.'/database/migrations');
+        $this->registerEloquentFactoriesFrom($packageRootDir.'/database/factories');
     }
 
     /**
@@ -118,13 +116,13 @@ class CausewayServiceProvider extends ServiceProvider
      */
     public function registerHelpers()
     {
-        $packageWorkingDir = __DIR__ . '/..';
+        $packageWorkingDir = __DIR__.'/..';
         // Load the helpers in app/Http/helpers.php
-        if (file_exists($packageWorkingDir . '/Helpers/helpers.php')) {
-            include_once($packageWorkingDir . '/Helpers/helpers.php');
+        if (file_exists($packageWorkingDir.'/Helpers/helpers.php')) {
+            include_once $packageWorkingDir.'/Helpers/helpers.php';
         }
-        if (file_exists($packageWorkingDir . '/Helpers/countries.php')) {
-            include_once($packageWorkingDir . '/Helpers/countries.php');
+        if (file_exists($packageWorkingDir.'/Helpers/countries.php')) {
+            include_once $packageWorkingDir.'/Helpers/countries.php';
         }
     }
 
@@ -132,7 +130,6 @@ class CausewayServiceProvider extends ServiceProvider
      * Register factories.
      *
      * @param string $path
-     * @return void
      */
     protected function registerEloquentFactoriesFrom($path)
     {
@@ -166,19 +163,19 @@ class CausewayServiceProvider extends ServiceProvider
      */
     protected function getRoutes()
     {
-        $packageWorkingDir = __DIR__ . '/..';
+        $packageWorkingDir = __DIR__.'/..';
 
         $this->routeModelBindings();
 
         Route::middleware('web')
             ->namespace($this->namespace)
-            ->group($packageWorkingDir . '/Routes/web.php');
+            ->group($packageWorkingDir.'/Routes/web.php');
 
         Route::middleware('api')
             ->namespace($this->namespace)
-            ->group($packageWorkingDir . '/Routes/api.php');
+            ->group($packageWorkingDir.'/Routes/api.php');
 
-        $this->loadRoutesFrom($packageWorkingDir . '/Routes/channels.php');
+        $this->loadRoutesFrom($packageWorkingDir.'/Routes/channels.php');
     }
 
     /**
@@ -249,8 +246,6 @@ class CausewayServiceProvider extends ServiceProvider
 
     /**
      * Register the application's policies.
-     *
-     * @return void
      */
     public function registerPolicies()
     {
@@ -260,7 +255,7 @@ class CausewayServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register method
+     * Register method.
      */
     public function register()
     {
@@ -269,23 +264,23 @@ class CausewayServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register dependencies
+     * Register dependencies.
      */
     public function registerDependencies()
     {
-        /**
+        /*
          * Register ServiceProviders
          */
-        $this->app->register(\OwenIt\Auditing\AuditingServiceProvider::class);
+        $this->app->register(AuditingServiceProvider::class);
         /*
         * Create aliases for the dependency.
         */
-        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        $loader->alias('PDF', \Barryvdh\Snappy\Facades\SnappyPdf::class);
+        $loader = AliasLoader::getInstance();
+        $loader->alias('PDF', SnappyPdf::class);
     }
 
     /**
-     * Registered middleware
+     * Registered middleware.
      */
     protected function registerMiddleware()
     {

@@ -5,10 +5,10 @@ namespace Exdeliver\Causeway\Domain\Entities\Forum;
 use Exdeliver\Causeway\Domain\Common\Entity;
 use Exdeliver\Causeway\Domain\Entities\Comment\CommentTrait;
 use Exdeliver\Causeway\Domain\Entities\User\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class Thread
- * @package Domain\Entities\Forum
+ * Class Thread.
  */
 class Thread extends Entity
 {
@@ -25,15 +25,15 @@ class Thread extends Entity
     protected $guarded = [];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function user()
     {

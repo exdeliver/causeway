@@ -2,14 +2,15 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
+use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use stdClass;
 
 /**
- * Class UploadService
- * @package Domain\Services
+ * Class UploadService.
  */
 final class UploadService extends AbstractService
 {
@@ -35,7 +36,7 @@ final class UploadService extends AbstractService
         $uploadPaths[] = $this->uploadPhotoPath;
 
         foreach ($this->imageSizes as $imageSize) {
-            $uploadPaths[] = $this->uploadPhotoPath . '/' . $imageSize;
+            $uploadPaths[] = $this->uploadPhotoPath.'/'.$imageSize;
         }
 
         $this->checkExistingFolders($uploadPaths);
@@ -51,9 +52,9 @@ final class UploadService extends AbstractService
         foreach ($paths as $path) {
             $path = str_replace(storage_path(), '', $path);
 
-            $path = storage_path('app' . $path);
+            $path = storage_path('app'.$path);
 
-            if (File::exists($path) !== true) {
+            if (true !== File::exists($path)) {
                 File::makeDirectory($path, 0777, true);
             }
         }
@@ -64,23 +65,24 @@ final class UploadService extends AbstractService
      *
      * @param $file
      * @param $path
-     * @return \stdClass
+     *
+     * @return stdClass
      */
-    public function upload(UploadedFile $file, $path = ''): \stdClass
+    public function upload(UploadedFile $file, $path = ''): stdClass
     {
         // Set relative path.
-        $storagePath = storage_path('app/' . $path);
+        $storagePath = storage_path('app/'.$path);
 
-        $storeageFilename = $file->getFilename() . '.' . $file->getClientOriginalExtension();
+        $storeageFilename = $file->getFilename().'.'.$file->getClientOriginalExtension();
         $fullFileName = $file->move($storagePath, $storeageFilename);
-        $fileName = $storagePath . '/' . $storeageFilename;
+        $fileName = $storagePath.'/'.$storeageFilename;
 
-        $uploadObject = new \stdClass();
+        $uploadObject = new stdClass();
         $uploadObject->name = str_replace($path, '', $file->getClientOriginalName());
-        $uploadObject->file_path = $path . '/' . $storeageFilename;
+        $uploadObject->file_path = $path.'/'.$storeageFilename;
         $uploadObject->filename = $fileName;
 
-        $uploadObject->size = round(Storage::size($path . '/' . $storeageFilename) / 1024, 2);
+        $uploadObject->size = round(Storage::size($path.'/'.$storeageFilename) / 1024, 2);
 
         return $uploadObject;
     }
@@ -88,15 +90,16 @@ final class UploadService extends AbstractService
     /**
      * @param $image
      * @param $name
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function resizeImage($image, $name)
     {
         // create instance
-        $image = storage_path('app/' . $image);
+        $image = storage_path('app/'.$image);
 
         if (!File::exists($image)) {
-            throw new \Exception('File not found: ' . $image);
+            throw new Exception('File not found: '.$image);
         }
 
         $img = Image::make($image);
@@ -104,13 +107,13 @@ final class UploadService extends AbstractService
         $path = str_replace($name, '', $image);
 
         foreach ($this->imageSizes as $imageSize) {
-            if (!is_dir($path . $imageSize)) {
-                File::makeDirectory($path . $imageSize, 0777, true);
+            if (!is_dir($path.$imageSize)) {
+                File::makeDirectory($path.$imageSize, 0777, true);
             }
 
             $img->resize($imageSize, null, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($path . $imageSize . '/' . $name);
+            })->save($path.$imageSize.'/'.$name);
         }
     }
 }

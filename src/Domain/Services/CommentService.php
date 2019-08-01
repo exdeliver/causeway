@@ -7,13 +7,13 @@ use Exdeliver\Causeway\Infrastructure\Repositories\CommentRepository;
 use Illuminate\Broadcasting\BroadcastException;
 
 /**
- * Class CommentService
- * @package Domain\Services
+ * Class CommentService.
  */
 final class CommentService extends AbstractService
 {
     /**
      * CommentRepository constructor.
+     *
      * @param CommentRepository $commentRepository
      */
     public function __construct(CommentRepository $commentRepository)
@@ -24,7 +24,8 @@ final class CommentService extends AbstractService
     /**
      * @param $type
      * @param string $id
-     * @param array $data
+     * @param array  $data
+     *
      * @return array
      */
     public function commentSubjectByTypeAndId($type, string $id, array $data)
@@ -38,9 +39,11 @@ final class CommentService extends AbstractService
 
         try {
             event(new CommentNotificationCreated($comment));
+
             return ['status' => true, 'event' => true];
         } catch (BroadcastException $e) {
             report($e);
+
             return ['status' => true, 'event' => false];
         }
     }

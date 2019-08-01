@@ -6,8 +6,7 @@ use Exdeliver\Causeway\Domain\Entities\Shop\Customers\Contact;
 use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
 
 /**
- * Interface Shipping
- * @package Domain\Contracts\Services
+ * Interface Shipping.
  */
 interface Shipping
 {

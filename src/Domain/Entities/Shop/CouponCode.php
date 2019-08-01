@@ -3,10 +3,10 @@
 namespace Exdeliver\Causeway\Domain\Entities\Shop;
 
 use Exdeliver\Causeway\Domain\Common\Entity;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * Class Product
- * @package Exdeliver\Causeway\Domain\Entities\Shop
+ * Class Product.
  */
 class CouponCode extends Entity
 {
@@ -35,7 +35,7 @@ class CouponCode extends Entity
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function categories()
     {
@@ -43,7 +43,7 @@ class CouponCode extends Entity
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function products()
     {
@@ -52,13 +52,15 @@ class CouponCode extends Entity
 
     /**
      * @param $value
+     *
      * @return float|int
      */
     public function setDiscountAmountAttribute($value)
     {
-        if ($this->attributes['discount_type'] === self::FIXED_PRICE_DISCOUNT) {
+        if (self::FIXED_PRICE_DISCOUNT === $this->attributes['discount_type']) {
             return $this->attributes['discount_amount'] = ($value * 100);
         }
+
         return $this->attributes['discount_amount'] = $value;
     }
 }

@@ -3,19 +3,22 @@
 namespace Exdeliver\Causeway\Domain\Services;
 
 use App\Exceptions\RegistrationException;
+use Exception;
 use Exdeliver\Causeway\Domain\Entities\User\User;
 use Exdeliver\Causeway\Events\CausewayRegistered;
 use Exdeliver\Causeway\Infrastructure\Repositories\UserRepository;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Throwable;
 
 /**
- * Class UserService
- *
- * @package Domain\Services
+ * Class UserService.
  */
 final class UserService extends AbstractService
 {
@@ -30,6 +33,7 @@ final class UserService extends AbstractService
 
     /**
      * UserService constructor.
+     *
      * @param UserRepository $userRepository
      */
     public function __construct(UserRepository $userRepository)
@@ -39,32 +43,36 @@ final class UserService extends AbstractService
 
     /**
      * @param int $userId
+     *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function findGroupsByUserId(int $userId)
     {
         try {
             $user = $this->repository->where('id', '=', $userId)->first();
+
             return $user->groups ?? null;
-        } catch (\Exception $e) {
-            throw new \Exception('Could not find user by id: ' . $userId);
+        } catch (Exception $e) {
+            throw new Exception('Could not find user by id: '.$userId);
         }
     }
 
     /**
      * @param array $params
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
     public function login(array $params)
     {
         $json = request()->wantsJson();
 
         if (Auth::attempt($params)) {
-            return $json === true ? response()->json(['status' => true, 'redirect_url' => route('causeway.dashboard')]) : redirect()->route('causeway.dashboard');
+            return true === $json ? response()->json(['status' => true, 'redirect_url' => route('causeway.dashboard')]) : redirect()->route('causeway.dashboard');
         }
 
-        if ($json === true) {
+        if (true === $json) {
             return response()->json([
                 'status' => false, 'errors' => [
                     'email' => ['Invalid email and or password combination.'],
@@ -80,8 +88,10 @@ final class UserService extends AbstractService
 
     /**
      * @param array $params
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Throwable
+     *
+     * @return RedirectResponse|Redirector
+     *
+     * @throws Throwable
      */
     public function register(array $params)
     {
@@ -101,9 +111,10 @@ final class UserService extends AbstractService
                 return $user;
             });
 
-            return response()->json(['status' => true, 'message' => 'Welcome ' . $user->name]);
+            return response()->json(['status' => true, 'message' => 'Welcome '.$user->name]);
         } catch (RegistrationException $e) {
             report($e);
+
             return response()->json([
                 'status' => false, 'errors' => [
                     'email' => ['Could not register this user.'],
@@ -113,7 +124,7 @@ final class UserService extends AbstractService
     }
 
     /**
-     * @param array $match
+     * @param array   $match
      * @param Request $request
      */
     public function updateOrCreateWithRoles(array $match, Request $request)

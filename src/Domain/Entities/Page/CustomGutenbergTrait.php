@@ -10,14 +10,14 @@ use VanOns\Laraberg\Models\Content;
 use VanOns\Laraberg\Models\Content as LaContent;
 
 /**
- * Trait CustomGutenbergTrait
- * @package Exdeliver\Causeway\Domain\Entities\Page
+ * Trait CustomGutenbergTrait.
  */
 trait CustomGutenbergTrait
 {
     /**
-     * Returns the rendered HTML from the Content object
-     * @return String
+     * Returns the rendered HTML from the Content object.
+     *
+     * @return string
      */
     public function renderContent()
     {
@@ -25,8 +25,9 @@ trait CustomGutenbergTrait
     }
 
     /**
-     * Returns the raw content that came out of Gutenberg
-     * @return String
+     * Returns the raw content that came out of Gutenberg.
+     *
+     * @return string
      */
     public function getRawContent()
     {
@@ -34,8 +35,9 @@ trait CustomGutenbergTrait
     }
 
     /**
-     * Returns the Gutenberg content with some initial rendering done to it
-     * @return String
+     * Returns the Gutenberg content with some initial rendering done to it.
+     *
+     * @return string
      */
     public function getRenderedContent()
     {
@@ -48,13 +50,15 @@ trait CustomGutenbergTrait
     public function transform()
     {
         $html = BlockHelper::renderBlocks(EmbedHelper::renderEmbeds($this->content));
+
         return "<div class='gutenberg__content wp-embed-responsive'>$html</div>";
     }
 
     /**
-     * Sets the content object using the raw editor content
-     * @param String $content
-     * @param String $save - Calls .save() on the Content object if true
+     * Sets the content object using the raw editor content.
+     *
+     * @param string $content
+     * @param string $save    - Calls .save() on the Content object if true
      */
     public function setContent($content, $save = false)
     {
@@ -70,11 +74,11 @@ trait CustomGutenbergTrait
     }
 
     /**
-     * Creates a content object and associates it with the parent object
+     * Creates a content object and associates it with the parent object.
      */
     private function createContent()
     {
-        $content = new Content;
+        $content = new Content();
         $this->body()->save($content);
         $this->body = $content;
         event(new ContentCreated($content));

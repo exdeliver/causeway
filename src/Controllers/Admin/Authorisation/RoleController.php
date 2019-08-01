@@ -2,11 +2,13 @@
 
 namespace Exdeliver\Causeway\Controllers\Admin\Authorisation;
 
+use Exception;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Services\RoleService;
 use Exdeliver\Causeway\Domain\Services\UserService;
 use Exdeliver\Causeway\Requests\PostAdminRoleRequest;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Permission;
@@ -14,8 +16,7 @@ use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 
 /**
- * Class RoleController
- * @package Exdeliver\Causeway\Controllers\Admin\Authorisation
+ * Class RoleController.
  */
 class RoleController extends Controller
 {
@@ -24,6 +25,7 @@ class RoleController extends Controller
 
     /**
      * UserController constructor.
+     *
      * @param RoleService $roleService
      */
     public function __construct(RoleService $roleService)
@@ -45,6 +47,7 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = Permissions::get();
+
         return view('causeway::admin.authorisation.roles.new', [
             'permissions' => $permissions,
         ]);
@@ -52,7 +55,8 @@ class RoleController extends Controller
 
     /**
      * @param Request $request
-     * @param Role $role
+     * @param Role    $role
+     *
      * @return Factory|View
      */
     public function edit(Request $request, Role $role)
@@ -67,8 +71,9 @@ class RoleController extends Controller
 
     /**
      * @param PostAdminRoleRequest $request
-     * @param Role $role
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Role                 $role
+     *
+     * @return RedirectResponse
      */
     public function update(PostAdminRoleRequest $request, Role $role)
     {
@@ -77,8 +82,9 @@ class RoleController extends Controller
 
     /**
      * @param PostAdminRoleRequest $request
-     * @param Role|null $role
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Role|null            $role
+     *
+     * @return RedirectResponse
      */
     public function store(PostAdminRoleRequest $request, Role $role = null)
     {
@@ -86,7 +92,7 @@ class RoleController extends Controller
             'id' => $role->id ?? null,
         ], $request);
 
-        $request->session()->flash('status', isset($role->id) && $role->id !== null ? 'Role has successfully been updated!' : 'Role has successfully been created!');
+        $request->session()->flash('status', isset($role->id) && null !== $role->id ? 'Role has successfully been updated!' : 'Role has successfully been created!');
 
         return redirect()
             ->route('admin.authorisation.role.index');
@@ -96,7 +102,8 @@ class RoleController extends Controller
      * Get Datatables.
      *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function getAjaxRoles()
     {
@@ -107,12 +114,12 @@ class RoleController extends Controller
                 return $row->name;
             })
             ->addColumn('manage', function (Role $row) {
-                $roleRemoval = $row->name !== 'admin' ? '<form action="' . route('admin.authorisation.role.remove', ['id' => $row->id]) . '" method="post" class="delete-inline">
-                            ' . method_field('DELETE') . csrf_field() . '
+                $roleRemoval = 'admin' !== $row->name ? '<form action="'.route('admin.authorisation.role.remove', ['id' => $row->id]).'" method="post" class="delete-inline">
+                            '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>' : '';
 
-                return '<a href="' . route('admin.authorisation.role.update', ['id' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>' .
+                return '<a href="'.route('admin.authorisation.role.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
                     $roleRemoval;
             })
             ->rawColumns(['name', 'email', 'role', 'manage'])
@@ -121,9 +128,11 @@ class RoleController extends Controller
 
     /**
      * @param Request $request
-     * @param Role $role
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @param Role    $role
+     *
+     * @return RedirectResponse
+     *
+     * @throws Exception
      */
     public function destroy(Request $request, Role $role)
     {

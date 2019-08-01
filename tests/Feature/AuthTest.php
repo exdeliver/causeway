@@ -68,7 +68,7 @@ class AuthTest extends TestCase
         // False password
         $response = $this->post(route('causeway.login'), [
             'email' => $user->email,
-            'password' => $password . '123',
+            'password' => $password.'123',
         ]);
 
         $response->assertJson(['status' => false]);

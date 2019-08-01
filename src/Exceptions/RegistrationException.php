@@ -6,18 +6,15 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 
 /**
- * Class RegistrationException
- * @package App\Exceptions
+ * Class RegistrationException.
  */
 class RegistrationException extends Exception
 {
     /**
      * Report or log an exception.
-     *
-     * @return void
      */
     public function report()
     {
-        Log::debug('Could not register user. Error: ' . $this->getMessage());
+        Log::debug('Could not register user. Error: '.$this->getMessage());
     }
 }

@@ -8,8 +8,6 @@ class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -17,7 +15,7 @@ class CreateCommentsTable extends Migration
             $table->increments('id');
             $table->uuid('commentable_id');
             $table->string('commentable_type');
-            $table->index(["commentable_type", "commentable_id"]);
+            $table->index(['commentable_type', 'commentable_id']);
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                 ->references('id')
@@ -30,8 +28,6 @@ class CreateCommentsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

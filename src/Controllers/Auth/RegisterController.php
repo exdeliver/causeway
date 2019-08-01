@@ -5,6 +5,10 @@ namespace Exdeliver\Causeway\Controllers\Auth;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Services\UserService;
 use Exdeliver\Causeway\Requests\PostRegisterRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Throwable;
 
 class RegisterController extends Controller
 {
@@ -38,7 +42,7 @@ class RegisterController extends Controller
     /**
      * Show the application registration form.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function showRegistrationForm()
     {
@@ -49,8 +53,10 @@ class RegisterController extends Controller
      * Handle a registration request for the application.
      *
      * @param PostRegisterRequest $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Throwable
+     *
+     * @return RedirectResponse|Redirector
+     *
+     * @throws Throwable
      */
     public function register(PostRegisterRequest $request)
     {

@@ -8,12 +8,12 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Class OrderNotificationMail
- * @package Exdeliver\Causeway\Notifications
+ * Class OrderNotificationMail.
  */
 class OrderNotificationMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * @var Order
@@ -42,13 +42,14 @@ class OrderNotificationMail extends Mailable
                 'customer' => $this->order->customer->primaryContact(),
                 'order' => $this->order,
             ])
-            ->subject(__('Thank you for your order - ' . config('app.name')));
+            ->subject(__('Thank you for your order - '.config('app.name')));
     }
 
     /**
      * Get the notification's delivery channels.
      *
      * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable): array

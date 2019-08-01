@@ -5,8 +5,7 @@ namespace Exdeliver\Causeway\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class PostShopCategoryRequest
- * @package Exdeliver\Causeway\Requests
+ * Class PostShopCategoryRequest.
  */
 class PostShopCategoryRequest extends FormRequest
 {

@@ -3,10 +3,10 @@
 namespace Exdeliver\Causeway\Domain\Entities\Shop\ProductVariants;
 
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class VariantValue
- * @package Exdeliver\Causeway\Domain\Entities\Shop
+ * Class VariantValue.
  */
 class VariantValue extends AggregateRoot
 {
@@ -26,7 +26,7 @@ class VariantValue extends AggregateRoot
     protected $guarded = [];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function variant()
     {

@@ -2,6 +2,7 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
+use Exception;
 use Exdeliver\Causeway\Domain\Entities\Group\Group;
 use Exdeliver\Causeway\Domain\Entities\Group\GroupUser;
 use Exdeliver\Causeway\Infrastructure\Repositories\GroupRepository;
@@ -9,13 +10,13 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 /**
- * Class GroupService
- * @package Domain\Services
+ * Class GroupService.
  */
 final class GroupService extends AbstractService
 {
     /**
      * GroupService constructor.
+     *
      * @param GroupRepository $groupRepository
      */
     public function __construct(GroupRepository $groupRepository)
@@ -26,8 +27,10 @@ final class GroupService extends AbstractService
     /**
      * @param array $users
      * @param Group $group
+     *
      * @return bool
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function addUsersToGroup(array $users, Group $group): bool
     {
@@ -37,6 +40,7 @@ final class GroupService extends AbstractService
                 if (!$group->findUserInGroup($user['user_id'])) {
                     return true;
                 }
+
                 return false;
             })->each(function ($user) use ($group) {
                 GroupUser::create([
@@ -51,29 +55,32 @@ final class GroupService extends AbstractService
             });
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             dd($e->getTraceAsString());
-            throw new \Exception('Could not add user to group');
+            throw new Exception('Could not add user to group');
         }
     }
 
     /**
-     * @param array $params
+     * @param array    $params
      * @param int|null $id
+     *
      * @return Group
      */
     public function saveGroup(array $params, int $id = null): PandaGroup
     {
-        if ($id !== null) {
+        if (null !== $id) {
             return $this->update($id, $params);
         } else {
             $params['uuid'] = Str::uuid();
+
             return $this->create($params);
         }
     }
 
     /**
      * @param $label
+     *
      * @return mixed
      */
     public function getGroupByLabel($label)
@@ -84,6 +91,7 @@ final class GroupService extends AbstractService
     /**
      * @param $label
      * @param $uuid
+     *
      * @return mixed
      */
     public function getGroupByLabelAndUuid($label, $uuid)
@@ -93,13 +101,14 @@ final class GroupService extends AbstractService
 
     /**
      * @param $label
+     *
      * @return mixed|void
      */
     public function getGroupByLabelAndAuthenticatedUser($label)
     {
         $group = $this->repository->getGroupByLabel($label)->firstOrFail();
 
-        if ($group->findUserById(auth()->user()->id) === false) {
+        if (false === $group->findUserById(auth()->user()->id)) {
             return abort(404);
         }
 
@@ -116,7 +125,8 @@ final class GroupService extends AbstractService
 
     /**
      * @param PandaGroup $group
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function deleteGroupAndUsers(PandaGroup $group): void
     {
@@ -141,7 +151,7 @@ final class GroupService extends AbstractService
     }
 
     /**
-     * @param int $userId
+     * @param int        $userId
      * @param Collection $groups
      */
     public function clearPointsByUser(int $userId, Collection $groups): void

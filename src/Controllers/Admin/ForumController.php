@@ -2,16 +2,19 @@
 
 namespace Exdeliver\Causeway\Controllers\Admin;
 
+use Exception;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Forum\Category;
 use Exdeliver\Causeway\Domain\Services\ForumService;
 use Exdeliver\Causeway\Requests\PostForumCategoryRequest;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Yajra\DataTables\Facades\DataTables;
 
 /**
- * Class MenuController
- * @package Exdeliver\Causeway\Controllers\Admin
+ * Class MenuController.
  */
 class ForumController extends Controller
 {
@@ -20,6 +23,7 @@ class ForumController extends Controller
 
     /**
      * EventController constructor.
+     *
      * @param ForumService $forumService
      */
     public function __construct(ForumService $forumService)
@@ -28,7 +32,7 @@ class ForumController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {
@@ -36,7 +40,7 @@ class ForumController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create()
     {
@@ -46,9 +50,10 @@ class ForumController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Category $forum
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @return Factory|View
      */
     public function edit(Request $request, Category $forum)
     {
@@ -60,8 +65,9 @@ class ForumController extends Controller
 
     /**
      * @param PostForumCategoryRequest $request
-     * @param Category $forum
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Category                 $forum
+     *
+     * @return RedirectResponse
      */
     public function update(PostForumCategoryRequest $request, Category $forum)
     {
@@ -70,8 +76,9 @@ class ForumController extends Controller
 
     /**
      * @param PostForumCategoryRequest $request
-     * @param Category|null $forum
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Category|null            $forum
+     *
+     * @return RedirectResponse
      */
     public function store(PostForumCategoryRequest $request, Category $forum = null)
     {
@@ -85,17 +92,19 @@ class ForumController extends Controller
             'sequence',
         ]));
 
-        $request->session()->flash('status', isset($forum->id) && $forum->id !== null ? 'Category has successfully been updated!' : 'Category has successfully been created!');
+        $request->session()->flash('status', isset($forum->id) && null !== $forum->id ? 'Category has successfully been updated!' : 'Category has successfully been created!');
 
         return redirect()
             ->route('admin.forum.index');
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Category $forum
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     *
+     * @return RedirectResponse
+     *
+     * @throws Exception
      */
     public function destroy(Request $request, Category $forum)
     {
@@ -109,9 +118,10 @@ class ForumController extends Controller
      * Move categories to order by direction buttons.
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @return RedirectResponse
      */
-    public function sortCategory(Request $request): \Illuminate\Http\RedirectResponse
+    public function sortCategory(Request $request): RedirectResponse
     {
         if (!isset($request->direction, $request->category)) {
             return abort(404, 'Invalid...');
@@ -129,7 +139,8 @@ class ForumController extends Controller
      * Get Datatables.
      *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function getAjaxCategories()
     {
@@ -142,21 +153,21 @@ class ForumController extends Controller
             ->addColumn('subcategory', function ($row) {
                 $html = '<ul class="list-group sortableNav">';
                 foreach ($row->children as $child) {
-                    $html .= '<li class="list-group-item list-group-item-action" id="item-' . $child->id . '"><span>' . $child->title . '</span>';
+                    $html .= '<li class="list-group-item list-group-item-action" id="item-'.$child->id.'"><span>'.$child->title.'</span>';
                     $html .= '<div class="pull-right">
                                 <ul class="up-down-chevron-btns">';
                     if (!isset($child->sequence) || $row->children()->min('sequence') !== $child->sequence) {
-                        $html .= '<li><a href="' . route('admin.forum.index.sort', ['category' => $child->id, 'direction' => 'up']) . '"><i class="fa fa-chevron-up"></i></a></li>';
+                        $html .= '<li><a href="'.route('admin.forum.index.sort', ['category' => $child->id, 'direction' => 'up']).'"><i class="fa fa-chevron-up"></i></a></li>';
                     }
                     if (!isset($child->sequence) || $row->children()->max('sequence') !== $child->sequence) {
-                        $html .= '<li><a href="' . route('admin.forum.index.sort', ['category' => $child->id, 'direction' => 'down']) . '"><i class="fa fa-chevron-down"></i></a></li>';
+                        $html .= '<li><a href="'.route('admin.forum.index.sort', ['category' => $child->id, 'direction' => 'down']).'"><i class="fa fa-chevron-down"></i></a></li>';
                     }
                     $html .= '</ul>
                                 </div>
                                 <div class="pull-right">
-                                <a href="' . route('admin.forum.update', ['id' => $child->id]) . '" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="' . route('admin.forum.remove', ['id' => $child->id]) . '" method="DELETE" class="delete-inline">
-                            ' . method_field('DELETE') . csrf_field() . '
+                                <a href="'.route('admin.forum.update', ['id' => $child->id]).'" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="'.route('admin.forum.remove', ['id' => $child->id]).'" method="DELETE" class="delete-inline">
+                            '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>
                                 </div>';
@@ -168,9 +179,9 @@ class ForumController extends Controller
                 return $html;
             })
             ->addColumn('manage', function ($row) {
-                return '<a href="' . route('admin.forum.update', ['id' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="' . route('admin.forum.remove', ['id' => $row->id]) . '" method="post" class="delete-inline">
-                            ' . method_field('DELETE') . csrf_field() . '
+                return '<a href="'.route('admin.forum.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="'.route('admin.forum.remove', ['id' => $row->id]).'" method="post" class="delete-inline">
+                            '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>
                         ';

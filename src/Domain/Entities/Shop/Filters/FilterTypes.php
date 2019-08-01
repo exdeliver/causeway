@@ -3,8 +3,7 @@
 namespace Exdeliver\Causeway\Domain\Entities\Shop\Filters;
 
 /**
- * Class FilterTypes
- * @package Exdeliver\Causeway\Domain\Entities\Shop\Filters
+ * Class FilterTypes.
  */
 class FilterTypes
 {

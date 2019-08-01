@@ -1,22 +1,21 @@
 <?php
 
+use Exdeliver\Causeway\Domain\Entities\Menu\Menu;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class UpdatePagesTable
+ * Class UpdatePagesTable.
  */
 class AddSiteMenuToMenuTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         $name = 'Site menu';
 
-        \Exdeliver\Causeway\Domain\Entities\Menu\Menu::firstOrCreate([
+        Menu::firstOrCreate([
             'label' => $name,
             'name' => str_slug($name),
         ]);
@@ -24,8 +23,6 @@ class AddSiteMenuToMenuTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

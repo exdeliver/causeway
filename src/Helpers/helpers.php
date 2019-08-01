@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 if (!function_exists('inputOld')) {
     function inputOld($name, $model = null)
     {
@@ -22,8 +24,9 @@ if (!function_exists('cmsDate')) {
     function cmsDateTime($value, $format = 'j M Y H:i')
     {
         if (isset($value) && !empty($value)) {
-            return \Carbon\Carbon::parse($value)->format($format);
+            return Carbon::parse($value)->format($format);
         }
+
         return null;
     }
 }
@@ -32,10 +35,10 @@ if (!function_exists('recursiveRequireFilesScanDir')) {
     function recursiveRequireFilesScanDir($target)
     {
         if (is_dir($target)) {
-            $files = glob($target . '*', GLOB_MARK);
+            $files = glob($target.'*', GLOB_MARK);
             foreach ($files as $file) {
                 if (!is_dir($file)) {
-                    include_once(__DIR__ . '/' . $file);
+                    include_once __DIR__.'/'.$file;
                 } else {
                     recursiveRequireFilesScanDir($file);
                 }
@@ -47,7 +50,7 @@ if (!function_exists('recursiveRequireFilesScanDir')) {
 if (!function_exists('causewayAsset')) {
     function causewayAsset($path)
     {
-        return asset('vendor/exdeliver/causeway' . '/' . $path);
+        return asset('vendor/exdeliver/causeway'.'/'.$path);
     }
 }
 
@@ -64,18 +67,18 @@ if (!function_exists('causewayVatPercentages')) {
         try {
             $vats = json_decode(config('causeway.vat_percentages'), true);
             if (!is_array($vats)) {
-                throw new \Exception('Error VATS configuration in .env or config file.');
+                throw new Exception('Error VATS configuration in .env or config file.');
             } else {
                 foreach ($vats as $key => $value) {
-                    if (!is_float((float)$key)) {
-                        throw new \Exception('Error VATS configuration in .env or config file. Key should be float.');
+                    if (!is_float((float) $key)) {
+                        throw new Exception('Error VATS configuration in .env or config file. Key should be float.');
                     }
                 }
             }
-            return $vats;
 
-        } catch (\Exception $e) {
-            throw new \Exception('Error VATS configuration in .env or config file.');
+            return $vats;
+        } catch (Exception $e) {
+            throw new Exception('Error VATS configuration in .env or config file.');
         }
     }
 }
@@ -88,6 +91,7 @@ if (!function_exists('orderedArray')) {
             $objectModel->subs = orderedArray($objectModel->children, $objectModel['id']);
             $temp_array[] = $objectModel->toArray();
         }
+
         return $temp_array;
     }
 }
@@ -95,7 +99,7 @@ if (!function_exists('orderedArray')) {
 if (!function_exists('causewayDate')) {
     function causewayDate(string $value = null, string $format = 'j M Y')
     {
-        return $value !== null ? \Carbon\Carbon::parse($value)->format($format) : '';
+        return null !== $value ? Carbon::parse($value)->format($format) : '';
     }
 }
 
@@ -119,6 +123,7 @@ if (!function_exists('generateArrayCombinations')) {
             }
             $combination = $temporaryResult;
         }
+
         return $combination;
     }
 }

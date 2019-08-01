@@ -7,10 +7,10 @@ use Carbon\Carbon;
 use Exdeliver\Causeway\Domain\Entities\Forum\Thread;
 use Exdeliver\Causeway\Domain\Services\CommentService;
 use Exdeliver\Causeway\Requests\PostCommentRequest;
+use Illuminate\Http\RedirectResponse;
 
 /**
- * Class CommentController
- * @package Exdeliver\Causeway\Controllers\
+ * Class CommentController.
  */
 class CommentController extends Controller
 {
@@ -21,6 +21,7 @@ class CommentController extends Controller
 
     /**
      * CommentController constructor.
+     *
      * @param CommentService $commentService
      */
     public function __construct(CommentService $commentService)
@@ -30,9 +31,10 @@ class CommentController extends Controller
 
     /**
      * @param PostCommentRequest $request
-     * @param string $type
-     * @param string $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @param string             $type
+     * @param string             $id
+     *
+     * @return RedirectResponse
      */
     public function comment(PostCommentRequest $request, string $type, string $id)
     {
@@ -41,7 +43,7 @@ class CommentController extends Controller
                 $notification = Notification::where('id', $id)->firstOrFail();
                 $result = auth()->user()->commentOn($notification, $id, [
                     'comment' => clean($request->comment),
-                    'profile_picture' => '/images/' . auth()->user()->profile_picture,
+                    'profile_picture' => '/images/'.auth()->user()->profile_picture,
                     'name' => auth()->user()->name,
                 ]);
                 break;
@@ -56,7 +58,7 @@ class CommentController extends Controller
                 $result = auth()->user()->commentOn($thread, $id, [
                     'comment' => $request->comment,
                     'formatted_date' => Carbon::now()->diffForHumans(),
-                    'profile_picture' => '/images/' . auth()->user()->profile_picture,
+                    'profile_picture' => '/images/'.auth()->user()->profile_picture,
                     'name' => auth()->user()->name,
                 ]);
                 break;

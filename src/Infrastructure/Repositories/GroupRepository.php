@@ -5,13 +5,13 @@ namespace Exdeliver\Causeway\Infrastructure\Repositories;
 use Exdeliver\Causeway\Domain\Entities\Group\Group;
 
 /**
- * Class GroupRepository
- * @package Exdeliver\Causeway\Infrastructure\Repositories
+ * Class GroupRepository.
  */
 class GroupRepository extends AbstractRepository
 {
     /**
      * GroupRepository constructor.
+     *
      * @param Group $model
      */
     public function __construct(Group $model)
@@ -21,11 +21,13 @@ class GroupRepository extends AbstractRepository
 
     /**
      * @param string $label
+     *
      * @return $this
      */
     public function getGroupByLabel(string $label): self
     {
         $this->model = $this->model->where('label', '=', $label);
+
         return $this;
     }
 
@@ -46,11 +48,13 @@ class GroupRepository extends AbstractRepository
 
     /**
      * @param string $uuid
+     *
      * @return GroupRepository
      */
     public function findByUuid(string $uuid): self
     {
         $this->model = $this->model->where('uuid', $uuid);
+
         return $this;
     }
 }

@@ -5,8 +5,7 @@ namespace Exdeliver\Causeway\Controllers\Admin\Authorisation;
 use Exdeliver\Causeway\Controllers\Controller;
 
 /**
- * Class PermissionController
- * @package Exdeliver\Causeway\Controllers\Admin\Authorisation
+ * Class PermissionController.
  */
 class PermissionController extends Controller
 {

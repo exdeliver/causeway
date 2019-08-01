@@ -15,12 +15,12 @@
                 <li><a href="{{ route('admin.menu.create') }}" class="list-group-item"><i class="fa fa-list-ul"></i> <span>New menu</span></a></li>
             </ul>
         </li>
-        <li><a href="{{ route('admin.shop.dashboard') }}" class="list-group-item {{ (request()->is('admin/shop*'))? 'active' :'' }}"><i class="fa fa-shopping-cart"></i> <span>Webshop</span></a>
+        <li><a href="#" class="list-group-item {{ (request()->is('admin/shop*'))? 'active' :'' }}"><i class="fa fa-shopping-cart"></i> <span>Webshop</span></a>
             <ul class="submenu" style="display: {{ (request()->is('admin/photo/album/new'))? 'block' :'' }};">
                 <li><a href="{{ route('admin.shop.order.index') }}" class="list-group-item"><i class="fa fa-euro"></i> <span>Sales</span></a></li>
                 <li><a href="{{ route('admin.shop.product.index') }}" class="list-group-item"><i class="fa fa-book"></i> <span>Products</span></a></li>
                 <li><a href="{{ route('admin.shop.category.index') }}" class="list-group-item"><i class="fa fa-bandcamp"></i> <span>Categories</span></a></li>
-                <li><a href="{{ route('admin.shop.customer.index') }}" class="list-group-item"><i class="fa fa-address-book"></i> <span>Customers</span></a></li>
+{{--                <li><a href="{{ route('admin.shop.customer.index') }}" class="list-group-item"><i class="fa fa-address-book"></i> <span>Customers</span></a></li>--}}
                 <li><a href="{{ route('admin.shop.couponcode.index') }}" class="list-group-item"><i class="fa fa-ticket"></i> <span>Coupon codes</span></a></li>
                 <li><a href="{{ route('admin.shop.shipping-method.index') }}" class="list-group-item"><i class="fa fa-envelope"></i> <span>Shipping methods</span></a></li>
             </ul>

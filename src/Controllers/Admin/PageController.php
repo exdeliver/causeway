@@ -2,16 +2,18 @@
 
 namespace Exdeliver\Causeway\Controllers\Admin;
 
+use Exception;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Page\Page;
 use Exdeliver\Causeway\Domain\Services\PageService;
 use Exdeliver\Causeway\Requests\PostPageRequest;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Yajra\DataTables\Facades\DataTables;
 
-/**
- *
- */
 class PageController extends Controller
 {
     /**
@@ -21,6 +23,7 @@ class PageController extends Controller
 
     /**
      * PageController constructor.
+     *
      * @param PageService $pageService
      */
     public function __construct(PageService $pageService)
@@ -29,7 +32,7 @@ class PageController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {
@@ -37,7 +40,7 @@ class PageController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create()
     {
@@ -46,8 +49,9 @@ class PageController extends Controller
 
     /**
      * @param Request $request
-     * @param Page $page
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Page    $page
+     *
+     * @return Factory|View
      */
     public function edit(Request $request, Page $page)
     {
@@ -60,8 +64,9 @@ class PageController extends Controller
 
     /**
      * @param PostPageRequest $request
-     * @param Page $page
-     * @return \Illuminate\Database\Eloquent\Model
+     * @param Page            $page
+     *
+     * @return Model
      */
     public function update(PostPageRequest $request, Page $page)
     {
@@ -70,17 +75,18 @@ class PageController extends Controller
 
     /**
      * @param PostPageRequest $request
-     * @param Page|null $page
-     * @return \Illuminate\Database\Eloquent\Model
+     * @param Page|null       $page
+     *
+     * @return Model
      */
     public function store(PostPageRequest $request, Page $page = null)
     {
         $savedPage = $this->pageService->savePage($request, $page->id ?? null);
 
-        if($page !== null) {
-            $message = 'Page ' . $savedPage->name . ' updated';
-        }else{
-            $message = 'Page ' . $savedPage->name . ' created';
+        if (null !== $page) {
+            $message = 'Page '.$savedPage->name.' updated';
+        } else {
+            $message = 'Page '.$savedPage->name.' created';
         }
         $request->session()->flash('status', $message);
 
@@ -90,13 +96,16 @@ class PageController extends Controller
 
     /**
      * @param Request $request
-     * @param Page $page
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @param Page    $page
+     *
+     * @return RedirectResponse
+     *
+     * @throws Exception
      */
     public function destroy(Request $request, Page $page)
     {
         $page->delete();
+
         return redirect()->back();
     }
 
@@ -104,7 +113,8 @@ class PageController extends Controller
      * Get Datatables.
      *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function getAjaxPages()
     {
@@ -112,7 +122,7 @@ class PageController extends Controller
 
         return Datatables::of($pages)
             ->addColumn('name', function ($row) {
-                return '<a href="' . url($row->slug ?? '/') . '" target="_blank">' . $row->name . ' <i class="fa fa-external-link"></i></a>';
+                return '<a href="'.url($row->slug ?? '/').'" target="_blank">'.$row->name.' <i class="fa fa-external-link"></i></a>';
             })
             ->addColumn('url', function ($row) {
                 return $row->slug;
@@ -121,9 +131,9 @@ class PageController extends Controller
                 return $row->access_level;
             })
             ->addColumn('manage', function ($row) {
-                return '<a href="' . route('admin.pages.update', ['id' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="' . route('admin.pages.destroy', ['id' => $row->id]) . '" class="delete-inline" method="post">
-                            ' . method_field('DELETE') . csrf_field() . '
+                return '<a href="'.route('admin.pages.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="'.route('admin.pages.destroy', ['id' => $row->id]).'" class="delete-inline" method="post">
+                            '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>
                         ';

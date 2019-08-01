@@ -5,13 +5,13 @@ namespace Exdeliver\Causeway\Infrastructure\Repositories;
 use Exdeliver\Causeway\Domain\Entities\Sound\Sound;
 
 /**
- * Class SoundRepository
- * @package Exdeliver\Causeway\Infrastructure\Repositories
+ * Class SoundRepository.
  */
 class SoundRepository extends AbstractRepository
 {
     /**
      * PageRepository constructor.
+     *
      * @param Sound $model
      */
     public function __construct(Sound $model)

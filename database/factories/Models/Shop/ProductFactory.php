@@ -1,8 +1,9 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-
+/** @var Factory $factory */
+use Exdeliver\Causeway\Domain\Entities\Shop\Product;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factory;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +16,11 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(\Exdeliver\Causeway\Domain\Entities\Shop\Product::class, function (Faker $faker) {
+$factory->define(Product::class, function (Faker $faker) {
     return [
         'title' => $faker->name,
         'slug' => $faker->name,
-        'type' => \Exdeliver\Causeway\Domain\Entities\Shop\Product::REGULAR_PRODUCT['type'],
+        'type' => Product::REGULAR_PRODUCT['type'],
         'active' => 1,
         'weight' => '1KG',
         'description' => $faker->paragraph,

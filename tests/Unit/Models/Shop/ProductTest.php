@@ -2,7 +2,6 @@
 
 namespace Exdeliver\Causeway\Tests\Unit;
 
-use Exdeliver\Causeway\Domain\Entities\Page\Page;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
 use Exdeliver\Causeway\Tests\TestCase;
 use Faker\Factory;
@@ -26,7 +25,7 @@ class ProductTest extends TestCase
         $this->assertEquals($product->slug, str_slug($title));
 
         // start iterating by 1 because slugs wont be ever - 0
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 5; ++$i) {
             $product = factory(Product::class)->create([
                 'title' => $title,
                 'slug' => str_slug($title),
@@ -36,7 +35,7 @@ class ProductTest extends TestCase
             $product->slug = str_slug($title);
             $product->save();
 
-            $this->assertEquals($product->slug, str_slug($title) . '-' . ($i + 1));
+            $this->assertEquals($product->slug, str_slug($title).'-'.($i + 1));
         }
     }
 }

@@ -2,18 +2,21 @@
 
 namespace Exdeliver\Causeway\Controllers\Admin;
 
+use Exception;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Menu\Menu;
 use Exdeliver\Causeway\Domain\Entities\Menu\MenuItem;
 use Exdeliver\Causeway\Domain\Services\MenuService;
 use Exdeliver\Causeway\Requests\PostMenuItemRequest;
 use Exdeliver\Causeway\Requests\PostMenuRequest;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Yajra\DataTables\Facades\DataTables;
 
 /**
- * Class MenuController
- * @package Exdeliver\Causeway\Controllers\Admin
+ * Class MenuController.
  */
 class MenuController extends Controller
 {
@@ -24,6 +27,7 @@ class MenuController extends Controller
 
     /**
      * MenuController constructor.
+     *
      * @param MenuService $menuService
      */
     public function __construct(MenuService $menuService)
@@ -32,7 +36,7 @@ class MenuController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {
@@ -40,7 +44,7 @@ class MenuController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create()
     {
@@ -49,8 +53,9 @@ class MenuController extends Controller
 
     /**
      * @param Request $request
-     * @param Menu $menu
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Menu    $menu
+     *
+     * @return Factory|View
      */
     public function edit(Request $request, Menu $menu)
     {
@@ -61,20 +66,24 @@ class MenuController extends Controller
 
     /**
      * @param Request $request
-     * @param Menu $menu
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @param Menu    $menu
+     *
+     * @return RedirectResponse
+     *
+     * @throws Exception
      */
     public function destroy(Request $request, Menu $menu)
     {
         $menu->delete();
+
         return redirect()->back();
     }
 
     /**
      * @param Request $request
-     * @param Menu $menu
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Menu    $menu
+     *
+     * @return Factory|View
      */
     public function show(Request $request, Menu $menu)
     {
@@ -85,7 +94,7 @@ class MenuController extends Controller
 
     /**
      * @param PostMenuRequest $request
-     * @param Menu $menu
+     * @param Menu            $menu
      */
     public function update(PostMenuRequest $request, Menu $menu)
     {
@@ -94,8 +103,9 @@ class MenuController extends Controller
 
     /**
      * @param PostMenuRequest $request
-     * @param Menu|null $menu
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Menu|null       $menu
+     *
+     * @return RedirectResponse
      */
     public function store(PostMenuRequest $request, Menu $menu = null)
     {
@@ -106,7 +116,7 @@ class MenuController extends Controller
             'label',
         ]));
 
-        $request->session()->flash('status', isset($menu->id) && $menu->id !== null ? 'Menu has successfully been updated!' : 'Menu has successfully been created!');
+        $request->session()->flash('status', isset($menu->id) && null !== $menu->id ? 'Menu has successfully been updated!' : 'Menu has successfully been created!');
 
         return redirect()
             ->route('admin.menu.index');
@@ -114,8 +124,9 @@ class MenuController extends Controller
 
     /**
      * @param Request $request
-     * @param Menu $menu
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Menu    $menu
+     *
+     * @return Factory|View
      */
     public function createItem(Request $request, Menu $menu)
     {
@@ -125,10 +136,11 @@ class MenuController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param Menu $menu
+     * @param Request  $request
+     * @param Menu     $menu
      * @param MenuItem $item
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @return Factory|View
      */
     public function editItem(Request $request, Menu $menu, MenuItem $item)
     {
@@ -142,9 +154,10 @@ class MenuController extends Controller
 
     /**
      * @param PostMenuItemRequest $request
-     * @param Menu $menu
-     * @param MenuItem $item
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Menu                $menu
+     * @param MenuItem            $item
+     *
+     * @return RedirectResponse
      */
     public function updateItem(PostMenuItemRequest $request, Menu $menu, MenuItem $item)
     {
@@ -153,9 +166,10 @@ class MenuController extends Controller
 
     /**
      * @param PostMenuItemRequest $request
-     * @param Menu $menu
-     * @param MenuItem|null $item
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Menu                $menu
+     * @param MenuItem|null       $item
+     *
+     * @return RedirectResponse
      */
     public function storeItem(PostMenuItemRequest $request, Menu $menu, MenuItem $item = null)
     {
@@ -168,11 +182,13 @@ class MenuController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param Menu $menu
+     * @param Request  $request
+     * @param Menu     $menu
      * @param MenuItem $item
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     *
+     * @return RedirectResponse
+     *
+     * @throws Exception
      */
     public function destroyItem(Request $request, Menu $menu, MenuItem $item)
     {
@@ -183,6 +199,7 @@ class MenuController extends Controller
             }
         }
         $item->delete();
+
         return redirect()->back();
     }
 
@@ -190,7 +207,8 @@ class MenuController extends Controller
      * Get Datatables.
      *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function getAjaxMenu()
     {
@@ -207,15 +225,14 @@ class MenuController extends Controller
                 return count($row->items);
             })
             ->addColumn('manage', function ($row) {
-                $menuRemoval = '<form action="' . route('admin.menu.remove', ['id' => $row->id]) . '" method="post" class="delete-inline">
-                            ' . method_field('DELETE') . csrf_field() . '
+                $menuRemoval = '<form action="'.route('admin.menu.remove', ['id' => $row->id]).'" method="post" class="delete-inline">
+                            '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>';
 
-                return '<a href="' . route('admin.menu.show', ['id' => $row->id]) . '" class="btn btn-sm btn-primary">Manage</a>
-                        <a href="' . route('admin.menu.update', ['id' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>' .
+                return '<a href="'.route('admin.menu.show', ['id' => $row->id]).'" class="btn btn-sm btn-primary">Manage</a>
+                        <a href="'.route('admin.menu.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
                     $menuRemoval;
-
             })
             ->rawColumns(['label', 'name', 'items', 'manage'])
             ->make(true);
@@ -223,7 +240,8 @@ class MenuController extends Controller
 
     /**
      * @param Request $request
-     * @param Menu $menu
+     * @param Menu    $menu
+     *
      * @return false|string
      */
     public function sort(Request $request, Menu $menu)
@@ -232,7 +250,7 @@ class MenuController extends Controller
         $items = json_decode($items);
 
         foreach ($items as $position => $item) {
-            $item = (object)$item;
+            $item = (object) $item;
             if (isset($item->id)) {
                 $condition = MenuItem::where('menu_id', $menu->id)->findOrFail($item->id);
                 $condition->sequence = $item->left;

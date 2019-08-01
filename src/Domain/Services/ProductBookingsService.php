@@ -7,14 +7,14 @@ use Exdeliver\Causeway\Domain\Entities\Shop\Product;
 use Exdeliver\Causeway\Domain\Entities\Shop\ProductBookingDates\BookingDate;
 
 /**
- * Class ProductBookingsService
- * @package Exdeliver\Causeway\Domain\Services
+ * Class ProductBookingsService.
  */
 final class ProductBookingsService
 {
     /**
-     * @param array $bookings
+     * @param array   $bookings
      * @param Product $product
+     *
      * @return array
      */
     public function saveBookings(array $bookings, Product $product)

@@ -6,26 +6,26 @@ use Exception;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
 use Exdeliver\Causeway\Domain\Entities\Shop\ProductVariants\ValueTypes;
 use Exdeliver\Causeway\Domain\Entities\Shop\ProductVariants\Variant;
-use Exdeliver\Causeway\Domain\Entities\Shop\ProductVariants\VariantProduct;
 use Exdeliver\Causeway\Domain\Entities\Shop\ProductVariants\VariantValue;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 /**
- * Class ProductVariantsService
- * @package Exdeliver\Causeway\Domain\Services
+ * Class ProductVariantsService.
  */
 final class ProductVariantsService
 {
     /**
-     * @param array $request
+     * @param array   $request
      * @param Product $product
+     *
      * @return array
-     * @throws \Throwable
+     *
+     * @throws Throwable
      */
     public function saveVariants(array $request, Product $product): ?array
     {
-        dd($request);
         $variants = $request->variant;
         $variantProduct = $request->variantProduct;
 
@@ -39,25 +39,29 @@ final class ProductVariantsService
             $generatedVariants = DB::transaction(function () use ($variants, $product) {
                 $result = [];
                 foreach ($variants as $sequence => $variant) {
-                    $variantType = Variant::updateOrCreate([
-                        'product_id' => $product->id,
-                        'slug' => str_slug($variant['name']),
-                    ],
+                    $variantType = Variant::updateOrCreate(
+                        [
+                            'product_id' => $product->id,
+                            'slug' => str_slug($variant['name']),
+                        ],
                         [
                             'name' => $variant['name'],
                             'sequence' => $variant['sequence'] ?? $sequence,
                             'value_type' => key(ValueTypes::TEXT),
-                        ]);
+                        ]
+                    );
 
                     foreach ($variant['values'] as $valueSequence => $value) {
-                        VariantValue::updateOrCreate([
-                            'variant_id' => $variantType->id,
-                            'slug' => str_slug($variant['name'] . ' ' . $value['name']),
-                        ],
+                        VariantValue::updateOrCreate(
+                            [
+                                'variant_id' => $variantType->id,
+                                'slug' => str_slug($variant['name'].' '.$value['name']),
+                            ],
                             [
                                 'variant_value' => $value['name'],
                                 'sequence' => $value['sequence'] ?? $valueSequence,
-                            ]);
+                            ]
+                        );
                     }
                 }
 
@@ -65,8 +69,7 @@ final class ProductVariantsService
             });
 
             return $generatedVariants;
-
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new Exception($e);
         }
     }
@@ -75,7 +78,8 @@ final class ProductVariantsService
      * Create variant products.
      *
      * @param Collection $generatedVariants
-     * @param Product $product
+     * @param Product    $product
+     *
      * @return array
      */
     public function createVariantProducts(Collection $generatedVariants, Product $product): array
@@ -83,15 +87,15 @@ final class ProductVariantsService
         $generatedProducts = [];
 
         foreach ($generatedVariants as $variantType) {
-
             $variantValuesName = array_column($variantType, 'variant_value');
 
-            $title = $product->title . ' ' . implode(', ', $variantValuesName);
+            $title = $product->title.' '.implode(', ', $variantValuesName);
 
-            $newProductVariant = Product::updateOrCreate([
-                'slug' => str_slug($title),
-                'parent_product_id' => $product->id,
-            ],
+            $newProductVariant = Product::updateOrCreate(
+                [
+                    'slug' => str_slug($title),
+                    'parent_product_id' => $product->id,
+                ],
                 [
                     'title' => $title,
                     'type' => Product::VARIANT_PRODUCT['type'],
@@ -100,7 +104,8 @@ final class ProductVariantsService
                     'gross_price' => $product->gross_price / 100,
                     'special_price' => $product->special_price / 100,
                     'vat' => $product->vat,
-                ]);
+                ]
+            );
 
             $generatedProducts[] = $newProductVariant;
         }
@@ -112,14 +117,16 @@ final class ProductVariantsService
      * Generate product variants.
      *
      * @param Product $product
+     *
      * @return Exception|Collection
+     *
      * @throws Exception
      */
     public function generateVariants(Product $product)
     {
         $variants = $product->variants()->orderBy('sequence')->get();
 
-        if (count($variants) === 0) {
+        if (0 === count($variants)) {
             throw new Exception('Cannot generate variants, because its empty.');
         }
 
@@ -133,7 +140,7 @@ final class ProductVariantsService
             return collect(generateArrayCombinations($variantValues));
         } catch (Exception $e) {
             logger()->error('Could not generate a variant combination with these values.', [$e]);
-            throw new \Exception('Error generating variant combinations.');
+            throw new Exception('Error generating variant combinations.');
         }
     }
 }

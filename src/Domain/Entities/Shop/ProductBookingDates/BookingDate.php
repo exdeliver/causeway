@@ -5,10 +5,10 @@ namespace Exdeliver\Causeway\Domain\Entities\Shop\ProductBookingDates;
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
 use Exdeliver\Causeway\Domain\Entities\Shop\PricingTrait;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class BookingDate
- * @package Exdeliver\Causeway\Domain\Entities\Shop
+ * Class BookingDate.
  */
 class BookingDate extends AggregateRoot
 {
@@ -18,7 +18,7 @@ class BookingDate extends AggregateRoot
      * @var bool
      */
     public $timestamps = false;
-    
+
     /**
      * @var string
      */
@@ -38,7 +38,7 @@ class BookingDate extends AggregateRoot
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function product()
     {

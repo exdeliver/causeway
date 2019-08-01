@@ -4,7 +4,7 @@
     </div>
     <div class="p-3 bg-white">
         <span id="overview"></span>
-        <cart-checkout-component :cart="{{ \CWCart::summary() }}" cart_details_route="{{ route('shop.cart.details') }}"></cart-checkout-component>
+        <cart-checkout-component :cart="{{ CWCart::summary() }}" cart_details_route="{{ route('shop.cart.details') }}"></cart-checkout-component>
 
         <div class="form-group">
             <label for="comment">{{ __('Leave comment behind.') }}</label>

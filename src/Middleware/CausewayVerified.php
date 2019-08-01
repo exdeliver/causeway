@@ -4,20 +4,23 @@ namespace Exdeliver\Causeway\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
 
 /**
- * Class CausewayVerified
- * @package Illuminate\Auth\Middleware
+ * Class CausewayVerified.
  */
 class CausewayVerified
 {
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @param Closure $next
+     *
+     * @return Response|RedirectResponse
      */
     public function handle($request, Closure $next)
     {

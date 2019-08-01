@@ -3,12 +3,15 @@
 namespace Exdeliver\Causeway\Controllers;
 
 use Exdeliver\Causeway\Domain\Entities\Page\Page;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 
 class PageController extends Controller
 {
     /**
      * @param Page $pageSlug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @return Factory|View
      */
     public function getSlug(Page $pageSlug)
     {
@@ -16,15 +19,15 @@ class PageController extends Controller
         $customView = 'site::page.default';
 
         // Find if custom page exists by slug and use that page
-        if (view()->exists('site::page.' . $pageSlug->slug)) {
-            $customView = 'site::page.' . $pageSlug->slug;
+        if (view()->exists('site::page.'.$pageSlug->slug)) {
+            $customView = 'site::page.'.$pageSlug->slug;
         }
 
         $metaTitle = $pageSlug->name;
 
         return view()->first([$customView, 'site::page.default'], [
             'page' => $pageSlug,
-            'metaTitle' => $metaTitle
+            'metaTitle' => $metaTitle,
         ]);
     }
 }

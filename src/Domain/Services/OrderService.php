@@ -2,6 +2,7 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
+use Exception;
 use Exdeliver\Cart\Domain\Services\CartService;
 use Exdeliver\Cart\Domain\Services\ShopCalculationService;
 use Exdeliver\Causeway\Domain\Entities\Shop\Customers\Customer;
@@ -13,10 +14,10 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use PDF;
 
 /**
- * Class OrderService
- * @package Domain\Services
+ * Class OrderService.
  */
 class OrderService extends AbstractService
 {
@@ -43,21 +44,25 @@ class OrderService extends AbstractService
 
     /**
      * @param CartService $cart
-     * @param Customer $customer
+     * @param Customer    $customer
+     *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function saveOrderByCart(CartService $cart, Customer $customer)
     {
         $items = $cart->all();
+
         return $this->saveOrder($items, $customer, 'molliePayment', $cart->total());
     }
 
     /**
      * @param Collection $items
-     * @param Customer $customer
-     * @param string $paymentMethod
-     * @param null $paymentTotal
+     * @param Customer   $customer
+     * @param string     $paymentMethod
+     * @param null       $paymentTotal
+     *
      * @return Order $order
      */
     public function saveOrder(Collection $items, Customer $customer, string $paymentMethod, $paymentTotal = null): Order
@@ -78,15 +83,15 @@ class OrderService extends AbstractService
                 'type' => $item->type,
             ];
 
-            if ($item->type === 'discount') {
-                $productArray['gross_price'] = '-' . $item->discount_price;
+            if ('discount' === $item->type) {
+                $productArray['gross_price'] = '-'.$item->discount_price;
                 $productArray['quantity'] = 1;
                 $productArray['discount_type'] = $item->discount_type;
                 $productArray['discount_amount'] = $item->discount_amount;
             } else {
                 $productArray['vat'] = $item->vat;
                 $productArray['quantity'] = $item->quantity;
-                $productArray['product_id'] = (int)$item->product_id;
+                $productArray['product_id'] = (int) $item->product_id;
                 $productArray['gross_price'] = (isset($item->special_price) && $item->special_price > 0 && $item->special_price < $item->gross_price) ? $item->special_price : $item->gross_price;
             }
 
@@ -122,6 +127,7 @@ class OrderService extends AbstractService
 
     /**
      * @param Order $order
+     *
      * @return string
      */
     public function invoicePdf(Order $order)
@@ -146,7 +152,7 @@ class OrderService extends AbstractService
             return $invoiceHTML;
         }
 
-        $pdf = \PDF::setOption('margin-bottom', 0)
+        $pdf = PDF::setOption('margin-bottom', 0)
             ->setOption('margin-top', 0)
             ->setOption('viewport-size', '1280x1024')
             ->loadView('site::shop.pdf.invoice', [
@@ -161,14 +167,14 @@ class OrderService extends AbstractService
                 'companyInformation' => $this->companyInformation,
             ]);
 
-        $uploadPath = public_path() . '/invoices/';
-        $savePath = $uploadPath . $order->uuid . '.pdf';
+        $uploadPath = public_path().'/invoices/';
+        $savePath = $uploadPath.$order->uuid.'.pdf';
 
         // path does not exist
         if (!file_exists($uploadPath)) {
             File::makeDirectory($uploadPath, 0775, true);
         }
 
-        return \PDF::inline($order->uuid);
+        return PDF::inline($order->uuid);
     }
 }

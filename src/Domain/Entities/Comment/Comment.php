@@ -2,15 +2,16 @@
 
 namespace Exdeliver\Causeway\Domain\Entities\Comment;
 
+use Exception;
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
 use Exdeliver\Causeway\Domain\Entities\User\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Rennokki\Befriended\Contracts\Likeable;
 use Rennokki\Befriended\Traits\CanBeLiked;
 
 /**
- * Class Comment
- * @package Domain\Entities\Comments
+ * Class Comment.
  */
 class Comment extends AggregateRoot implements Likeable
 {
@@ -60,13 +61,13 @@ class Comment extends AggregateRoot implements Likeable
     {
         try {
             return json_decode($this->data, false)->name;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return 'Anonymous';
         }
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function user()
     {
@@ -74,7 +75,7 @@ class Comment extends AggregateRoot implements Likeable
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getLikesCountAttribute()
     {

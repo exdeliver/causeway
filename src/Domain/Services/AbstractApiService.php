@@ -1,20 +1,20 @@
 <?php
 
-
 namespace Exdeliver\Causeway\Domain\Services;
 
 use Exception;
 use Illuminate\Foundation\Application;
 
 /**
- * Class AbstractApiService
- * @package Domain\Services
+ * Class AbstractApiService.
  */
 abstract class AbstractApiService extends AbstractService
 {
     /**
      * @param string $serviceClassName
+     *
      * @return Application|mixed
+     *
      * @throws Exception
      */
     public function getProvider(string $serviceClassName)

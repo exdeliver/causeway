@@ -6,11 +6,12 @@ use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Services\UserService;
 use Exdeliver\Causeway\Requests\PostLoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
- * Class LoginController
- * @package Exdeliver\Causeway\Controllers\Auth
+ * Class LoginController.
  */
 class LoginController extends Controller
 {
@@ -52,7 +53,8 @@ class LoginController extends Controller
 
     /**
      * @param PostLoginRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
     public function login(PostLoginRequest $request)
     {
@@ -62,8 +64,9 @@ class LoginController extends Controller
     /**
      * Log the user out of the application.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     *
+     * @return Response
      */
     public function logout(Request $request)
     {
@@ -79,7 +82,7 @@ class LoginController extends Controller
     /**
      * Show the application's login form.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function showLoginForm()
     {

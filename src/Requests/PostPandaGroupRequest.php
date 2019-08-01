@@ -5,8 +5,7 @@ namespace Exdeliver\Causeway\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class PostGroupRequest
- * @package Exdeliver\Causeway\Requests
+ * Class PostGroupRequest.
  */
 class PostGroupRequest extends FormRequest
 {
@@ -30,8 +29,8 @@ class PostGroupRequest extends FormRequest
         $rules = [];
 
         if (isset($this->group)) {
-            $rules['label'] = 'required|unique:groups,label,' . $this->group->id . ',id';
-            $rules['name'] = 'required|unique:groups,name,' . $this->group->id . ',id';
+            $rules['label'] = 'required|unique:groups,label,'.$this->group->id.',id';
+            $rules['name'] = 'required|unique:groups,name,'.$this->group->id.',id';
         } else {
             $rules['name'] = 'required|unique:groups,name';
         }

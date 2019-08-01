@@ -8,8 +8,7 @@ use Rennokki\Befriended\Contracts\Likeable;
 use Rennokki\Befriended\Traits\CanBeLiked;
 
 /**
- * Class Page
- * @package Domain\Entities\Page
+ * Class Page.
  */
 class Page extends AggregateRoot implements Likeable
 {

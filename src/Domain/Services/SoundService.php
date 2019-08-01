@@ -2,13 +2,14 @@
 
 namespace Exdeliver\Causeway\Domain\Services;
 
+use Exception;
 use Exdeliver\Causeway\Infrastructure\Repositories\SoundRepository;
 use Exdeliver\Causeway\Jobs\GenerateWaveform;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 
 /**
- * Class SoundService
- * @package Domain\Services
+ * Class SoundService.
  */
 final class SoundService extends AbstractService
 {
@@ -24,8 +25,9 @@ final class SoundService extends AbstractService
 
     /**
      * SoundService constructor.
+     *
      * @param SoundRepository $soundRepository
-     * @param UploadService $uploadService
+     * @param UploadService   $uploadService
      */
     public function __construct(SoundRepository $soundRepository, UploadService $uploadService)
     {
@@ -34,17 +36,19 @@ final class SoundService extends AbstractService
     }
 
     /**
-     * @param array $params
+     * @param array    $params
      * @param int|null $id
-     * @return \Illuminate\Database\Eloquent\Model
-     * @throws \Exception
+     *
+     * @return Model
+     *
+     * @throws Exception
      */
     public function saveSound(array $params, int $id = null)
     {
         $params['user_id'] = auth()->user()->id;
 
         if (!isset($params['filename'])) {
-            throw new \Exception('File is required');
+            throw new Exception('File is required');
         }
 
         $storageWaveformDir = storage_path('app/public/uploads/sounds/');
@@ -52,10 +56,10 @@ final class SoundService extends AbstractService
             File::makeDirectory($storageWaveformDir, 0777, true);
         }
 
-        $file = $this->uploadService->upload($params['filename'], 'public/uploads/' . $this->path);
+        $file = $this->uploadService->upload($params['filename'], 'public/uploads/'.$this->path);
 
-        if (!file_exists(storage_path('app/' . $file->file_path))) {
-            throw new \Exception('Missing');
+        if (!file_exists(storage_path('app/'.$file->file_path))) {
+            throw new Exception('Missing');
         }
 
         $params['filename'] = $file->file_path;

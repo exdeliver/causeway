@@ -8,21 +8,25 @@ use Exdeliver\Causeway\Domain\Entities\Forum\Thread;
 use Exdeliver\Causeway\Domain\Services\ForumService;
 use Exdeliver\Causeway\Domain\Services\GroupService;
 use Exdeliver\Causeway\Requests\PostNewThreadRequest;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 /**
- * Class GroupController
- * @package Exdeliver\Causeway\Controllers
+ * Class GroupController.
  */
 class ForumController extends Controller
 {
     /**
-     * @var GroupService $groupService
+     * @var GroupService
      */
     private $forumService;
 
     /**
      * GroupController constructor.
+     *
      * @param ForumService $forumService
      */
     public function __construct(ForumService $forumService)
@@ -31,7 +35,7 @@ class ForumController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {
@@ -41,9 +45,10 @@ class ForumController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Category $forumCategory
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @return Factory|View
      */
     public function getCategory(Request $request, Category $forumCategory)
     {
@@ -54,9 +59,10 @@ class ForumController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Category $forumCategory
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @return Factory|View
      */
     public function getNewThread(Request $request, Category $forumCategory)
     {
@@ -67,9 +73,10 @@ class ForumController extends Controller
 
     /**
      * @param PostNewThreadRequest $request
-     * @param Category $forumCategory
-     * @param Thread|null $item
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Category             $forumCategory
+     * @param Thread|null          $item
+     *
+     * @return RedirectResponse
      */
     public function postNewThread(PostNewThreadRequest $request, Category $forumCategory, Thread $item = null)
     {
@@ -81,7 +88,7 @@ class ForumController extends Controller
             'id' => $item->id ?? null,
         ], $request->only(['title', 'slug', 'content', 'category_id']));
 
-        $request->session()->flash('status', isset($item->id) && $item->id !== null ? 'Thread has successfully been updated!' : 'Thread has successfully been created!');
+        $request->session()->flash('status', isset($item->id) && null !== $item->id ? 'Thread has successfully been updated!' : 'Thread has successfully been created!');
 
         return redirect()
             ->route('site.forum.thread', [
@@ -91,10 +98,11 @@ class ForumController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Category $forumCategory
-     * @param Thread $forumThread
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Thread   $forumThread
+     *
+     * @return Factory|View
      */
     public function getThread(Request $request, Category $forumCategory, Thread $forumThread)
     {
@@ -108,7 +116,8 @@ class ForumController extends Controller
      * Get quote by comment.
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|void
+     *
+     * @return JsonResponse|void
      */
     public function getQuoteByComment(Request $request)
     {

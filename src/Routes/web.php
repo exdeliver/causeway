@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Prefix: sound/
+ * Prefix: sound/.
  */
 Route::group(['prefix' => 'sound'], function () {
     Route::get('{soundName}', 'SoundController@getSound')->name('causeway.sound.play');
 });
 
-/**
+/*
  * Localisation
  *
  * Prefix: js/
@@ -15,11 +15,11 @@ Route::group(['prefix' => 'sound'], function () {
 Route::get('/js/lang.js', function () {
     $strings = Cache::rememberForever('lang.js', function () {
         $lang = config('app.locale');
-        $files   = glob(__DIR__.'/../Lang/' . $lang . '/*.php');
+        $files = glob(__DIR__.'/../Lang/'.$lang.'/*.php');
         $strings = [];
 
         foreach ($files as $file) {
-            $name           = basename($file, '.php');
+            $name = basename($file, '.php');
             $strings[$name] = require $file;
         }
 
@@ -27,11 +27,11 @@ Route::get('/js/lang.js', function () {
     });
 
     header('Content-Type: text/javascript');
-    echo('window.i18n = ' . json_encode($strings) . ';');
+    echo 'window.i18n = '.json_encode($strings).';';
     exit();
 })->name('assets.lang');
 
-/**
+/*
  * Prefix: forum/
  */
 Route::group(['prefix' => 'forum'], function () {
@@ -45,14 +45,15 @@ Route::group(['prefix' => 'forum'], function () {
     Route::get('/category/{forumCategory}/thread/{forumThread}', 'ForumController@getThread')->name('site.forum.thread');
 });
 
-include('shop_routes.php');
+include 'shop_routes.php';
 
-/**
+/*
  * Prefix: causeway/
  */
 Route::group(['prefix' => 'causeway'], function () {
     Route::post('/logout', function () {
         Auth::logout();
+
         return redirect()
             ->route('causeway.login');
     })->name('causeway.logout');
@@ -73,13 +74,13 @@ Route::group(['prefix' => 'causeway'], function () {
         Route::get('/account/verified/resend', 'Auth\VerificationController@resend')->name('causeway.verification.resend');
     });
 
-    /**
+    /*
      * Protected routes for verified users...
      */
     Route::group(['middleware' => ['causewayVerified', 'causewayAuth']], function () {
         Route::post('/upload/file', 'UploadController@upload')->name('site.upload');
 
-        /**
+        /*
          * Ajax routing
          *
          * Prefix: causeway/ajax
@@ -89,7 +90,7 @@ Route::group(['prefix' => 'causeway'], function () {
             Route::get('like/type/{type}/id/{id}', 'LikeController@like')->name('like.toggle');
             Route::post('comment/type/{type}/id/{id}', 'CommentController@comment')->name('comment.store');
 
-            /**
+            /*
              * Ajax group actions
              *
              * Prefix: causeway/ajax/group
@@ -99,46 +100,46 @@ Route::group(['prefix' => 'causeway'], function () {
                 Route::get('index', 'GroupController@getGroupsByUser')->name('ajax.group.index');
             });
 
-            /**
+            /*
              * Admin protected ajax calls.
              */
             Route::group(['middleware' => ['causewayAdmin']], function () {
-                /**
+                /*
                  * Prefix: causeway/ajax/events
                  */
                 Route::group(['prefix' => 'events'], function () {
                     Route::get('index', 'Admin\EventController@getAjaxEvents')->name('ajax.events.index');
                 });
 
-                /**
+                /*
                  * Prefix: causeway/ajax/pages
                  */
                 Route::group(['prefix' => 'pages'], function () {
                     Route::get('index', 'Admin\PageController@getAjaxPages')->name('ajax.pages.index');
                 });
 
-                /**
+                /*
                  * Prefix: causeway/ajax/menu
                  */
                 Route::group(['prefix' => 'menu'], function () {
                     Route::get('index', 'Admin\MenuController@getAjaxMenu')->name('ajax.menu.index');
                 });
 
-                /**
+                /*
                  * Prefix: causeway/ajax/sound
                  */
                 Route::group(['prefix' => 'sound'], function () {
                     Route::get('index', 'Admin\SoundController@getAjaxSounds')->name('ajax.sound.index');
                 });
 
-                /**
+                /*
                  * Prefix: causeway/ajax/forum
                  */
                 Route::group(['prefix' => 'forum'], function () {
                     Route::get('index', 'Admin\ForumController@getAjaxCategories')->name('ajax.forum.index');
                 });
 
-                /**
+                /*
                  * Prefix: causeway/ajax/authorisation
                  */
                 Route::group(['prefix' => 'authorisation'], function () {
@@ -149,7 +150,7 @@ Route::group(['prefix' => 'causeway'], function () {
             });
         });
 
-        /**
+        /*
          * Admin protected routes
          */
         Route::group(['namespace' => 'Admin', 'middleware' => ['causewayAdmin']], function () {
@@ -160,11 +161,11 @@ Route::group(['prefix' => 'causeway'], function () {
 
             Route::get('/dashboard', 'DashboardController@index')->name('causeway.dashboard');
 
-            /**
+            /*
              * Prefix: causeway/photo/
              */
             Route::group(['prefix' => 'photo'], function () {
-                /**
+                /*
                  * Prefix: causeway/photo/album
                  */
                 Route::group(['prefix' => 'album'], function () {
@@ -203,7 +204,7 @@ Route::group(['prefix' => 'causeway'], function () {
             ]);
 
             /**
-             * Prefix: causeway/shop
+             * Prefix: causeway/shop.
              */
             include 'admin_shop_routes.php';
 
@@ -244,7 +245,7 @@ Route::group(['prefix' => 'causeway'], function () {
             ]);
             Route::post('menu/show/{menu}/sort', 'MenuController@sort')->name('admin.menu.show.sort');
 
-            /**
+            /*
              * Prefix: causeway/authorisation
              */
             Route::group(['prefix' => 'authorisation', 'namespace' => 'Authorisation'], function () {
@@ -277,7 +278,7 @@ Route::group(['prefix' => 'causeway'], function () {
             });
         });
 
-        /**
+        /*
          * Prefix: causeway/profile
          */
         Route::group(['prefix' => 'profile'], function () {

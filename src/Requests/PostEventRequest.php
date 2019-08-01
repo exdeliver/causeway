@@ -6,8 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class PostEventRequest
- * @package Exdeliver\Causeway\Requests
+ * Class PostEventRequest.
  */
 class PostEventRequest extends FormRequest
 {

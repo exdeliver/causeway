@@ -1,8 +1,7 @@
 <?php
 /**
- * Public shop routes
+ * Public shop routes.
  */
-
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'shop', 'namespace' => 'Shop'], function () {

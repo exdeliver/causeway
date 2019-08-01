@@ -6,13 +6,13 @@ use Exdeliver\Causeway\Infrastructure\Repositories\PhotoRepository;
 use Illuminate\Support\Str;
 
 /**
- * Class PhotoService
- * @package Domain\Services
+ * Class PhotoService.
  */
 final class PhotoService extends AbstractService
 {
     /**
      * PhotoService constructor.
+     *
      * @param PhotoRepository $repository
      */
     public function __construct(PhotoRepository $repository)
@@ -21,16 +21,18 @@ final class PhotoService extends AbstractService
     }
 
     /**
-     * @param array $params
+     * @param array    $params
      * @param int|null $id
+     *
      * @return mixed
      */
     public function savePhoto(array $params, int $id = null)
     {
-        if ($id !== null) {
+        if (null !== $id) {
             return $this->update($id, $params);
         } else {
             $params['uuid'] = Str::uuid();
+
             return $this->create($params);
         }
     }

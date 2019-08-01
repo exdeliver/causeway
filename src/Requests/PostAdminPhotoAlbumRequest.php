@@ -26,8 +26,8 @@ class PostAdminPhotoAlbumRequest extends FormRequest
         $rules = [];
 
         if (isset($this->album)) {
-            $rules['label'] = 'required|unique:photo_albums,label,' . $this->album->id . ',id';
-            $rules['name'] = 'required|unique:photo_albums,name,' . $this->album->id . ',id';
+            $rules['label'] = 'required|unique:photo_albums,label,'.$this->album->id.',id';
+            $rules['name'] = 'required|unique:photo_albums,name,'.$this->album->id.',id';
         } else {
             $rules['name'] = 'required|unique:photo_albums,name';
         }

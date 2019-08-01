@@ -3,8 +3,7 @@
 namespace Exdeliver\Causeway\Domain\Contracts\Repository;
 
 /**
- * Interface AbstractRepositoryInterface
- * @package Domain\Contracts\Repository
+ * Interface AbstractRepositoryInterface.
  */
 interface AbstractRepositoryInterface
 {

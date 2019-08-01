@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class PageTranslation
- * @package Domain\Entities\Page
+ * Class PageTranslation.
  */
 class PageTranslation extends Model implements Auditable
 {

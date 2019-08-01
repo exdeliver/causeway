@@ -6,12 +6,13 @@ use Exdeliver\Causeway\Domain\Entities\Shop\Category;
 use Exdeliver\Causeway\Infrastructure\Repositories\ShopCategoryRepository;
 
 /**
- * Class ShopCategoryService
+ * Class ShopCategoryService.
  */
 final class ShopCategoryService extends AbstractService
 {
     /**
      * ShopCategoryService constructor.
+     *
      * @param ShopCategoryRepository $shopCategoryRepository
      */
     public function __construct(ShopCategoryRepository $shopCategoryRepository)
@@ -20,13 +21,14 @@ final class ShopCategoryService extends AbstractService
     }
 
     /**
-     * @param array $params
+     * @param array    $params
      * @param int|null $id
+     *
      * @return mixed
      */
     public function saveCategory(array $params, int $id = null)
     {
-        if ($id !== null) {
+        if (null !== $id) {
             return $this->update($id, $params);
         }
 
@@ -36,6 +38,7 @@ final class ShopCategoryService extends AbstractService
     /**
      * @param $direction
      * @param Category $category
+     *
      * @return int
      */
     public function setCategorySequence($direction, Category $category)
@@ -50,7 +53,7 @@ final class ShopCategoryService extends AbstractService
             }
         }
 
-        $sequence = (int)$category->sequence;
+        $sequence = (int) $category->sequence;
 
         switch ($direction) {
             case 'up':

@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class Category
- * @package Exdeliver\Causeway\Domain\Entities\Shop
+ * Class Category.
  */
 class Category extends AggregateRoot implements Auditable
 {

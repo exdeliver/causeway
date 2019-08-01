@@ -5,13 +5,13 @@ namespace Exdeliver\Causeway\Domain\Services;
 use Exdeliver\Causeway\Infrastructure\Repositories\EventRepository;
 
 /**
- * Class EventService
- * @package Domain\Services
+ * Class EventService.
  */
 final class EventService extends AbstractService
 {
     /**
      * PhotoAlbumService constructor.
+     *
      * @param EventRepository $eventRepository
      */
     public function __construct(EventRepository $eventRepository)
@@ -20,8 +20,9 @@ final class EventService extends AbstractService
     }
 
     /**
-     * @param array $params
+     * @param array    $params
      * @param int|null $id
+     *
      * @return mixed
      */
     public function saveEvent(array $params, int $id = null)

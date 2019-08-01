@@ -25,8 +25,6 @@ class CreateAdminCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -46,7 +44,7 @@ class CreateAdminCommand extends Command
         /** @var User $user */
         $user = User::where('email', $email)->first();
 
-        if ($user === null) {
+        if (null === $user) {
             $user = User::create([
                 'email' => $email,
                 'password' => Hash::make($password),

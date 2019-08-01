@@ -7,8 +7,7 @@ use Rennokki\Befriended\Contracts\Likeable;
 use Rennokki\Befriended\Traits\CanBeLiked;
 
 /**
- * Class Sound
- * @package Domain\Entities\Sound
+ * Class Sound.
  */
 class Sound extends Entity implements Likeable
 {
@@ -46,8 +45,9 @@ class Sound extends Entity implements Likeable
             $waveform = basename(str_replace('.mp3', '.png', $this->filename));
             $path = '/storage/uploads/sounds/';
 
-            return asset($path . $waveform);
+            return asset($path.$waveform);
         }
+
         return null;
     }
 
@@ -57,8 +57,9 @@ class Sound extends Entity implements Likeable
     public function getPublicFilenameAttribute()
     {
         if (isset($this->attributes['filename'])) {
-            return '/storage/' . str_replace('public', '', $this->attributes['filename']);
+            return '/storage/'.str_replace('public', '', $this->attributes['filename']);
         }
+
         return null;
     }
 }
