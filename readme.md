@@ -18,7 +18,7 @@ Add to your app.php providers & Aliases
     
     'CW' => \Exdeliver\Causeway\Facades\CausewayServiceFacade::class,
     
-    'CWCart' => \Exdeliver\Causeway\Facades\CausewayCartServiceFacade::class,
+    'CWCart' => \Exdeliver\Cart\Facades\CartServiceFacade::class,
 
 Update your config/auth.php
 
