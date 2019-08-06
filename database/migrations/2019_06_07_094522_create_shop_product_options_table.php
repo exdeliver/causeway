@@ -90,7 +90,7 @@ class CreateShopProductOptionsTable extends Migration
         });
 
         Schema::table('shop_products', function (Blueprint $table) {
-            $table->integer('parent_product_id')->unsigned();
+            $table->integer('parent_product_id')->unsigned()->nullable();
             $table->foreign('parent_product_id')
                 ->references('id')
                 ->on('shop_products')
