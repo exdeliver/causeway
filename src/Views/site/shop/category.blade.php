@@ -21,9 +21,14 @@
 
                 @include('site::layouts.partials._status_messages')
 
+                <div class="container-fluid">
+                    @foreach($activeFilters as $filter)
+                        {!! $filter !!}
+                    @endforeach
+                </div>
                 <div class="container-fluid" style="padding: 0px !important">
                     <div class="pull-left">
-                        <p><span><strong>{{ __('Total products') }}:</strong> {{{ $products->total() }}} | <strong>{{ __('Per page') }}:</strong> {{{ $products->perPage() }}}</span></p>
+                        <p><span><strong>{{ __('Total products') }}:</strong>  | <strong>{{ __('Per page') }}:</strong> {{{ $products->perPage() }}}</span></p>
                     </div>
                     <div class="pull-right">
                         {!! $products->appends($activeFilters)->render() !!}
@@ -50,7 +55,7 @@
                         {!! $products->appends($activeFilters)->render() !!}
                     </div>
                     <div class="pull-right">
-                        <p><span><strong>{{ __('Total products') }}:</strong> {{{ $products->total() }}} | <strong>{{ __('Per page') }}:</strong> {{{ $products->perPage() }}}</span></p>
+                        <p><span><strong>{{ __('Total products') }}:</strong>  | <strong>{{ __('Per page') }}:</strong> {{{ $products->perPage() }}}</span></p>
                     </div>
                     <div class="clearfix"></div>
                 </div>

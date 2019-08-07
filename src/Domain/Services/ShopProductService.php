@@ -5,9 +5,9 @@ namespace Exdeliver\Causeway\Domain\Services;
 use Exdeliver\Causeway\Domain\Entities\Shop\Category;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
 use Exdeliver\Causeway\Infrastructure\Repositories\ShopProductRepository;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class ShopProductService.
@@ -35,7 +35,7 @@ final class ShopProductService extends AbstractService
     }
 
     /**
-     * @param array    $params
+     * @param array $params
      * @param int|null $id
      *
      * @return Model
@@ -51,62 +51,19 @@ final class ShopProductService extends AbstractService
 
     /**
      * @param Category $shopCategory
-     * @param Request  $request
+     * @param Request $request
      *
      * @return \Illuminate\Database\Query\Builder
+     * @throws \ReflectionException
      */
     public function queryProducts(Category $shopCategory, Request $request)
     {
-        $products = Product::whereIn('id', $shopCategory->products->pluck('product_id')->toArray());
-
-        $products = $this->filter($request, $products, $shopCategory);
-
-        return $products;
-    }
-
-    /**
-     * Filtering.
-     *
-     * @param Request  $request
-     * @param Builder  $products
-     * @param Category $category
-     *
-     * @return Builder
-     */
-    public function filter(Request $request, Builder $products, Category $category)
-    {
-        $categoryFilters = $category;
-
-        $this->filters = [];
-        if (null !== $request->filter) {
-            foreach ($request->filter as $filterName => $value) {
-                $this->filters['filter'][$filterName] = $value;
-
-                if (in_array($filterName, $this->availableFilters)) {
-                    $value = explode(',', $value);
-                    if (!is_array($value)) {
-                        $products->where($filterName, 'LIKE', '%'.$value.'%');
-                    } else {
-                        $products->where($filterName, 'LIKE', '%'.$value[0].'%');
-                        unset($value[0]);
-                        foreach ($value as $val) {
-                            $products->orWhere($filterName, 'LIKE', '%'.$val.'%');
-                        }
-                    }
-                }
-            }
-        }
+        $products = Product::select(
+            '*',
+            DB::raw('IF(special_price IS NOT NULL AND special_price < gross_price, special_price, gross_price) * ((vat/100)+1) as price')
+        )
+            ->whereIn('id', $shopCategory->products->pluck('product_id')->toArray());
 
         return $products;
-    }
-
-    /**
-     * Return active filters.
-     *
-     * @return array
-     */
-    public function getActiveFilters()
-    {
-        return null !== $this->filters ? $this->filters : [];
     }
 }
