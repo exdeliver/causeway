@@ -12,7 +12,7 @@
 <script>
     export default {
         mounted() {
-            console.log('Shop add to cart product.');
+            console.log('Shop show shipping methods');
         },
         props: ['shipping', 'add_to_cart_route', 'csrf_token'],
         components: {},

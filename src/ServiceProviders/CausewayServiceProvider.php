@@ -92,7 +92,6 @@ class CausewayServiceProvider extends ServiceProvider
 
         $this->publishes([
             $packageRootDir.'/assets/compiled' => public_path('vendor/exdeliver/causeway'),
-            $packageWorkingDir.'/Views/site' => $this->app->resourcePath('views/vendor/exdeliver/causeway'),
             $packageRootDir.'/config/laraberg.php' => config_path('laraberg.php'),
         ], 'public');
 

@@ -8,6 +8,7 @@ require('./causewayAdmin/cwLanguageSwitcher.js');
 
 window.jQuery(document).ready(function () {
     $(function () {
+        // Tooltip
         $('[data-toggle="tooltip"]').tooltip()
     });
 });
