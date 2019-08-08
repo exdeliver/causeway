@@ -60,9 +60,9 @@ final class ShopProductService extends AbstractService
     {
         $products = Product::select(
             '*',
-            DB::raw('IF(special_price IS NOT NULL AND special_price < gross_price, special_price, gross_price) * ((vat/100)+1) as price')
+            DB::raw('IF(shop_products.special_price IS NOT NULL AND shop_products.special_price < shop_products.gross_price, shop_products.special_price, shop_products.gross_price) * ((vat/100)+1) as price')
         )
-            ->groupBy(['shop_products.id','shop_products.special_price'])
+            ->groupBy(['shop_products.id'])
             ->whereIn('id', $shopCategory->products->pluck('product_id')->toArray());
 
         return $products;
