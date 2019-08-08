@@ -26,7 +26,7 @@ class PriceRangeFilter extends AbstractFilter
             $values[1] *= 100;
         }
 
-        return $query->groupBy('shop_products.id')->havingBetween($column, $values);
+        return $query->havingBetween($column, $values);
     }
 
     /**
