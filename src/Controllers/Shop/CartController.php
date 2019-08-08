@@ -51,12 +51,13 @@ class CartController extends Controller
     {
         foreach ($request->products as $productId => $quantity) {
             $product = Product::findOrFail($productId);
+
             $this->cartService->validateAndAddToCart([
                 'product_id' => $product->id,
                 'name' => $product->title,
                 '_link' => route('shop.product', ['slug' => $product->slug]),
                 'type' => 'item',
-                'gross_price' => (null !== $product->special_price && $product->gross_price > $product->special_price) ? $product->special_price : $product->gross_price,
+                'gross_price' => (null !== $product->special_price && $product->special_price > 0 && $product->gross_price > $product->special_price) ? $product->special_price : $product->gross_price,
                 'vat' => $product->vat,
             ], $quantity);
         }
