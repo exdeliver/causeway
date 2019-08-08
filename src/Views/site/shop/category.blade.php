@@ -22,16 +22,32 @@
                 @include('site::layouts.partials._status_messages')
 
                 <div class="container-fluid">
-                    @foreach($activeFilters as $filter)
-                        {!! $filter !!}
-                    @endforeach
+                    {{ Form::open(['method' => 'GET']) }}
+                    <div class="row">
+                        @foreach($activeFilters->chunk(6) as $filterItems)
+                            @foreach($filterItems as $filter)
+                                <div class="col-md-{{ 12/6 }}">
+                                    {!! $filter !!}
+                                </div>
+                            @endforeach
+                        @endforeach
+                        <p class="mt-2">
+                            <br />
+                            {{ Form::submit('Filter', ['class' => 'btn btn-xs btn-primary btn-inline']) }}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr/>
+                        </div>
+                    </div>
+                    {{ Form::close() }}
                 </div>
                 <div class="container-fluid" style="padding: 0px !important">
                     <div class="pull-left">
-                        <p><span><strong>{{ __('Total products') }}:</strong>  | <strong>{{ __('Per page') }}:</strong> {{{ $products->perPage() }}}</span></p>
+                        <p><span><strong>{{ __('Total products') }}:</strong> {{{ $products->total() }}} | <strong>{{ __('Per page') }}:</strong> {{{ $products->perPage() }}}</span></p>
                     </div>
                     <div class="pull-right">
-                        {!! $products->appends($activeFilters)->render() !!}
+                        {!! $products->appends($activeFilters->toArray())->render() !!}
                     </div>
                     <div class="clearfix"></div>
                     @if(count($products))
@@ -52,10 +68,10 @@
                     </p>
                     <div class="clearfix"></div>
                     <div class="pull-left">
-                        {!! $products->appends($activeFilters)->render() !!}
+                        {!! $products->appends($activeFilters->toArray())->render() !!}
                     </div>
                     <div class="pull-right">
-                        <p><span><strong>{{ __('Total products') }}:</strong>  | <strong>{{ __('Per page') }}:</strong> {{{ $products->perPage() }}}</span></p>
+                        <p><span><strong>{{ __('Total products') }}:</strong> {{{ $products->total() }}} | <strong>{{ __('Per page') }}:</strong> {{{ $products->perPage() }}}</span></p>
                     </div>
                     <div class="clearfix"></div>
                 </div>

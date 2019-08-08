@@ -30,8 +30,8 @@ class CreateShopProductOptionsTable extends Migration
 
         Schema::create('shop_product_attribute_values', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('shop_product_attribute_id')->unsigned();
-            $table->foreign('shop_product_attribute_id')
+            $table->integer('attribute_id')->unsigned();
+            $table->foreign('attribute_id')
                 ->references('id')
                 ->on('shop_product_attributes')
                 ->onDelete('cascade');

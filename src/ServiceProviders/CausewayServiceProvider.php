@@ -4,6 +4,7 @@ namespace Exdeliver\Causeway\ServiceProviders;
 
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Exdeliver\Causeway\Commands\CreateAdminCommand;
+use Exdeliver\Causeway\Commands\FillTestDataCommand;
 use Exdeliver\Causeway\Domain\Entities\Forum\Category;
 use Exdeliver\Causeway\Domain\Entities\Forum\Thread;
 use Exdeliver\Causeway\Domain\Entities\Page\Page;
@@ -154,6 +155,7 @@ class CausewayServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 CreateAdminCommand::class,
+                FillTestDataCommand::class,
             ]);
         }
     }

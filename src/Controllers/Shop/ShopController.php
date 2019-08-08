@@ -93,7 +93,7 @@ class ShopController extends Controller
         $activeFilters = $products->getFilters();
         $products = $products->getQuery();
 
-        $pagination = $products->simplePaginate($request->numberPerPage ?? self::DEFAULT_PAGINATOR_SIZE);
+        $pagination = $products->paginate($request->numberPerPage ?? self::DEFAULT_PAGINATOR_SIZE);
 
         $customView = 'site::shop.category';
 

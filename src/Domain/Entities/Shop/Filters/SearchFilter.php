@@ -17,4 +17,13 @@ class SearchFilter extends AbstractFilter
     {
         return $query->where($column, 'LIKE', '%' . $value . '%');
     }
+
+    /**
+     * @param $params
+     * @return View
+     */
+    public function render(array $params): View
+    {
+        return view('site::shop.partials.category.filters.text', $params);
+    }
 }
