@@ -25,6 +25,6 @@ class Attribute extends AggregateRoot
      */
     public function values()
     {
-        return $this->hasMany(VariantValue::class);
+        return $this->hasMany(AttributeValue::class);
     }
 }

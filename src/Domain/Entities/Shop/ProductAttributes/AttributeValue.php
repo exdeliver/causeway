@@ -25,6 +25,6 @@ class AttributeValue extends AggregateRoot
      */
     public function attribute()
     {
-        return $this->belongsTo(Variant::class);
+        return $this->belongsTo(Attribute::class);
     }
 }

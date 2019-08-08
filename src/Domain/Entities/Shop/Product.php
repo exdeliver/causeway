@@ -3,6 +3,7 @@
 namespace Exdeliver\Causeway\Domain\Entities\Shop;
 
 use Exdeliver\Causeway\Domain\Common\Entity;
+use Exdeliver\Causeway\Domain\Common\ItemPaginatorTrait;
 use Exdeliver\Causeway\Domain\Entities\Shop\ProductAttributes\Attribute;
 use Exdeliver\Causeway\Domain\Entities\Shop\ProductAttributes\AttributeValue;
 use Exdeliver\Causeway\Domain\Entities\Shop\ProductBookingDates\BookingDate;
@@ -20,6 +21,7 @@ class Product extends Entity implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use PricingTrait;
+    use ItemPaginatorTrait;
 
     /**
      * Product types that Causeway Supports.

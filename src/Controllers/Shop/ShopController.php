@@ -6,6 +6,7 @@ use Exception;
 use Exdeliver\Cart\Domain\Services\CartService;
 use Exdeliver\Causeway\Controllers\Controller;
 use Exdeliver\Causeway\Domain\Entities\Shop\Category;
+use Exdeliver\Causeway\Domain\Entities\Shop\Filters\QueryBuilder;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
 use Exdeliver\Causeway\Domain\Services\MolliePaymentService;
 use Exdeliver\Causeway\Domain\Services\PaymentService;
@@ -86,13 +87,19 @@ class ShopController extends Controller
         $bootstrapColWidth = 12 / $numberOfColumns;
 
         $products = $this->productService->queryProducts($shopCategorySlug, $request);
-        $activeFilters = $this->productService->getActiveFilters();
 
-        $customView = 'site::hop.category';
+        $products = new QueryBuilder($request, $products);
+
+        $activeFilters = $products->getFilters();
+        $products = $products->getQuery();
+
+        $pagination = $products->paginate($request->numberPerPage ?? self::DEFAULT_PAGINATOR_SIZE);
+
+        $customView = 'site::shop.category';
 
         return view()->first([$customView, 'site::shop.category'], [
             'category' => $shopCategorySlug,
-            'products' => $products->paginate($request->numberPerPage ?? self::DEFAULT_PAGINATOR_SIZE),
+            'products' => $pagination,
             'numberOfColumns' => $numberOfColumns,
             'bootstrapColWidth' => $bootstrapColWidth,
             'activeFilters' => $activeFilters ?? [],
