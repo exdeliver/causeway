@@ -8,7 +8,6 @@ use Exdeliver\Causeway\Domain\Entities\Shop\Invoices\Invoice;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
@@ -165,86 +164,6 @@ class Order extends AggregateRoot implements Auditable
     public function customer()
     {
         return $this->belongsTo(new Customer());
-    }
-
-    /**
-     * @param $query
-     * @param $request
-     *
-     * @return mixed
-     */
-    public function scopeSearchBy($query, $request)
-    {
-        $orderByColumns = [
-            'orders.created_at',
-            'orders.id',
-            'fullname',
-            'contacts.email',
-            'orders.payment_id',
-            'orders.paid_at',
-            'gross_price_sum',
-        ];
-
-        $query = $query->calculatedOrders();
-
-        if (isset($request->search)) {
-            $search = $request->search;
-
-            $query->whereHas('customer.contacts', function ($query) use ($search) {
-                $query->where('contacts.first_name', 'LIKE', '%'.$search.'%')
-                    ->orWhere('contacts.last_name', 'LIKE', '%'.$search.'%')
-                    ->orWhere('contacts.email', 'LIKE', '%'.$search.'%');
-            })
-                ->orWhere('payment_id', $search);
-        }
-
-        if (isset($request->sortBy) && in_array($request->sortBy, $orderByColumns, true)) {
-            $sortByColumn = $request->sortBy;
-        } else {
-            $sortByColumn = 'orders.created_at';
-        }
-
-        $query->orderBy($sortByColumn, 'asc' === $request->direction ? 'asc' : 'desc');
-
-        return $query;
-    }
-
-    /**
-     * @param $query
-     *
-     * @return mixed
-     */
-    public function scopeCalculatedOrders($query)
-    {
-        $query->join('customers', 'orders.customer_id', 'customers.id')
-            ->join('contacts', 'customers.id', 'contacts.customer_id')
-            ->join('events', 'events.id', 'orders.event_id')
-            ->select([
-                DB::raw("CONCAT(contacts.first_name,' ',contacts.last_name) AS fullname"),
-                'orders.created_at',
-                'orders.payment_id',
-                'orders.id',
-                'orders.payment_id',
-                'orders.paid_at',
-                'orders.uuid',
-                'orders.mollie_payment_total',
-                'events.slug',
-                'contacts.*',
-            ])
-            ->withCount([
-                'items AS gross_price_sum' => function ($query) {
-                    $query->where('type', 'item')->select(
-                        DB::raw('SUM(gross_price*quantity) as grosspricesum')
-                    );
-                },
-                'items AS vat_price_sum' => function ($query) {
-                    $query->where('type', 'item')->select(
-                        DB::raw('SUM((gross_price * ((vat/100)+1))*quantity) as vatpricesum')
-                    );
-                },
-            ]);
-
-        return $query;
     }
 
     /**
