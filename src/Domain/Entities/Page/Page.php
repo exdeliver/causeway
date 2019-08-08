@@ -2,7 +2,7 @@
 
 namespace Exdeliver\Causeway\Domain\Entities\Page;
 
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
 use Rennokki\Befriended\Contracts\Likeable;
 use Rennokki\Befriended\Traits\CanBeLiked;

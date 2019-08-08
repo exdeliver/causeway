@@ -2,7 +2,8 @@
 
 namespace Exdeliver\Causeway\Domain\Entities\Menu;
 
-use Dimsav\Translatable\Translatable;
+
+use Astrotomic\Translatable\Translatable;
 use Exdeliver\Causeway\Domain\Common\Entity;
 use Exdeliver\Causeway\Domain\Common\Interfaces\MenuItemInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
