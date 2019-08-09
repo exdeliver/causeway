@@ -9,9 +9,9 @@
         @include('site::layouts.partials.common._error', ['name' => 'shipping'])
 
         @foreach ($shippingMethods as $method)
-            <checkout-shippingmethod-component csrf_token="{{ csrf_token() }}"
+            <checkout-shipping-method-component csrf_token="{{ csrf_token() }}"
                                                add_to_cart_route="{{ route('shop.product.add_shipping_method') }}"
-                                               :shipping="{{ $method->toJson() }}"></checkout-shippingmethod-component>
+                                               :shipping="{{ $method->toJson() }}"></checkout-shipping-method-component>
         @endforeach
     </div>
 </div>

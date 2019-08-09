@@ -5,6 +5,7 @@ namespace Exdeliver\Causeway\Domain\Services;
 use Exdeliver\Causeway\Domain\Entities\Shop\Category;
 use Exdeliver\Causeway\Domain\Entities\Shop\Product;
 use Exdeliver\Causeway\Infrastructure\Repositories\ShopProductRepository;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -54,9 +55,8 @@ final class ShopProductService extends AbstractService
      * @param Request $request
      *
      * @return \Illuminate\Database\Query\Builder
-     * @throws \ReflectionException
      */
-    public function queryProducts(Category $shopCategory, Request $request)
+    public function queryProducts(Category $shopCategory, Request $request): Builder
     {
         $products = Product::query()
             ->with(['variants', 'attributes'])
