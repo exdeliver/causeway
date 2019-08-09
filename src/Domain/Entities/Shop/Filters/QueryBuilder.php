@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use ReflectionClass;
 
-class QueryBuilder
+final class QueryBuilder
 {
+    /**
+     * @var array
+     */
+    protected $queries = [];
+
     /**
      * @var Builder
      */
@@ -46,9 +51,6 @@ class QueryBuilder
 
         $filterTypes = new ReflectionClass(FilterTypes::class);
 
-        // Save typed queries in array.
-        $queries = [];
-
         // Loop through all available filters
         foreach ($availableFilters as $filterName => $availableFilter) {
             // Get the filter type name
@@ -60,7 +62,7 @@ class QueryBuilder
 
             // Perform query if is set in the request
             if (isset($this->request->filters[$filterName]) && !empty($value)) {
-                $queries[] = $filterTypeFQDN->performQuery($filterName, $value, $this->query);
+                $this->queries[] = $filterTypeFQDN->performQuery($filterName, $value, $this->query);
             }
 
             // Render view and add to filters array to display on category page.
@@ -70,11 +72,6 @@ class QueryBuilder
                 'value' => $value,
                 'data' => $availableFilters[$filterName]['values'] ?? null,
             ]);
-        }
-
-        // Append queries
-        foreach ($queries as $query) {
-            $this->query = $query;
         }
     }
 
@@ -91,6 +88,34 @@ class QueryBuilder
      */
     public function getQuery()
     {
+        $columns = [
+            'shop_products.id',
+            'shop_products.parent_product_id',
+            'shop_products.title',
+            'shop_products.slug',
+            'shop_products.type',
+            'shop_products.active',
+            'shop_products.description',
+            'shop_products.quantity',
+            'shop_products.gross_price',
+            'shop_products.special_price',
+            'shop_products.vat',
+            'shop_products.pid',
+            'shop_products.weight',
+            'shop_products.sequence',
+            'shop_products.created_at',
+            'shop_products.updated_at',
+        ];
+
+        // Append queries
+        if (count($this->queries) > 0) {
+            foreach ($this->queries as $query) {
+                $this->query = $query;
+            }
+            return $this->query
+                ->groupBy($columns);
+        }
+
         return $this->query;
     }
 }
