@@ -16,9 +16,10 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 // Variables
+@import '~bootstrap/scss/bootstrap';
 @import 'variables';
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+
 @import '~jquery-ui/themes/base/all.css';
 @import "~font-awesome/css/font-awesome.css";
 @import '~lightbox2/src/css/lightbox.css';

@@ -38,7 +38,7 @@ class OrderNotificationMail extends Mailable
     public function build()
     {
         return $this
-            ->markdown('causeway::shop.mail.order', [
+            ->markdown('site::shop.mail.order', [
                 'customer' => $this->order->customer->primaryContact(),
                 'order' => $this->order,
             ])

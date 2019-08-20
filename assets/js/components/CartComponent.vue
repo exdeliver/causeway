@@ -100,6 +100,7 @@
                 if (result.status === true) {
                     var jsonData = {type: 'alert-success', title: 'Success!', message: 'Product <strong>'+vm.product.name+'</strong> quantity updated..'};
                     EventBus.$emit('status-message', jsonData);
+                    EventBus.$emit('modal-message', jsonData);
                     EventBus.$emit('cart-totals', jsonData);
                 }
             })

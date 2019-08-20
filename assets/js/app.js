@@ -25,12 +25,14 @@ const _ = require('lodash');
 
 Vue.prototype.trans = string => _.get(window.i18n, string);
 
-const router = new VueRouter({routes: require('./components/routes/web')});
+const router = new VueRouter({
+    routes: require('./components/routes/web'),
+    mode: 'history'
+});
 
 const files = require.context('./', true, /\.vue$/i);
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 const app = new Vue({
-    mode: 'history',
     router
 }).$mount('#app');

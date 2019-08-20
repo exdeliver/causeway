@@ -32,6 +32,7 @@
         @include('site::layouts.partials._breadcrumbs')
         @yield('content')
     </main>
+    <modal-component></modal-component>
 </div>
 
 <!-- Scripts -->

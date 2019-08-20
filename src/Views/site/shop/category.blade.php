@@ -17,7 +17,7 @@
                 <hr class="py-0 my-0 border border-grey-lighter"/>
                 </p>
 
-                <message-component @status-message="flash('success','test', 'test')"></message-component>
+                <message-component></message-component>
 
                 @include('site::layouts.partials._status_messages')
 

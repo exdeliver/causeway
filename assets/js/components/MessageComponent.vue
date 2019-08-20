@@ -13,7 +13,7 @@
         created() {
             let vm = this;
             EventBus.$on('status-message', obj => {
-                this.flash(obj.type, obj.title, obj.message);
+                this.flash(obj.type, obj.title, obj.message, true);
             });
         },
         data: function () {
@@ -21,7 +21,8 @@
                 flashMessage: {
                     type: '',
                     title: '',
-                    message: ''
+                    message: '',
+                    show: false,
                 },
             };
         },

@@ -162,8 +162,8 @@ class CreateShopModels extends Migration
             $table->string('type');
             $table->integer('quantity');
             $table->integer('gross_price');
-            $table->string('discount_type');
-            $table->integer('discount_amount');
+            $table->string('discount_type')->nullable();
+            $table->integer('discount_amount')->nullable();
             $table->decimal('vat');
             $table->timestamps();
         });
