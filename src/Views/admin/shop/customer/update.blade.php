@@ -17,7 +17,7 @@
 
             <hr/>
 
-            {{ Form::model($category, ['url' => route('admin.shop.customer.new.store'), 'id' => 'customer-form']) }}
+            {{ Form::model($customer->primaryContact(), ['url' => route('admin.shop.customer.update.store', ['customer' => $customer]), 'id' => 'customer-form', 'method' => 'put']) }}
             @include('causeway::admin.shop.customer.partials._form')
             {{ Form::close() }}
 

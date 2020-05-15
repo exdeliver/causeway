@@ -46,9 +46,7 @@ final class CustomerService extends AbstractService
     {
         try {
             $customer = DB::transaction(function () {
-                $customer = $this->customerRepository->create([]);
-
-                return $customer;
+                return $this->customerRepository->create([]);
             });
 
             return $customer;

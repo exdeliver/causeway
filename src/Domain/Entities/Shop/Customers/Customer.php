@@ -3,6 +3,7 @@
 namespace Exdeliver\Causeway\Domain\Entities\Shop\Customers;
 
 use Exdeliver\Causeway\Domain\Common\AggregateRoot;
+use Exdeliver\Causeway\Domain\Entities\Shop\Orders\Order;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
@@ -59,5 +60,10 @@ class Customer extends AggregateRoot
     public function primaryContact()
     {
         return $this->contacts()->where('primary', '=', Contact::PRIMARY_CONTACT)->first();
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

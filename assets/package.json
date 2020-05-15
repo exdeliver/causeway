@@ -12,16 +12,14 @@
     "devDependencies": {
         "axios": "^0.19.0",
         "bootstrap": "^4.0.0",
-        "browser-sync": "^2.26.7",
-        "browser-sync-webpack-plugin": "^2.2.2",
-        "cross-env": "^5.1",
-        "jquery": "^3.4.1",
-        "laravel-mix": "^4.1.2",
+        "cross-env": "^7.0",
+        "jquery": "^3.5.1",
+        "laravel-mix": "^5.0.1",
         "lodash": "^4.17.14",
         "popper.js": "^1.15.0",
-        "resolve-url-loader": "^2.3.1",
+        "resolve-url-loader": "^3.1.0",
         "sass": "^1.22.4",
-        "sass-loader": "^7.1.0",
+        "sass-loader": "^8.0.0",
         "sw-precache-webpack-plugin": "^0.11.5",
         "tailwindcss": "^1.0.5",
         "vue": "^2.5.7",
@@ -52,6 +50,6 @@
         "vuedraggable": "^2.23.0",
         "vuejs-datepicker": "^1.6.2",
         "vuejs-datetimepicker": "^1.1.9",
-        "webpack-plugin-replace-css-url": "^1.0.3"
+        "webpack-plugin-replace-css-url": "2.0.5"
     }
 }

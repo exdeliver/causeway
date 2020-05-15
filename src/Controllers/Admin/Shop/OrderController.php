@@ -45,6 +45,28 @@ final class OrderController extends Controller
     }
 
     /**
+     * @return Factory|View
+     */
+    public function create()
+    {
+        return view('causeway::admin.shop.order.new');
+    }
+
+    /**
+     * @param Request $request
+     * @param Order $order
+     * @return Factory|View
+     */
+    public function edit(Request $request, Order $order)
+    {
+        return view('causeway::admin.shop.order.update', [
+            'order' => $order,
+            'invoiceContact' => $order->customer->primaryContact(),
+            'shippingContact' => $order->customer->shippingContact(),
+        ]);
+    }
+
+    /**
      * @param PostOrderStatusRequest $request
      * @param Order                  $order
      *

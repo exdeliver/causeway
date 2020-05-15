@@ -4,7 +4,7 @@
  * Prefix: sound/.
  */
 Route::group(['prefix' => 'sound'], function () {
-    Route::get('{soundName}', 'SoundController@getSound')->name('causeway.sound.play');
+    Route::get('{name}', 'SoundController@getSound')->name('causeway.sound.play');
 });
 
 /*

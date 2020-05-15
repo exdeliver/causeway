@@ -155,8 +155,8 @@ class SoundController extends Controller
                 return $row->artist;
             })
             ->addColumn('manage', function ($row) {
-                return '<a href="'.route('admin.sound.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="'.route('admin.sound.destroy', ['id' => $row->id]).'" class="delete-inline" method="post">
+                return '<a href="'.route('admin.sound.update', ['sound' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="'.route('admin.sound.destroy', ['sound' => $row->id]).'" class="delete-inline" method="post">
                             '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>

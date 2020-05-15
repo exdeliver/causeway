@@ -90,7 +90,6 @@
         created() {
             this.bookingsArray = this.bookings;
             this.errors = this.formErrors;
-            console.log(this.booking_disabled_dates);
         },
         data() {
             return {

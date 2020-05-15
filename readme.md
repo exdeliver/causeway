@@ -1,12 +1,12 @@
 ## Causeway CMS
-Content Management System for Laravel 5.7
+Content Management System for Laravel 7
 Written by Jason Hoendervanger - EXdeliver.nl
 
 ### Requirements
 System requirements for running this content management system:
 
     MariaDB 10.3
-    PHP 7.1.3 or later
+    PHP 7.2 or later
     (optional for sound plugin) LAME encoder (apt-get install lame)
 
 ##### Howto install

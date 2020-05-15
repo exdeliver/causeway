@@ -18,7 +18,7 @@
             <hr/>
 
             {{ Form::open(['url' => route('admin.shop.customer.new.store'), 'id' => 'customer-form', 'method' => 'post']) }}
-            @include('causeway::admin.shop.category.partials._form')
+            @include('causeway::admin.shop.customer.partials._form')
             {{ Form::close() }}
 
         </div>
