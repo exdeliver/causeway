@@ -11,7 +11,7 @@
 
             <hr/>
 
-            {{ Form::model($category, ['url' => route('admin.forum.update.store', ['id' => $category->id]), 'id' => 'page-form', 'method' => 'put']) }}
+            {{ Form::model($category, ['url' => route('admin.forum.update.store', ['forum' => $category->id]), 'id' => 'page-form', 'method' => 'put']) }}
             @include('causeway::admin.forum.partials._form')
             {{ Form::close() }}
 

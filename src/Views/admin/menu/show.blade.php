@@ -20,7 +20,7 @@
                         <span>{{ $item->label }}
                             <div class="pull-right">
                                 <a href="{{ route('admin.menu.item.edit', ['menu' => $menu->id, 'item' => $item->id]) }}" class="btn btn-sm btn-warning">Edit</a>
-                                                                                <form action="{{ route('admin.menu.item.destroy', ['menu' => $menu->id, 'id' => $item->id]) }}" class="delete-inline"
+                                                                                <form action="{{ route('admin.menu.item.destroy', ['menu' => $menu->id, 'item' => $item->id]) }}" class="delete-inline"
                                                                                       method="post">
                                                     {{ method_field('DELETE') }}
                                                                                     {{ csrf_field()  }}
@@ -35,7 +35,7 @@
                                         <span>{{ $subItem->label }}
                                             <div class="pull-right">
                                                 <a href="" class="btn btn-sm btn-warning">Edit</a>
-                                                <form action="{{ route('admin.menu.item.destroy', ['menu' => $menu->id, 'id' => $subItem->id]) }}" class="delete-inline" method="post">
+                                                <form action="{{ route('admin.menu.item.destroy', ['menu' => $menu->id, 'item' => $subItem->id]) }}" class="delete-inline" method="post">
                                                     {{ method_field('DELETE') }}
                                                     {{ csrf_field()  }}
                                                     <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Remove</button>
@@ -78,7 +78,7 @@
                         data: {data: data},
                         dataType: "json",
                         type: 'POST',
-                        url: '{{ route('admin.menu.show.sort', ['id' => $menu->id]) }}'
+                        url: '{{ route('admin.menu.show.sort', ['menu' => $menu->id]) }}'
                     });
                 }
             });

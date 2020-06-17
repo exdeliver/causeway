@@ -120,7 +120,7 @@ final class OrderController extends Controller
 
             ->addColumn('id', function ($row) {
                 return '<a href="'.route('admin.shop.order.show', [
-                        'id' => $row->id,
+                        'order' => $row->id,
                     ]).'">'.$row->id.'</a>';
             })
             ->addColumn('name', function ($row) {
@@ -133,7 +133,7 @@ final class OrderController extends Controller
                 return $price;
             })
             ->addColumn('status', function ($row) {
-                $statusForm = '<form action="'.route('admin.shop.order.status', ['id' => $row->id]).'" method="post">';
+                $statusForm = '<form action="'.route('admin.shop.order.status', ['order' => $row->id]).'" method="post">';
                 $statusForm .= csrf_field();
                 $statusForm .= '<select name="status" onchange="this.form.submit();">';
                 foreach (Order::getOrderStatuses() as $orderStatus) {
@@ -148,12 +148,12 @@ final class OrderController extends Controller
                 return causewayDate($row->created_at, 'j M Y H:i');
             })
             ->addColumn('manage', function ($row) {
-                $menuRemoval = '<form action="'.route('admin.shop.order.destroy', ['id' => $row->id]).'" method="post" class="delete-inline">
+                $menuRemoval = '<form action="'.route('admin.shop.order.destroy', ['order' => $row->id]).'" method="post" class="delete-inline">
                             '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>';
 
-                return '<a href="'.route('admin.shop.order.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>';
+                return '<a href="'.route('admin.shop.order.update', ['order' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>';
             })
             ->rawColumns(['id', 'name', 'price', 'status', 'created_at', 'manage'])
             ->toJson();

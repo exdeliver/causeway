@@ -67,12 +67,12 @@ final class ShippingMethodController extends Controller
                 return $row->service;
             })
             ->addColumn('manage', function ($row) {
-                $menuRemoval = '<form action="'.route('admin.shop.shipping-method.destroy', ['id' => $row->id]).'" method="post" class="delete-inline">
+                $menuRemoval = '<form action="'.route('admin.shop.shipping-method.destroy', ['shippingMethod' => $row->id]).'" method="post" class="delete-inline">
                             '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>';
 
-                return '<a href="'.route('admin.shop.shipping-method.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
+                return '<a href="'.route('admin.shop.shipping-method.update', ['shippingMethod' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
                     $menuRemoval;
             })
             ->rawColumns(['pid', 'name', 'gross_price', 'vat_price', 'service', 'manage'])

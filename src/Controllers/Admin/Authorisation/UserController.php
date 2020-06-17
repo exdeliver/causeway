@@ -121,12 +121,12 @@ class UserController extends Controller
                 return implode(', ', array_column($row->roles->toArray(), 'name'));
             })
             ->addColumn('manage', function ($row) {
-                $userRemoval = !$row->hasRole('admin') ? '<form action="'.route('admin.authorisation.user.remove', ['id' => $row->id]).'" method="post" class="delete-inline">
+                $userRemoval = !$row->hasRole('admin') ? '<form action="'.route('admin.authorisation.user.remove', ['user' => $row->id]).'" method="post" class="delete-inline">
                             '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>' : '';
 
-                return '<a href="'.route('admin.authorisation.user.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
+                return '<a href="'.route('admin.authorisation.user.update', ['user' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
                     $userRemoval;
             })
             ->rawColumns(['name', 'email', 'role', 'manage'])

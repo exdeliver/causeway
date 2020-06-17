@@ -5,7 +5,7 @@
 
     {{ __('Your order has successfully been received and we will process your order as soon as we have received your payment.') }}
 
-@component('mail::button', ['url' => route('shop.order.invoice', ['id' => $order->uuid])])
+@component('mail::button', ['url' => route('shop.order.invoice', ['invoice' => $order->uuid])])
     {{ __('Download invoice') }}
 @endcomponent
 

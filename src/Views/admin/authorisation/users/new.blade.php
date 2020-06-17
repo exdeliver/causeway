@@ -11,7 +11,7 @@
 
             <hr/>
 
-            {{ Form::open(['url' => route('admin.authorisation.user.store'), 'id' => 'user-form']) }}
+            {{ Form::open(['url' => route('admin.authorisation.user.store'), 'user' => 'user-form']) }}
             @include('causeway::admin.authorisation.users.partials._form')
             {{ Form::close() }}
 

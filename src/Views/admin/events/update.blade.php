@@ -11,7 +11,7 @@
 
             <hr/>
 
-            {{ Form::model($event, ['url' => route('admin.events.update.store', ['id' => $event->id]), 'id' => 'event-form', 'method' => 'PUT']) }}
+            {{ Form::model($event, ['url' => route('admin.events.update.store', ['event' => $event->id]), 'id' => 'event-form', 'method' => 'PUT']) }}
             @include('causeway::admin.events.partials._form')
             {{ Form::close() }}
 

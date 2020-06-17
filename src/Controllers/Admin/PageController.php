@@ -91,7 +91,7 @@ class PageController extends Controller
         $request->session()->flash('status', $message);
 
         return redirect()
-            ->to(route('admin.pages.update', ['id' => $savedPage->id]));
+            ->to(route('admin.pages.update', ['page' => $savedPage->id]));
     }
 
     /**
@@ -131,8 +131,8 @@ class PageController extends Controller
                 return $row->access_level;
             })
             ->addColumn('manage', function ($row) {
-                return '<a href="'.route('admin.pages.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="'.route('admin.pages.destroy', ['id' => $row->id]).'" class="delete-inline" method="post">
+                return '<a href="'.route('admin.pages.update', ['page' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="'.route('admin.pages.destroy', ['page' => $row->id]).'" class="delete-inline" method="post">
                             '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>

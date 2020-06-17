@@ -171,9 +171,9 @@ Route::group(['prefix' => 'causeway'], function () {
                 Route::group(['prefix' => 'album'], function () {
                     Route::get('/new', 'PhotoAlbumController@createAlbum')->name('admin.photo.album.new');
                     Route::post('/new', 'PhotoAlbumController@storeAlbum')->name('admin.photo.album.new.store');
-                    Route::get('/edit/{photoAlbum}', 'PhotoAlbumController@editAlbum')->name('admin.photo.album.edit');
-                    Route::post('/edit/{photoAlbum}', 'PhotoAlbumController@storeAlbum')->name('admin.photo.album.edit.store');
-                    Route::get('/remove/{photoAlbum}', 'PhotoAlbumController@removeAlbum')->name('admin.photo.album.remove');
+                    Route::get('/edit/{album}', 'PhotoAlbumController@editAlbum')->name('admin.photo.album.edit');
+                    Route::post('/edit/{album}', 'PhotoAlbumController@storeAlbum')->name('admin.photo.album.edit.store');
+                    Route::get('/remove/{album}', 'PhotoAlbumController@removeAlbum')->name('admin.photo.album.remove');
                     Route::get('/{photoAlbum?}', 'PhotoAlbumController@index')->name('admin.photo.album.index');
                 });
 

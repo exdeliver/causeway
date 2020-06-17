@@ -165,8 +165,8 @@ class ForumController extends Controller
                     $html .= '</ul>
                                 </div>
                                 <div class="pull-right">
-                                <a href="'.route('admin.forum.update', ['id' => $child->id]).'" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="'.route('admin.forum.remove', ['id' => $child->id]).'" method="DELETE" class="delete-inline">
+                                <a href="'.route('admin.forum.update', ['forum' => $child->id]).'" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="'.route('admin.forum.remove', ['forum' => $child->id]).'" method="DELETE" class="delete-inline">
                             '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>
@@ -179,8 +179,8 @@ class ForumController extends Controller
                 return $html;
             })
             ->addColumn('manage', function ($row) {
-                return '<a href="'.route('admin.forum.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="'.route('admin.forum.remove', ['id' => $row->id]).'" method="post" class="delete-inline">
+                return '<a href="'.route('admin.forum.update', ['forum' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="'.route('admin.forum.remove', ['forum' => $row->id]).'" method="post" class="delete-inline">
                             '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>

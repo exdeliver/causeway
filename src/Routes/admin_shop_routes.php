@@ -54,7 +54,7 @@ Route::group(['prefix' => 'shop', 'namespace' => 'Shop'], function () {
 
     Route::get('/dashboard', 'DashboardController@index')->name('admin.shop.dashboard');
 
-    Route::post('order/status/{orderId}', 'OrderController@status')->name('admin.shop.order.status');
+    Route::post('order/status/{order}', 'OrderController@status')->name('admin.shop.order.status');
 
     Route::resource('order', 'OrderController')->names([
         'index' => 'admin.shop.order.index',

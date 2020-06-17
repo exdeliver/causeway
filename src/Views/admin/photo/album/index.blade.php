@@ -42,7 +42,7 @@
                 @if(count($subAlbums) > 0)
                     @foreach($subAlbums as $subAlbum)
                         <div class="card">
-                            <a href="{{ route('admin.photo.album.remove', ['id' => $subAlbum->id]) }}" class="btn btn-sm btn-danger float-right position-absolute"
+                            <a href="{{ route('admin.photo.album.remove', ['album' => $subAlbum->id]) }}" class="btn btn-sm btn-danger float-right position-absolute"
                                onclick="return confirm('Delete album and childalbums and all pictures?')" data-placement="top" data-toggle="tooltip" title="Delete album"><i
                                         class="fa fa-remove"></i></a>
                             <a href="{{ route('admin.photo.album.index', ['album' => $subAlbum->label]) }}">
@@ -62,7 +62,7 @@
                 @if(isset($photos) && count($photos) > 0)
                     @foreach($photos as $photo)
                         <div class="card">
-                            <a href="{{ route('admin.photo.remove', ['id' => $photo->id]) }}" class="btn btn-sm btn-danger float-right position-absolute" onclick="return confirm('Are you sure?')"
+                            <a href="{{ route('admin.photo.remove', ['photo' => $photo->id]) }}" class="btn btn-sm btn-danger float-right position-absolute" onclick="return confirm('Are you sure?')"
                                data-placement="bottom" data-toggle="tooltip" title="Delete photo"><i class="fa fa-remove"></i></a>
                             <a href="{{ $photo->getPhoto() }}" data-lightbox="image-1" data-title="My caption">
                                 <img data-src="{{ $photo->getPhoto(360) }}" alt="100%x280" style="max-height: 100px; display: block;" src="{{ $photo->getPhoto(180) }}"

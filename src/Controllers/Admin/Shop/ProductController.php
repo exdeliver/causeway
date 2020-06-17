@@ -149,7 +149,7 @@ final class ProductController extends Controller
         }
 
         return redirect()
-            ->to(route('admin.shop.product.update', ['id' => $product->id]));
+            ->to(route('admin.shop.product.update', ['product' => $product->id]));
     }
 
     /**
@@ -183,12 +183,12 @@ final class ProductController extends Controller
                 return $row->vat + 0 .'%';
             })
             ->addColumn('manage', function ($row) {
-                $menuRemoval = '<form action="'.route('admin.shop.product.destroy', ['id' => $row->id]).'" method="post" class="delete-inline">
+                $menuRemoval = '<form action="'.route('admin.shop.product.destroy', ['product' => $row->id]).'" method="post" class="delete-inline">
                             '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>';
 
-                return '<a href="'.route('admin.shop.product.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
+                return '<a href="'.route('admin.shop.product.update', ['product' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
                     $menuRemoval;
             })
             ->rawColumns(['pid', 'name', 'gross_price', 'vat_price', 'vat', 'manage'])

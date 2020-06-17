@@ -112,7 +112,7 @@ final class CustomerController extends Controller
         }
 
         return redirect()
-            ->to(route('admin.shop.customer.update', ['id' => $customer->id]));
+            ->to(route('admin.shop.customer.update', ['customer' => $customer->id]));
     }
 
     /**
@@ -137,12 +137,12 @@ final class CustomerController extends Controller
                 return count($row->orders);
             })
             ->addColumn('manage', function ($row) {
-                $menuRemoval = '<form action="' . route('admin.shop.customer.destroy', ['id' => $row->id]) . '" method="post" class="delete-inline">
+                $menuRemoval = '<form action="' . route('admin.shop.customer.destroy', ['customer' => $row->id]) . '" method="post" class="delete-inline">
                             ' . method_field('DELETE') . csrf_field() . '
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>';
 
-                return '<a href="' . route('admin.shop.customer.update', ['id' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>' .
+                return '<a href="' . route('admin.shop.customer.update', ['customer' => $row->id]) . '" class="btn btn-sm btn-warning">Edit</a>' .
                     $menuRemoval;
             })
             ->rawColumns(['label', 'name', 'items', 'manage'])

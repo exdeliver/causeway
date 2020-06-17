@@ -154,8 +154,8 @@ final class CategoryController extends Controller
                     $html .= '</ul>
                                 </div>
                                 <div class="pull-right">
-                                <a href="'.route('admin.shop.category.update', ['id' => $child->id]).'" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="'.route('admin.shop.category.destroy', ['id' => $child->id]).'" method="DELETE" class="delete-inline">
+                                <a href="'.route('admin.shop.category.update', ['category' => $child->id]).'" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="'.route('admin.shop.category.destroy', ['category' => $child->id]).'" method="DELETE" class="delete-inline">
                             '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>
@@ -168,12 +168,12 @@ final class CategoryController extends Controller
                 return $html;
             })
             ->addColumn('manage', function ($row) {
-                $menuRemoval = '<form action="'.route('admin.shop.category.destroy', ['id' => $row->id]).'" method="post" class="delete-inline">
+                $menuRemoval = '<form action="'.route('admin.shop.category.destroy', ['category' => $row->id]).'" method="post" class="delete-inline">
                             '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>';
 
-                return '<a href="'.route('admin.shop.category.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
+                return '<a href="'.route('admin.shop.category.update', ['category' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
                     $menuRemoval;
             })
             ->rawColumns(['title', 'products', 'subcategory', 'manage'])

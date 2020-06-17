@@ -11,7 +11,7 @@
 
             <hr/>
 
-            {{ Form::model($sound, ['url' => route('admin.sound.update.store', ['id' => $sound->id]), 'id' => 'sound-form', 'method' => 'put']) }}
+            {{ Form::model($sound, ['url' => route('admin.sound.update.store', ['sound' => $sound->id]), 'id' => 'sound-form', 'method' => 'put']) }}
             @include('causeway::admin.sound.partials._form')
             {{ Form::close() }}
 

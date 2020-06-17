@@ -17,7 +17,7 @@
 
             <hr/>
 
-            {{ Form::model($couponCode, ['url' => route('admin.shop.couponcode.update.store', ['id' => $couponCode->id]), 'id' => 'category-form', 'method' => 'put']) }}
+            {{ Form::model($couponCode, ['url' => route('admin.shop.couponcode.update.store', ['couponcode' => $couponCode->id]), 'id' => 'category-form', 'method' => 'put']) }}
             @include('causeway::admin.shop.couponcode.partials._form')
             {{ Form::close() }}
 

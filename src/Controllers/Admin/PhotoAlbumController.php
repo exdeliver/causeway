@@ -53,21 +53,21 @@ class PhotoAlbumController extends Controller
 
     /**
      * @param Request $request
-     * @param $photoAlbum
+     * @param $album
      *
      * @return Factory|View
      */
-    public function index(Request $request, PhotoAlbum $photoAlbum = null): View
+    public function index(Request $request, PhotoAlbum $album = null): View
     {
-        if (isset($photoAlbum)) {
-            $subAlbums = $photoAlbum->albums;
-            $photos = $photoAlbum->photos;
+        if (isset($album)) {
+            $subAlbums = $album->albums;
+            $photos = $album->photos;
         } else {
             // override albums if we have a album selected
             $subAlbums = $this->albumService->getAlbums();
         }
 
-        return view('causeway::admin.photo.album.index', ['album' => $photoAlbum, 'subAlbums' => $subAlbums, 'photos' => $photos ?? null]);
+        return view('causeway::admin.photo.album.index', ['album' => $album, 'subAlbums' => $subAlbums, 'photos' => $photos ?? null]);
     }
 
     /**

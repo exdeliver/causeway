@@ -178,7 +178,7 @@ class MenuController extends Controller
         $this->menuService->updateOrCreateItem($request, $item->id ?? null);
 
         return redirect()
-            ->route('admin.menu.show', ['id' => $menu->id]);
+            ->route('admin.menu.show', ['menu' => $menu->id]);
     }
 
     /**
@@ -225,13 +225,13 @@ class MenuController extends Controller
                 return count($row->items);
             })
             ->addColumn('manage', function ($row) {
-                $menuRemoval = '<form action="'.route('admin.menu.remove', ['id' => $row->id]).'" method="post" class="delete-inline">
+                $menuRemoval = '<form action="'.route('admin.menu.remove', ['menu' => $row->id]).'" method="post" class="delete-inline">
                             '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>';
 
-                return '<a href="'.route('admin.menu.show', ['id' => $row->id]).'" class="btn btn-sm btn-primary">Manage</a>
-                        <a href="'.route('admin.menu.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
+                return '<a href="'.route('admin.menu.show', ['menu' => $row->id]).'" class="btn btn-sm btn-primary">Manage</a>
+                        <a href="'.route('admin.menu.update', ['menu' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
                     $menuRemoval;
             })
             ->rawColumns(['label', 'name', 'items', 'manage'])

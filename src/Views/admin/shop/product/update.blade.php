@@ -18,7 +18,7 @@
             <hr/>
 
             {{ Form::model($product, ['url' => route('admin.shop.product.update.store', [
-                'id' => $product->id
+                'product' => $product->id
             ]), 'id' => 'product-form', 'method' => 'put']) }}
             @include('causeway::admin.shop.product.partials._form')
             {{ Form::close() }}

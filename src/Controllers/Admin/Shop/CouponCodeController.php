@@ -145,12 +145,12 @@ final class CouponCodeController extends Controller
                 return null;
             })
             ->addColumn('manage', function ($row) {
-                $menuRemoval = '<form action="'.route('admin.shop.couponcode.destroy', ['id' => $row->id]).'" method="post" class="delete-inline">
+                $menuRemoval = '<form action="'.route('admin.shop.couponcode.destroy', ['couponcode' => $row->id]).'" method="post" class="delete-inline">
                             '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>';
 
-                return '<a href="'.route('admin.shop.couponcode.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
+                return '<a href="'.route('admin.shop.couponcode.update', ['couponcode' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>'.
                     $menuRemoval;
             })
             ->rawColumns(['name', 'coupon_code', 'status', 'manage'])

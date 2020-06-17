@@ -17,7 +17,7 @@
 
             <hr/>
 
-            {{ Form::model($category, ['url' => route('admin.shop.category.update.store', ['id' => $category->id]), 'id' => 'category-form', 'method' => 'put']) }}
+            {{ Form::model($category, ['url' => route('admin.shop.category.update.store', ['category' => $category->id]), 'id' => 'category-form', 'method' => 'put']) }}
             @include('causeway::admin.shop.category.partials._form')
             {{ Form::close() }}
 

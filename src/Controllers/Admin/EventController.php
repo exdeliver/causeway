@@ -141,8 +141,8 @@ class EventController extends Controller
                 return $row->end_datetime;
             })
             ->addColumn('manage', function ($row) {
-                return '<a href="'.route('admin.events.update', ['id' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>
-                                                <form action="'.route('admin.events.remove', ['id' => $row->id]).'" method="post" class="delete-inline">
+                return '<a href="'.route('admin.events.update', ['event' => $row->id]).'" class="btn btn-sm btn-warning">Edit</a>
+                                                <form action="'.route('admin.events.remove', ['event' => $row->id]).'" method="post" class="delete-inline">
                             '.method_field('DELETE').csrf_field().'
                             <button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Remove</button>
                         </form>

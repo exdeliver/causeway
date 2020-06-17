@@ -23,7 +23,7 @@
 
             @include('causeway::admin.shop.order.partials._order_audit')
 
-            <a href="{{ route('shop.order.invoice', ['id' => $order->uuid]) }}" class="btn btn-outline-dark" target="_blank"><i class="fa fa-file-pdf-o"></i> Invoice </a>
+            <a href="{{ route('shop.order.invoice', ['invoice' => $order->uuid]) }}" class="btn btn-outline-dark" target="_blank"><i class="fa fa-file-pdf-o"></i> Invoice </a>
         </div>
     </div>
 @endsection

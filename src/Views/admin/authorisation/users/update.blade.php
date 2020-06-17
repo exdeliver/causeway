@@ -11,7 +11,7 @@
 
             <hr/>
 
-            {{ Form::model($user, ['url' => route('admin.authorisation.user.update.store', ['id' => $user->id]), 'id' => 'user-form', 'method' => 'PUT']) }}
+            {{ Form::model($user, ['url' => route('admin.authorisation.user.update.store', ['user' => $user->id]), 'id' => 'user-form', 'method' => 'PUT']) }}
             @include('causeway::admin.authorisation.users.partials._form')
             {{ Form::close() }}
 
