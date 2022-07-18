@@ -35,7 +35,7 @@
         "font-awesome": "^4.7.0",
         "frontwise-grid-editor": "github:frontwise/grid-editor",
         "fullcalendar": "^3.10.0",
-        "jquery-ui": "^1.12.1",
+        "jquery-ui": "^1.13.2",
         "laravel-echo": "^1.4.1",
         "lightbox2": "^2.10.0",
         "magicsuggest-alpine": "^1.0.0",
